@@ -12,7 +12,7 @@
   --line:#3d2d1f; --line2:#523b27;
   --ink:#f3e9d6; --ink2:#c9b391; --ink3:#9a846a;
   --gold:#e2b45c; --gold-dim:#a8832f;
-  --fox:#e2602f; --rabbit:#e5b53d; --mouse:#cf9163; --bird:#6ba3dd;
+  --fox:#ef7a2e; --rabbit:#e8bb3c; --mouse:#bb3a38; --bird:#6ba3dd;
   --cat:#e07c35; --eyrie:#4f84c4; --alliance:#58a567; --vaga:#aab0b4;
   --cult:#e8c948; --river:#3fb0a6;
   --ok:#5fb871; --bad:#d8584f;
@@ -78,6 +78,10 @@ nav.tabs{
   display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
 }
 .tabs-in::-webkit-scrollbar{display:none}
+nav.tabs{position:sticky}
+nav.tabs::after{content:"";position:absolute;right:0;top:0;bottom:0;width:52px;pointer-events:none;
+  background:linear-gradient(to right,rgba(14,10,7,0),rgba(14,10,7,.97));opacity:1;transition:opacity .2s}
+nav.tabs.atend::after{opacity:0}
 .tb{
   background:none;border:0;border-bottom:3px solid transparent;
   color:var(--ink3);font:inherit;font-size:.82rem;letter-spacing:.06em;
@@ -257,6 +261,22 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
   <symbol id="i-bag" viewBox="0 0 24 24"><path d="M8 7.6h8l4 13.4H4z" fill="currentColor" opacity=".2"/><path d="M8 7.6h8l4 13.4H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 7.6c0-3 1.4-4.8 3-4.8s3 1.8 3 4.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.6 15.6 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
   <symbol id="i-vp" viewBox="0 0 24 24"><path d="M12 2.2 14.9 9h7.3l-5.9 4.4 2.2 7.2L12 16.3l-6.5 4.3 2.2-7.2L1.8 9h7.3z" fill="currentColor"/></symbol>
+  <symbol id="i-warrior" viewBox="0 0 24 24"><path d="M12 2.2 19 5v7.4c0 4.4-3 7.6-7 9.4-4-1.8-7-5-7-9.4V5z" fill="currentColor" opacity=".25"/><path d="M12 2.2 19 5v7.4c0 4.4-3 7.6-7 9.4-4-1.8-7-5-7-9.4V5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.6 8.6 12 11l3.4-2.4M12 11v4.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-sawmill" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" fill="currentColor" opacity=".22"/><path d="M12 2.6 13.7 5 16.4 4.2 16.8 7l2.8.6-.8 2.7 2.2 1.7-2.2 1.7.8 2.7-2.8.6-.4 2.8-2.7-.8L12 21.4 10.3 19l-2.7.8-.4-2.8-2.8-.6.8-2.7L3 12l2.2-1.7-.8-2.7L7.2 7l.4-2.8L10.3 5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/></symbol>
+  <symbol id="i-workshop" viewBox="0 0 24 24"><path d="M5.4 11h13.2c0 4.4-2.6 7.6-6.6 7.6S5.4 15.4 5.4 11z" fill="currentColor" opacity=".25"/><path d="M5.4 11h13.2c0 4.4-2.6 7.6-6.6 7.6S5.4 15.4 5.4 11z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 21.4h6M12 18.6v2.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M15 10.6 18.6 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 10.6 6.4 5.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-recruiter" viewBox="0 0 24 24"><path d="M12 2.6 4 6.4v5.2c0 4.4 3.3 8.3 8 9.8 4.7-1.5 8-5.4 8-9.8V6.4z" fill="currentColor" opacity=".22"/><path d="M12 2.6 4 6.4v5.2c0 4.4 3.3 8.3 8 9.8 4.7-1.5 8-5.4 8-9.8V6.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7.6 9.4 12 12l4.4-2.6M7.6 13.4 12 16l4.4-2.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-roost" viewBox="0 0 24 24"><path d="M2.8 13.4h18.4c0 4-4.1 6.6-9.2 6.6S2.8 17.4 2.8 13.4z" fill="currentColor" opacity=".25"/><path d="M2.8 13.4h18.4c0 4-4.1 6.6-9.2 6.6S2.8 17.4 2.8 13.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3.6 13.4c2.6-1.8 6-2.6 8.4-2.6s5.8.8 8.4 2.6" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="9.2" cy="9.6" r="2.3" fill="currentColor" opacity=".55"/><circle cx="14.4" cy="10" r="2" fill="currentColor" opacity=".35"/></symbol>
+  <symbol id="i-base" viewBox="0 0 24 24"><path d="M12 2.6 22 20H2z" fill="currentColor" opacity=".22"/><path d="M12 2.6 22 20H2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9.6 17 20H7z" fill="currentColor" opacity=".45"/><path d="M12 9.6 17 20H7z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sympathy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.4" fill="currentColor" opacity=".2"/><circle cx="12" cy="12" r="9.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 18.4V9.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 11.6C12 8 9.4 5.8 6.2 5.8c0 3.6 2.6 5.8 5.8 5.8zm0 2.6c0-3.2 2.4-5.2 5.4-5.2 0 3.2-2.4 5.2-5.4 5.2z" fill="currentColor" opacity=".6"/></symbol>
+  <symbol id="i-garden" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.4" fill="currentColor" opacity=".2"/><circle cx="12" cy="12" r="9.4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="11.4" r="2.1" fill="currentColor"/><g fill="currentColor" opacity=".65"><ellipse cx="12" cy="7.2" rx="1.7" ry="2.5"/><ellipse cx="12" cy="15.6" rx="1.7" ry="2.5"/><ellipse cx="7.8" cy="11.4" rx="2.5" ry="1.7"/><ellipse cx="16.2" cy="11.4" rx="2.5" ry="1.7"/></g></symbol>
+  <symbol id="i-post" viewBox="0 0 24 24"><path d="M3.4 9h17.2v11.4H3.4z" fill="currentColor" opacity=".2"/><path d="M3.4 9h17.2v11.4H3.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M2.4 9 5 3.4h14L21.6 9z" fill="currentColor" opacity=".4"/><path d="M2.4 9 5 3.4h14L21.6 9z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 20.4v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-keep" viewBox="0 0 24 24"><path d="M3 8V3.6h3.4V6h3.2V3.6h4.8V6h3.2V3.6H21V8l-1.6 1.6v10.8H4.6V9.6z" fill="currentColor" opacity=".22"/><path d="M3 8V3.6h3.4V6h3.2V3.6h4.8V6h3.2V3.6H21V8l-1.6 1.6v10.8H4.6V9.6z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.6 20.4v-6h4.8v6" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-wood" viewBox="0 0 24 24"><ellipse cx="7" cy="8.6" rx="4.4" ry="4.4" fill="currentColor" opacity=".25"/><circle cx="7" cy="8.6" r="4.4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="8.6" r="1.6" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="16.4" cy="11" r="4.4" fill="currentColor" opacity=".25"/><circle cx="16.4" cy="11" r="4.4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="16.4" cy="11" r="1.6" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="11" cy="17.6" r="4.4" fill="currentColor" opacity=".25"/><circle cx="11" cy="17.6" r="4.4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="11" cy="17.6" r="1.6" fill="none" stroke="currentColor" stroke-width="1.2"/></symbol>
+  <symbol id="i-ruin" viewBox="0 0 24 24"><path d="M3 20.4V9.4l3.6-2.8v3.2l3.4-2.6v3.2l3.6-2.8V21z" fill="currentColor" opacity=".25"/><path d="M3 20.4V9.4l3.6-2.8v3.2l3.4-2.6v3.2l3.6-2.8V21z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14.4 20.4v-8l3.2 2v-3l3.4 2.4v6.6z" fill="currentColor" opacity=".35"/><path d="M14.4 20.4v-8l3.2 2v-3l3.4 2.4v6.6z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M1.6 21.4h20.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-die" viewBox="0 0 24 24"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="4.4" fill="currentColor" opacity=".2"/><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="1.7" fill="currentColor"/><circle cx="16" cy="16" r="1.7" fill="currentColor"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="4.6" y="2.6" width="15" height="18.8" rx="2.4" fill="currentColor" opacity=".2"/><rect x="4.6" y="2.6" width="15" height="18.8" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7.6 6.4h6M7.6 9.4h8.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="7.6" y="12.6" width="5" height="5" rx="1.2" fill="currentColor" opacity=".55"/></symbol>
+  <symbol id="i-acolyte" viewBox="0 0 24 24"><path d="M12 2.4c3.4 2.6 5.2 5.4 5.2 8.4 0 2-.9 3.6-2.3 4.7l1.3 5.9H7.8l1.3-5.9c-1.4-1.1-2.3-2.7-2.3-4.7 0-3 1.8-5.8 5.2-8.4z" fill="currentColor" opacity=".25"/><path d="M12 2.4c3.4 2.6 5.2 5.4 5.2 8.4 0 2-.9 3.6-2.3 4.7l1.3 5.9H7.8l1.3-5.9c-1.4-1.1-2.3-2.7-2.3-4.7 0-3 1.8-5.8 5.2-8.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="10.4" r="2.2" fill="currentColor"/></symbol>
+  <symbol id="i-forest" viewBox="0 0 24 24"><path d="M12 1.8 18.4 11h-3.2l4.4 6.6H4.4L8.8 11H5.6z" fill="currentColor" opacity=".25"/><path d="M12 1.8 18.4 11h-3.2l4.4 6.6H4.4L8.8 11H5.6z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 17.6v4.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
 </defs>
 </svg>
 
@@ -286,6 +306,13 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
 <section class="panel on" id="p-setup" role="tabpanel">
   <h2 class="ph"><svg class="ico"><use href="#i-vp"/></svg> Preparar la partida <small>paso a paso</small></h2>
   <p class="lead">Elige cuántos sois y qué facciones jugáis. La guía comprueba el <strong>alcance</strong> y te genera la lista de montaje exacta para esas facciones.</p>
+
+<div class="first" id="first">
+    <button class="fstep" data-first="reglas"><span class="nn">1</span><b>Las cuatro reglas base</b><span>Gobernar, mover, fabricar y llegar a 30. Diez minutos y ya puedes jugar.</span></button>
+    <button class="fstep" data-first="tablero"><span class="nn">2</span><b>Mira el tablero</b><span>Los 12 claros, sus palos y sus huecos. Tócalo y te lo explica.</span></button>
+    <button class="fstep" data-first="setup"><span class="nn">3</span><b>Monta la partida</b><span>Elige cuántos sois y qué facciones: te genero la lista de montaje.</span></button>
+    <button class="fstep" data-first="mesa"><span class="nn">4</span><b>A jugar</b><span>Marcador, combate y un entrenador que te dice qué toca en tu turno.</span></button>
+  </div>
 
   <h3>1 · ¿Cuántos jugáis?</h3>
   <div id="pcount" style="display:flex;gap:8px;flex-wrap:wrap"></div>
@@ -360,6 +387,10 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
   <h2 class="ph"><svg class="ico"><use href="#i-vp"/></svg> Mesa <small>durante la partida</small></h2>
   <p class="lead">Las cuatro cosas que hacen falta con la partida en marcha: el marcador, quién gobierna, resolver un combate y de quién es el turno.</p>
 
+<h3>¿Qué toca hacer ahora?</h3>
+  <p>Según de quién sea el turno y en qué fase estéis, aquí salen <strong>los pasos exactos de esa facción</strong>. Ve marcándolos.</p>
+  <div id="coach"></div>
+
   <h3>Marcador</h3>
   <p>Gana quien llega a <strong>30</strong>. Si varios llegan a la vez, gana <strong>quien está jugando el turno</strong>.</p>
   <div id="scoreboard"></div>
@@ -412,6 +443,50 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
   <div class="card" id="turnBox"></div>
 </section>
 
+<!-- ============================================================ TABLERO -->
+<section class="panel" id="p-tablero" role="tabpanel">
+  <h2 class="ph"><svg class="ico"><use href="#i-forest"/></svg> El tablero <small>mapa de Otoño</small></h2>
+  <p class="lead">Los <strong>12 claros</strong> del mapa de Otoño con sus palos, sus huecos de edificio y sus caminos. <strong>Toca un claro</strong> para verlo todo, o cambia de modo para que el mapa te ayude a montar la partida y a cazar dominios.</p>
+
+  <div class="modebar" id="mapModes"></div>
+
+  <div class="mapwrap">
+    <div class="mapbox"><div id="mapSvg"></div></div>
+    <aside class="mapside" id="mapInfo"></aside>
+  </div>
+
+  <div class="maplegend" id="mapLegend"></div>
+
+  <div class="note" style="margin-top:18px">
+    <h4>Qué es y qué no es este esquema</h4>
+    <p>Es un <strong>diagrama</strong>, no una copia del tablero impreso: los <strong>palos, los huecos y los caminos son exactos</strong>, y las posiciones están colocadas para que se lea bien y las esquinas caigan donde caen en el tablero de verdad.</p>
+    <p style="margin:0"><strong>Lo que no está:</strong> el <strong>río</strong>, los <strong>bosques</strong> y las <strong>4 ruinas</strong>. Esos sí están en el tablero físico: míralos ahí. Prefiero dejar un hueco antes que dibujarte un río que no he podido verificar.</p>
+  </div>
+
+  <h3>Una partida de verdad</h3>
+  <p>Así se ve una mesa montada, en el turno 1. Puedes localizar la fortaleza de la Marquesa (las piezas naranjas por todo el mapa), el nido de las Águilas en la esquina opuesta (azul) y el Vagabundo metido en un bosque.</p>
+  <figure class="shot">
+    <img src="img/mesa.jpg" alt="Una partida de Root montada sobre una mesa, en el turno 1" loading="lazy" width="1200" height="900">
+    <figcaption>«Turn 1 in board game Root», de murphzero — Wikimedia Commons, <strong>CC0</strong>.</figcaption>
+  </figure>
+  <figure class="shot">
+    <img src="img/tablero.jpg" alt="El tablero de Otoño con las piezas de la Marquesa y las Águilas colocadas" loading="lazy" width="1150" height="870">
+    <figcaption>El tablero de Otoño en juego. Los <strong>árboles naranjas</strong> marcan claros de zorro, los <strong>amarillos</strong> de conejo y los <strong>rojos</strong> de ratón. Mismo original, CC0.</figcaption>
+  </figure>
+
+  <h3>Cómo leer un claro</h3>
+  <div class="grid g2">
+    <div class="card"><h4><svg class="ico s-fox"><use href="#i-fox"/></svg> El palo</h4>
+      <p style="margin:0">Zorro, conejo o ratón. Lo marcan el <strong>color de los árboles</strong> y un <strong>iconito del animal</strong> junto al claro. Decide qué cartas sirven ahí: para construir, reclutar, fabricar, emboscar o extender simpatía.</p></div>
+    <div class="card"><h4>Los huecos de edificio</h4>
+      <p style="margin:0">Los <strong>cuadros blancos</strong> dentro del claro. Hay de <strong>1, 2 y 3</strong>. Un claro sin huecos libres <strong>no admite más edificios</strong> — y un hueco con una <strong>ruina</strong> está bloqueado hasta que el Vagabundo la vacíe.</p></div>
+    <div class="card"><h4>Los caminos</h4>
+      <p style="margin:0">Las <strong>líneas de puntos</strong>. Dos claros son adyacentes si los une un camino. El <strong>río</strong> (azul) <strong>no</strong> es un camino, salvo para la Compañía y quien le compre barcos.</p></div>
+    <div class="card"><h4>Las esquinas</h4>
+      <p style="margin:0">Los <strong>4 claros de las puntas</strong>. Ahí va la fortaleza de la Marquesa, el primer nido de las Águilas en la <strong>diagonal opuesta</strong>, y el Culto en otra. Y son la condición del <strong>dominio de pájaro</strong>.</p></div>
+  </div>
+</section>
+
 <!-- ============================================================ MARQUESA -->
 <section class="panel" id="p-cat" role="tabpanel" style="--c:var(--cat)">
   <div class="hero">
@@ -447,14 +522,18 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
   <h3>Los tres tracks de edificios</h3>
   <p>Cada track tiene <strong>6 espacios</strong>. En el montaje se llenan todos <strong>menos el de más a la izquierda</strong> (ahí va el edificio que ya plantas en el mapa). Al construir coges <strong>el edificio de más a la izquierda que quede</strong>: pagas la madera que indica la cabecera de su columna y, al levantarlo, anotas los puntos que quedan al descubierto debajo.</p>
   <div class="trk">
-    <div class="cellcol"><span class="lbl">1.º</span><div class="cell pc">vacío</div></div>
-    <div class="cellcol"><span class="lbl">2.º</span><div class="cell">🪵</div></div>
-    <div class="cellcol"><span class="lbl">3.º</span><div class="cell">🪵</div></div>
-    <div class="cellcol"><span class="lbl">4.º</span><div class="cell">🪵</div></div>
-    <div class="cellcol"><span class="lbl">5.º</span><div class="cell">🪵</div></div>
-    <div class="cellcol"><span class="lbl">6.º</span><div class="cell">🪵</div></div>
+    <div class="cellcol"><span class="lbl">1.º</span><div class="cell vp">0</div><div class="cell pc">vacío</div></div>
+    <div class="cellcol"><span class="lbl">2.º</span><div class="cell vp">1</div><div class="cell"><svg class="ico"><use href="#i-sawmill"/></svg></div></div>
+    <div class="cellcol"><span class="lbl">3.º</span><div class="cell vp">2</div><div class="cell"><svg class="ico"><use href="#i-sawmill"/></svg></div></div>
+    <div class="cellcol"><span class="lbl">4.º</span><div class="cell vp">3</div><div class="cell"><svg class="ico"><use href="#i-sawmill"/></svg></div></div>
+    <div class="cellcol"><span class="lbl">5.º</span><div class="cell vp">3</div><div class="cell"><svg class="ico"><use href="#i-sawmill"/></svg></div></div>
+    <div class="cellcol"><span class="lbl">6.º</span><div class="cell vp">4</div><div class="cell"><svg class="ico"><use href="#i-sawmill"/></svg></div></div>
   </div>
-  <p class="trk-legend">Coste en madera y puntos crecen hacia la derecha. <strong>Los números exactos están impresos en tu tablero</strong> — no los reproduzco aquí para no equivocarme: míralos en la cabecera (coste) y debajo del edificio (puntos).</p>
+  <p class="trk-legend">Arriba, el <strong>coste en madera</strong> de cada columna: <strong>0 · 1 · 2 · 3 · 3 · 4</strong>, igual en los tres tracks. Los <strong>puntos</strong> están impresos <em>debajo</em> de cada edificio y los ves al levantarlo — crecen hacia la derecha, pero esos no te los doy de memoria: léelos en tu tablero.</p>
+<figure class="shot">
+    <img src="img/tablero-marquesa.jpg" alt="Tablero de la Marquesa de los Gatos con el track de edificios y sus costes de madera" loading="lazy" width="920" height="573">
+    <figcaption>El track de edificios en una partida real: arriba, los <strong>costes de madera</strong>. Los puntos están <em>debajo</em> de cada edificio y se ven al levantarlo. Foto CC0 de murphzero.</figcaption>
+  </figure>
   <div class="note"><p>Si te <strong>destruyen</strong> un edificio, vuelve al <strong>espacio vacío de más a la derecha</strong> de su track. Es decir: el siguiente que construyas vuelve a dar los puntos altos. Destruir edificios de la Marquesa la frena, pero también le reabre los puntos buenos.</p></div>
 
   <h3>El turno</h3>
@@ -522,6 +601,11 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
       <li>Una <strong>carta de pájaro</strong> es comodín: sirve para cualquier palo. Por eso un pájaro en el Decreto es flexible… y por eso Tumulto te cuesta un punto por cada pájaro que haya ahí.</li>
       <li>Reclutar exige <strong>nido del palo correcto</strong>. Construir exige claro <strong>sin nido</strong> del palo correcto. Son las dos que más Tumultos provocan.</li>
     </ul></div>
+
+<figure class="shot">
+    <img src="img/tablero-aguilas.jpg" alt="Tablero de las Dinastías de las Águilas con el Decreto y el resumen de turno" loading="lazy" width="920" height="784">
+    <figcaption>El tablero de las Águilas: arriba el <strong>Decreto</strong> con sus cuatro columnas —Reclutar, Mover, Batallar, Construir— y los dos Visires Leales ya metidos. Foto CC0 de murphzero.</figcaption>
+  </figure>
 
   <h3>Tumulto</h3>
   <p>Si no puedes cumplir una acción del Decreto —por cualquier motivo—, cae el Tumulto <strong>inmediatamente</strong>:</p>
@@ -1086,6 +1170,10 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
   </div>
   <p style="font-size:.86rem;color:var(--ink3)">Retirar un edificio o token enemigo da <strong>1 punto</strong> — a cualquiera. Retirar guerreros no da puntos (salvo Infamia del Vagabundo contra facciones hostiles).</p>
 
+<h3>Las piezas, una por una</h3>
+  <p>Si acabas de abrir la caja: esto es lo que hay y para qué sirve cada cosa.</p>
+  <div class="pieces" id="piecesGrid"></div>
+
   <h3>Mover</h3>
   <ul>
     <li>Coges <strong>cuantos guerreros quieras</strong> de <strong>un</strong> claro y los llevas a <strong>un</strong> claro adyacente.</li>
@@ -1253,7 +1341,8 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
   </div>
   <div class="note" style="margin-top:20px"><h4>Sobre esta guía</h4>
     <p>Redactada desde <em>The Law of Root</em> (reglamento base) y <em>Learning to Play — The Riverfolk Expansion</em>.</p>
-    <p style="margin:0">Donde un dato está <strong>impreso en un tablero</strong> y no en el reglamento —los puntos de los tracks de la Marquesa, las Águilas y la Alianza— la guía te dice <strong>qué espacio mirar</strong> en vez de darte un número que podría estar mal. En la mesa lo lees en un segundo; una cifra equivocada te arruina la partida.</p></div>
+    <p>Donde un dato está <strong>impreso en un tablero</strong> y no en el reglamento, la guía te dice <strong>qué espacio mirar</strong> en vez de darte un número que podría estar mal. En la mesa lo lees en un segundo; una cifra equivocada te arruina la partida. Así están los <strong>puntos</strong> de los tracks de la Marquesa, las Águilas y la Alianza.</p>
+    <p style="margin:0">Sí van con número los que he podido <strong>verificar</strong>: los <strong>costes de madera</strong> de la Marquesa (0·1·2·3·3·4, leídos de una foto del tablero) y el <strong>track de jardines</strong> del Culto.</p></div>
 </section>
 
 </div><!-- /wrap -->
@@ -1295,6 +1384,59 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
 .turnrow.act{background:color-mix(in srgb,var(--c) 14%,var(--panel));border-color:var(--c)}
 .turnrow .ix{font-size:.72rem;color:var(--ink3);width:18px}
 .phbtns{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+/* ---------- fotos ---------- */
+.shot{margin:16px 0 22px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
+.shot img{display:block;width:100%;height:auto}
+.shot figcaption{padding:10px 14px;font-size:.82rem;color:var(--ink3);border-top:1px solid var(--line);background:#0e0a07}
+.shot.sm{max-width:560px}
+/* ---------- mapa ---------- */
+.modebar{display:flex;gap:7px;flex-wrap:wrap;margin:6px 0 16px}
+.mapwrap{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,1fr);gap:16px;align-items:start}
+@media (max-width:860px){.mapwrap{grid-template-columns:1fr}}
+.mapbox{border:1px solid var(--line);border-radius:var(--r);background:
+  radial-gradient(120% 90% at 50% 0%,#20301f 0%,#16210f 60%,#101808 100%);padding:8px;box-shadow:var(--shadow)}
+.mapbox svg{display:block;width:100%;height:auto;touch-action:manipulation}
+.mapside{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:15px 17px;min-height:150px}
+.mapside h4{margin-bottom:8px}
+.maplegend{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;font-size:.84rem;color:var(--ink2);align-items:center}
+.maplegend b{display:inline-flex;align-items:center;gap:6px}
+.swatch{width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(0,0,0,.4);display:inline-block}
+.pth{stroke:#cbb089;stroke-width:2.4;stroke-linecap:round;stroke-dasharray:1 6;opacity:.75}
+.pth.hot{stroke:var(--gold);opacity:1;stroke-dasharray:none;stroke-width:3.4}
+.cl{cursor:pointer}
+.cl .disc{stroke:#1a1208;stroke-width:1.8;transition:.15s}
+.cl:hover .disc{stroke:#fff;stroke-width:2.6}
+.cl.sel .disc{stroke:#fff;stroke-width:3.4}
+.cl.dim{opacity:.3}
+.cl.glow .disc{stroke:var(--gold);stroke-width:3.6}
+.cl .cname{font:600 4.6px/1 ui-sans-serif,system-ui,sans-serif;fill:#20160a;text-anchor:middle;pointer-events:none;letter-spacing:.04em}
+.cl .cslots{font:700 3.6px/1 ui-sans-serif,system-ui,sans-serif;fill:#20160a;text-anchor:middle;pointer-events:none;opacity:.75}
+.cnrbadge{font:700 3.2px/1 ui-sans-serif,system-ui,sans-serif;fill:var(--gold);text-anchor:middle;pointer-events:none;letter-spacing:.1em}
+.slotpip{fill:#fffdf6;stroke:#20160a;stroke-width:.5;opacity:.92}
+/* ---------- galeria de piezas ---------- */
+.pieces{display:grid;gap:11px;grid-template-columns:repeat(auto-fill,minmax(166px,1fr))}
+.piece{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:13px;text-align:center;
+  border-top:3px solid var(--c,var(--gold));transition:.14s}
+.piece:hover{border-color:var(--line2);transform:translateY(-2px)}
+.piece .pi{width:2.5em;height:2.5em;color:var(--c,var(--gold));margin-bottom:6px}
+.piece b{display:block;font-size:.92rem;color:var(--ink);margin-bottom:2px}
+.piece .who{display:block;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--c,var(--gold));margin-bottom:5px}
+.piece span.d{font-size:.81rem;color:var(--ink2);line-height:1.4;display:block}
+/* ---------- entrenador de turno ---------- */
+.coachhead{display:flex;gap:11px;align-items:center;flex-wrap:wrap;padding:13px 15px;border-radius:var(--r) var(--r) 0 0;
+  background:color-mix(in srgb,var(--c,var(--gold)) 20%,#0e0a07);border:1px solid var(--c,var(--line2));border-bottom:0}
+.coachhead b{font-size:1.05rem;color:var(--ink)}
+.coachbody{border:1px solid var(--c,var(--line2));border-radius:0 0 var(--r) var(--r);background:var(--panel);padding:14px 16px}
+.coachbody .chk{background:#0e0a07}
+/* ---------- onboarding ---------- */
+.first{display:grid;gap:11px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin:6px 0 24px}
+.fstep{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:14px 15px;position:relative;
+  cursor:pointer;transition:.14s;text-align:left;font:inherit;color:inherit}
+.fstep:hover{border-color:var(--gold-dim);transform:translateY(-2px)}
+.fstep .nn{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#201505;
+  font-weight:700;font-size:.82rem;margin-bottom:8px}
+.fstep b{display:block;color:var(--ink);font-size:.95rem;margin-bottom:3px}
+.fstep span{font-size:.84rem;color:var(--ink2)}
 </style>
 
 <script>
@@ -1311,6 +1453,7 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 const TABS=[
   {id:"setup",   label:"Preparar",    c:"var(--gold)"},
   {id:"mesa",    label:"Mesa",        c:"var(--gold)"},
+  {id:"tablero", label:"Tablero",     c:"var(--alliance)", nu:1},
   {id:"cat",     label:"Marquesa",    c:"var(--cat)"},
   {id:"eyrie",   label:"Águilas",     c:"var(--eyrie)"},
   {id:"alliance",label:"Alianza",     c:"var(--alliance)"},
@@ -1377,9 +1520,14 @@ function go(id,push){
   $$(".tb").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.t===id)));
   $$(".panel").forEach(p=>p.classList.toggle("on",p.id==="p-"+id));
   if(push){try{history.replaceState(null,"","#"+id);}catch(e){}}
+  const act=$(`.tb[data-t="${id}"]`);
+  if(act&&act.scrollIntoView)try{act.scrollIntoView({inline:"center",block:"nearest",behavior:"smooth"});}catch(e){}
   window.scrollTo({top:0,behavior:"instant"});
 }
 $("#tabs").addEventListener("click",e=>{const b=e.target.closest(".tb");if(b){clearSearch();go(b.dataset.t,1);}});
+function tabFade(){const el=$("#tabs"),n=el.parentElement;
+  n.classList.toggle("atend", el.scrollLeft+el.clientWidth>=el.scrollWidth-4);}
+$("#tabs").addEventListener("scroll",tabFade); window.addEventListener("resize",tabFade); tabFade();
 go((location.hash||"#setup").slice(1),0);
 
 /* ---------------- preparar ---------------- */
@@ -1398,7 +1546,7 @@ function renderPick(){
 $("#fpick").addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;
   const k=b.dataset.f, i=S.picked.indexOf(k);
   if(i>=0)S.picked.splice(i,1); else S.picked.push(k);
-  save();renderPick();renderReach();renderSetup();renderScore();renderRule();renderTurn();});
+  save();renderPick();renderReach();renderSetup();renderScore();renderRule();renderTurn();syncCoach();});
 
 function reachOf(list){
   // un 2.º vagabundo valdría 2; aquí cada facción se elige una sola vez
@@ -1582,12 +1730,13 @@ function renderTurn(){
          <button class="btn" id="nextPl">Jugador siguiente ››</button></div>
        ${S.picked.includes("riverfolk")?`<div class="note" style="margin-top:12px"><p style="margin:0"><b>Al empezar el Birdsong de cada jugador</b> (menos la Compañía), ofrécele comprar servicios: 1, más 1 por cada claro con puesto comercial donde tenga alguna pieza.</p></div>`:""}`;
 }
+function syncCoach(){try{renderCoach();}catch(e){}}
 $("#turnBox").addEventListener("click",e=>{
   const p=e.target.closest("[data-ph]"), t=e.target.closest("[data-t2]");
-  if(p){S.phase=+p.dataset.ph;save();renderTurn();return;}
-  if(t){S.turn=+t.dataset.t2;save();renderTurn();return;}
-  if(e.target.id==="nextPh"){S.phase=(S.phase+1)%3; if(S.phase===0)S.turn=(S.turn+1)%roster().length; save();renderTurn();return;}
-  if(e.target.id==="nextPl"){S.turn=(S.turn+1)%roster().length;S.phase=0;save();renderTurn();}
+  if(p){S.phase=+p.dataset.ph;save();renderTurn();syncCoach();return;}
+  if(t){S.turn=+t.dataset.t2;save();renderTurn();syncCoach();return;}
+  if(e.target.id==="nextPh"){S.phase=(S.phase+1)%3; if(S.phase===0)S.turn=(S.turn+1)%roster().length; save();renderTurn();syncCoach();return;}
+  if(e.target.id==="nextPl"){S.turn=(S.turn+1)%roster().length;S.phase=0;save();renderTurn();syncCoach();}
 });
 
 /* ---------------- búsqueda ---------------- */
@@ -1661,6 +1810,220 @@ $("#resetBtn").addEventListener("click",()=>{
   if(!confirm("¿Borrar marcador, marcas de preparación y nombres? Las facciones elegidas se conservan."))return;
   S.checks={};S.scores={};S.names={};S.ruleN={};S.turn=0;S.phase=0;save();
   renderSetup();renderScore();renderRule();renderTurn();});
+
+/* ================= EL TABLERO ================= */
+const SUIT={fox:{n:"zorro",c:"#ef7a2e",i:"i-fox"},rabbit:{n:"conejo",c:"#e8bb3c",i:"i-rabbit"},mouse:{n:"ratón",c:"#bb3a38",i:"i-mouse"}};
+const MAP={
+ A:{num:1, s:"mouse", k:1,x:14,y:12,n:["B","C","D"],      cnr:"noroeste"},
+ B:{num:2, s:"rabbit",k:2,x:52,y: 7,n:["A","E"]},
+ E:{num:3, s:"fox",   k:2,x:88,y:16,n:["B","D","I"],      cnr:"noreste"},
+ C:{num:4, s:"fox",   k:2,x:17,y:44,n:["A","F","G"]},
+ D:{num:5, s:"rabbit",k:2,x:57,y:33,n:["A","E","G"]},
+ I:{num:6, s:"mouse", k:2,x:89,y:54,n:["E","H","L"]},
+ G:{num:7, s:"mouse", k:2,x:37,y:61,n:["C","D","F","H","K"]},
+ H:{num:8, s:"fox",   k:3,x:66,y:63,n:["G","I","L"]},
+ F:{num:9, s:"rabbit",k:1,x:10,y:78,n:["C","G","J"],      cnr:"suroeste"},
+ J:{num:10,s:"mouse", k:2,x:24,y:94,n:["F","K"]},
+ K:{num:11,s:"fox",   k:2,x:55,y:89,n:["G","J","L"]},
+ L:{num:12,s:"rabbit",k:1,x:87,y:88,n:["H","I","K"],      cnr:"sureste"}
+};
+const DIAG={A:"L",L:"A",E:"F",F:"E"};
+const CORNERS=["A","E","F","L"];
+const EDGES=(()=>{const e=[],seen={};
+  for(const k in MAP) MAP[k].n.forEach(o=>{const id=[k,o].sort().join("");if(!seen[id]){seen[id]=1;e.push([k,o]);}});
+  return e;})();
+const MODES=[
+  {id:"palos",   t:"Palos"},
+  {id:"huecos",  t:"Huecos de edificio"},
+  {id:"caminos", t:"Vecinos"},
+  {id:"montaje", t:"Montaje"},
+  {id:"dominio", t:"Dominio"}
+];
+let MM="palos", MSEL=null, MDOM="fox";
+
+function mapHi(){
+  // devuelve {glow:Set, dim:Set, hotEdges:Set}
+  const glow=new Set(), dim=new Set(), hot=new Set();
+  if(MM==="caminos"&&MSEL){ MAP[MSEL].n.forEach(o=>{glow.add(o);hot.add([MSEL,o].sort().join(""));});
+    for(const k in MAP) if(k!==MSEL&&!glow.has(k)) dim.add(k); }
+  if(MM==="montaje"){ for(const k in MAP) if(!CORNERS.includes(k)) dim.add(k);
+    if(MSEL&&CORNERS.includes(MSEL)) glow.add(DIAG[MSEL]); }
+  if(MM==="dominio"){
+    if(MDOM==="bird"){ for(const k in MAP) if(!CORNERS.includes(k)) dim.add(k); CORNERS.forEach(k=>glow.add(k)); }
+    else { for(const k in MAP){ if(MAP[k].s!==MDOM) dim.add(k); else glow.add(k); } }
+  }
+  return {glow,dim,hot};
+}
+function renderMap(){
+  const {glow,dim,hot}=mapHi();
+  let s=`<svg viewBox="-3 -10 106 116" role="img" aria-label="Esquema del mapa de Otoño con 12 claros">`;
+  s+=`<g>`+EDGES.map(([a,b])=>{
+      const id=[a,b].sort().join("");
+      return `<line class="pth${hot.has(id)?" hot":""}" x1="${MAP[a].x}" y1="${MAP[a].y}" x2="${MAP[b].x}" y2="${MAP[b].y}"/>`;
+    }).join("")+`</g>`;
+  for(const k in MAP){
+    const c=MAP[k], su=SUIT[c.s];
+    const cls=["cl"]; if(MSEL===k)cls.push("sel"); if(glow.has(k))cls.push("glow"); if(dim.has(k))cls.push("dim");
+    const fill = MM==="huecos" ? ["#3a2a1a","#6b5230","#9a7536","#d2a43f"][c.k] : su.c;
+    s+=`<g class="${cls.join(" ")}" data-c="${k}" role="button" tabindex="0" aria-label="Claro ${c.num}, ${su.n}, ${c.k} hueco${c.k>1?"s":""}">`;
+    s+=`<circle class="disc" cx="${c.x}" cy="${c.y}" r="8.6" fill="${fill}"/>`;
+    if(MM==="huecos"){
+      s+=`<text class="cname" x="${c.x}" y="${c.y+1.6}" style="font-size:7px;fill:#fff">${c.k}</text>`;
+    }else{
+      s+=`<use href="#${su.i}" x="${c.x-4.6}" y="${c.y-5.4}" width="9.2" height="9.2" style="color:#1d1408;opacity:.85"/>`;
+      for(let i=0;i<c.k;i++){const w=2.3,g=.8,tot=c.k*w+(c.k-1)*g;
+        s+=`<rect class="slotpip" x="${c.x-tot/2+i*(w+g)}" y="${c.y+4.3}" width="${w}" height="${w}" rx=".6"/>`;}
+    }
+    s+=`<text class="cnrbadge" x="${c.x}" y="${c.y-11.6}">${c.num}${c.cnr?" ◆":""}</text>`;
+    s+=`</g>`;
+  }
+  s+=`</svg>`;
+  $("#mapSvg").innerHTML=s;
+  $("#mapModes").innerHTML=MODES.map(m=>`<button class="btn ${MM===m.id?"on":""}" data-mm="${m.id}">${m.t}</button>`).join("")
+    + (MM==="dominio"?`<span style="width:12px"></span>`+
+       [["fox","Zorro"],["rabbit","Conejo"],["mouse","Ratón"],["bird","Pájaro"]].map(([k,t])=>
+         `<button class="btn ${MDOM===k?"on":""}" data-dom="${k}">${t}</button>`).join(""):"");
+  $("#mapLegend").innerHTML = MM==="huecos"
+    ? [1,2,3].map(n=>`<b><i class="swatch" style="background:${["#3a2a1a","#6b5230","#9a7536","#d2a43f"][n]}"></i> ${n} hueco${n>1?"s":""}</b>`).join("")
+      +`<b style="color:var(--ink3)">◆ esquina</b>`
+    : Object.keys(SUIT).map(k=>`<b><i class="swatch" style="background:${SUIT[k].c}"></i> ${SUIT[k].n}</b>`).join("")
+      +`<b style="color:var(--ink3)">◆ esquina</b><b style="color:var(--ink3)">▫ huecos de edificio</b>`;
+  renderMapInfo();
+}
+function renderMapInfo(){
+  const box=$("#mapInfo");
+  let h="";
+  if(MM==="montaje"){
+    h+=`<h4>Dónde empieza cada uno</h4>`;
+    if(!MSEL||!CORNERS.includes(MSEL)){
+      h+=`<p>Toca una <b>esquina</b> (las cuatro marcadas con ◆) para colocar ahí la <b>fortaleza de la Marquesa</b>.</p>`;
+    }else{
+      const d=DIAG[MSEL], otras=CORNERS.filter(k=>k!==MSEL&&k!==d);
+      h+=`<p style="color:var(--cat)"><b>Fortaleza de la Marquesa</b> → claro <b>${MAP[MSEL].num}</b>, esquina ${MAP[MSEL].cnr}.<br>
+            <span style="color:var(--ink2);font-size:.88rem">Y un guerrero en todos los claros menos el ${MAP[d].num}.</span></p>
+          <p style="color:var(--eyrie)"><b>Nido de las Águilas</b> → claro <b>${MAP[d].num}</b>, esquina ${MAP[d].cnr}. Es la <b>diagonal opuesta</b>. Con 6 guerreros.</p>
+          <p style="color:var(--cult)"><b>Culto Reptiliano</b> → una esquina que no sea inicio de otro: claro <b>${otras.map(k=>MAP[k].num).join("</b> o <b>")}</b>. 4 guerreros, 1 jardín, y 1 guerrero en cada claro vecino.</p>
+          <p style="margin:0;font-size:.86rem;color:var(--ink3)">La Alianza no coloca nada. El Vagabundo va a un bosque. La Compañía, 4 guerreros en claros con río.</p>`;
+    }
+    box.innerHTML=h; return;
+  }
+  if(MM==="dominio"){
+    h+=`<h4>Dominio de ${MDOM==="bird"?"pájaro":SUIT[MDOM].n}</h4>`;
+    h+= MDOM==="bird"
+      ? `<p>Ganas si, <b>al empezar tu Birdsong</b>, gobiernas <b>dos claros en esquinas opuestas</b>.</p>
+         <p style="margin:0">Las dos parejas posibles: <b>${MAP.A.num} y ${MAP.L.num}</b>, o <b>${MAP.E.num} y ${MAP.F.num}</b>.</p>`
+      : `<p>Ganas si, <b>al empezar tu Birdsong</b>, gobiernas <b>3 claros de ${SUIT[MDOM].n}</b>. Hay <b>4</b> en el mapa, así que te sobra uno.</p>
+         <p style="margin:0">Marcados: claros <b>${Object.keys(MAP).filter(k=>MAP[k].s===MDOM).map(k=>MAP[k].num).sort((a,b)=>a-b).join(", ")}</b>.</p>`;
+    h+=`<p style="margin:12px 0 0;font-size:.86rem;color:var(--ink3)">Recuerda: se activa en tu Daylight con <b>10+ puntos</b>, y a partir de ahí <b>dejas de puntuar</b>.</p>`;
+    box.innerHTML=h; return;
+  }
+  if(!MSEL){
+    box.innerHTML=`<h4>Toca un claro</h4><p style="margin:0">Te digo su palo, sus huecos y con quién conecta. En <b>Vecinos</b> se iluminan sus caminos; en <b>Montaje</b> te coloca a todo el mundo; en <b>Dominio</b> marca los claros que necesitas.</p>`;
+    return;
+  }
+  const c=MAP[MSEL], su=SUIT[c.s];
+  h+=`<h4 style="color:${su.c}">Claro ${c.num} · ${su.n}</h4>`;
+  h+=`<p style="margin:0 0 10px"><span class="pill" style="border-color:${su.c};color:${su.c}">${c.k} hueco${c.k>1?"s":""} de edificio</span>
+      ${c.cnr?` <span class="pill" style="border-color:var(--gold);color:var(--gold)">esquina ${c.cnr}</span>`:""}</p>`;
+  h+=`<p style="margin:0 0 8px"><b>Conecta con</b> ${c.n.map(o=>`<button class="btn" style="padding:3px 9px;font-size:.78rem" data-goto="${o}">${MAP[o].num} · ${SUIT[MAP[o].s].n}</button>`).join(" ")}</p>`;
+  if(c.cnr) h+=`<p style="margin:0 0 8px;font-size:.88rem">Su <b>diagonal opuesta</b> es el claro <b>${MAP[DIAG[MSEL]].num}</b>.</p>`;
+  h+=`<p style="margin:10px 0 0;font-size:.86rem;color:var(--ink2)">Aquí puedes construir, reclutar o extender simpatía con cartas de <b style="color:${su.c}">${su.n}</b> — o con un <b class="s-bird">pájaro</b>, salvo en los rituales del Culto.</p>`;
+  h+=`<p style="margin:8px 0 0;font-size:.82rem;color:var(--ink3)">Los números son solo de esta guía: tu tablero no los lleva.</p>`;
+  box.innerHTML=h;
+}
+$("#mapModes").addEventListener("click",e=>{
+  const m=e.target.closest("[data-mm]"), d=e.target.closest("[data-dom]");
+  if(m){MM=m.dataset.mm; MSEL=null; renderMap();}
+  if(d){MDOM=d.dataset.dom; renderMap();}
+});
+$("#mapSvg").addEventListener("click",e=>{const g=e.target.closest("[data-c]");if(!g)return;
+  MSEL = MSEL===g.dataset.c ? null : g.dataset.c; renderMap();});
+$("#mapSvg").addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;
+  const g=e.target.closest("[data-c]");if(!g)return; e.preventDefault(); MSEL=g.dataset.c; renderMap();});
+$("#mapInfo").addEventListener("click",e=>{const b=e.target.closest("[data-goto]");if(!b)return;
+  MSEL=b.dataset.goto; renderMap();});
+
+/* ================= GALERÍA DE PIEZAS ================= */
+const PIEZAS=[
+ ["i-warrior","Guerrero","Todas","var(--gold)","Cuenta para gobernar y fija tu tope de golpes en combate. Al caer vuelve a tu reserva."],
+ ["i-keep","Fortaleza","Marquesa","var(--cat)","Token. Solo ella puede <b>colocar</b> piezas en ese claro. Si se la quitan, a la caja."],
+ ["i-sawmill","Aserradero","Marquesa","var(--cat)","Edificio. Pone <b>1 madera</b> en su claro cada Birdsong."],
+ ["i-workshop","Taller","Marquesa","var(--cat)","Edificio. Es su pieza de fabricación."],
+ ["i-recruiter","Reclutador","Marquesa","var(--cat)","Edificio. Da <b>1 guerrero</b> cada vez que Recluta."],
+ ["i-wood","Madera","Marquesa","var(--cat)","Token. Paga los edificios, y solo viaja por claros que ella <b>gobierne</b>."],
+ ["i-roost","Nido","Águilas","var(--eyrie)","Edificio. Pieza de fabricación, y <b>cada Evening</b> puntúa según cuántos haya."],
+ ["i-sympathy","Simpatía","Alianza","var(--alliance)","Token. Puntúa al ponerlo, sirve para fabricar y provoca <b>Indignación</b> si lo tocan."],
+ ["i-base","Base","Alianza","var(--alliance)","Edificio, una por palo. Partidarios ilimitados, reclutar y entrenar oficiales."],
+ ["i-garden","Jardín","Culto","var(--cult)","Edificio. <b>Gobierna el claro él solo</b> y destapa el track de puntos."],
+ ["i-acolyte","Acólito","Culto","var(--cult)","Guerrero en la caja de Acólitos. Es la moneda de las conspiraciones."],
+ ["i-post","Puesto comercial","Compañía","var(--river)","Edificio. <b>2 puntos</b> al ponerlo y abre los dividendos. Si cae, <b>no vuelve</b>."],
+ ["i-ruin","Ruina","Del mapa","var(--ink3)","Bloquea un hueco de edificio. Solo el Vagabundo la vacía, explorando."],
+ ["i-forest","Bosque","Del mapa","var(--alliance)","El verde entre los caminos. Solo entra el Vagabundo, y ahí lo repara todo."],
+ ["i-die","Dados","Combate","var(--bad)","Dos dados de <b>0 a 3</b>. El alto para el atacante, el bajo para el defensor."],
+ ["i-card","Carta","Todas","var(--bird)","Zorro, conejo, ratón o pájaro. <b>Máximo 5</b> en mano al acabar tu Evening."]
+];
+$("#piecesGrid").innerHTML=PIEZAS.map(([i,n,w,c,d])=>
+  `<div class="piece" style="--c:${c}"><svg class="ico pi"><use href="#${i}"/></svg>
+     <span class="who">${w}</span><b>${n}</b><span class="d">${d}</span></div>`).join("");
+
+/* ================= ENTRENADOR DE TURNO ================= */
+const STEPS={
+ cat:{b:["Coloca <b>1 madera en cada aserradero</b>."],
+      d:["Fabrica activando <b>talleres</b>.","Hasta <b>3 acciones</b>: Batallar · Marchar (2 movimientos) · Reclutar (1×/turno) · Construir · Sobrecargar.","¿Más acciones? <b>1 carta de pájaro</b> por cada extra."],
+      e:["Roba 1 carta + 1 por bonus descubierto.","Descarta hasta <b>5</b>."]},
+ eyrie:{b:["¿Mano vacía? Roba 1 carta.","<b>Obligatorio:</b> añade <b>1 o 2 cartas</b> al Decreto. Como mucho <b>una</b> de pájaro.","¿Sin nidos en el mapa? 1 nido y 3 guerreros en el claro con <b>menos guerreros</b>."],
+        d:["Fabrica activando <b>nidos</b>.","Resuelve el Decreto <b>de izquierda a derecha</b>: Reclutar → Mover → Batallar → Construir.","Si no puedes cumplir algo entero → <b>Tumulto</b>."],
+        e:["<b>Puntúa</b> el espacio vacío más a la derecha del track de nidos.","Roba 1 + bonus. Descarta hasta 5."]},
+ alliance:{b:["<b>Revuelta:</b> 2 partidarios del palo → limpia el claro, base, guerreros y 1 oficial.","<b>Extender simpatía:</b> paga el coste del track (+1 si hay 3+ guerreros enemigos) y anota los puntos."],
+        d:["Fabricar con tokens de simpatía.","<b>Movilizar:</b> 1 carta de la mano al montón de partidarios.","<b>Entrenar:</b> 1 carta del palo de una base → 1 oficial.","Aquí <b>no</b> se mueve, <b>no</b> se batalla, <b>no</b> se recluta."],
+        e:["<b>Operaciones militares:</b> tantas como oficiales — Mover, Batallar, Reclutar, Organizar.","Roba 1 + bonus. Descarta hasta 5."]},
+ vagabond:{b:["Refresca <b>2 objetos por cada tetera</b> boca arriba, y luego <b>3 más</b>.","<b>Escabullirse:</b> a un claro o bosque adyacente, gratis."],
+        d:["Agota objetos: Mover · Batallar · Explorar · Ayudar · Misión · Golpear · Reparar · Fabricar · Especial.","Tras batallar, golpear o ayudar: <b>comprueba la relación</b>."],
+        e:["¿Estás en un <b>bosque</b>? Repara todos los objetos dañados.","Roba 1 + 1 por moneda. Descarta hasta 5.","Límite de objetos: <b>6 + 2 por bolsa</b>."]},
+ cult:{b:["<b>Ajusta el Paria</b> mirando las Almas Perdidas, ignorando pájaros.","<b>Vacía</b> las Almas Perdidas al descarte.","Conspiraciones: Cruzada <b>2</b> · Convertir <b>2</b> · Santificar <b>3</b> acólitos. Uno menos si está <b>Odiado</b>."],
+        d:["Revela cartas: <b>un ritual por carta</b> — Construir · Reclutar · Sacrificar (pájaro) · Puntuar.","Puntuar <b>gasta</b> la carta. Una vez por palo y turno."],
+        e:["Recupera las cartas reveladas a tu mano.","Fabrica con los <b>jardines del palo del Paria</b>.","Roba 1 + bonus. Descarta hasta 5."]},
+ riverfolk:{b:["¿Caja de <b>Pagos vacía</b>? Mete 2 guerreros tuyos.","¿Algún puesto en el mapa? <b>1 punto por cada 2 fondos</b> — cuenta <b>antes</b> de recoger.","Mueve todo el tablero a <b>Fondos</b>."],
+        d:["<b>Comprometer 1:</b> Mover · Batallar · Robar.","<b>Fabricar:</b> los fondos van al track de puestos del palo.","<b>Gastar 1:</b> Reclutar en un claro con río.","<b>Gastar 2 del que gobierna:</b> puesto comercial + guarnición → <b>2 puntos</b>."],
+        e:["Descarta hasta 5.","<b>Fija los precios</b> de tus tres servicios."]}
+};
+function renderCoach(){
+  const r=roster(), k=r[S.turn]||r[0], f=F[k], ph=["b","d","e"][S.phase], phn=PH[S.phase];
+  let h=`<div class="coachhead" style="--c:${f.c}">
+     <svg class="ico" style="width:1.4em;height:1.4em;color:${f.c}"><use href="#i-warrior"/></svg>
+     <b>${esc(f.n)}</b><span class="pill" style="--c:${f.c}">${phn.n} · ${phn.d}</span>
+     ${S.names[k]?`<span style="margin-left:auto;color:var(--ink3);font-size:.86rem">${esc(S.names[k])}</span>`:""}</div>
+   <div class="coachbody" style="--c:${f.c}">`;
+  if(k!=="riverfolk" && S.picked.includes("riverfolk") && S.phase===0)
+    h+=`<div class="note" style="margin:0 0 12px"><p style="margin:0"><b>Antes de nada:</b> puedes comprarle servicios a la Compañía — uno, más uno por cada claro con puesto donde tengas alguna pieza.</p></div>`;
+  h+=(STEPS[k][ph]||[]).map((t,i)=>{
+      const id=`co.${k}.${ph}.${i}`;
+      return `<label class="chk ${S.checks[id]?"done":""}" data-c="${id}"><input type="checkbox" ${S.checks[id]?"checked":""}><span class="ct">${t}</span></label>`;
+    }).join("");
+  h+=`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn" id="coachNext">Hecho, siguiente fase ›</button>
+        <a class="btn" href="#${k}" data-jump="${k}" style="text-decoration:none">Ver la facción entera</a></div></div>`;
+  $("#coach").innerHTML=h;
+}
+$("#coach").addEventListener("change",e=>{
+  const l=e.target.closest(".chk"); if(!l)return;
+  S.checks[l.dataset.c]=e.target.checked; l.classList.toggle("done",e.target.checked); save();});
+$("#coach").addEventListener("click",e=>{
+  if(e.target.id==="coachNext"){
+    const r=roster(), k=r[S.turn]||r[0], ph=["b","d","e"][S.phase];
+    (STEPS[k][ph]||[]).forEach((t,i)=>delete S.checks[`co.${k}.${ph}.${i}`]);
+    S.phase=(S.phase+1)%3; if(S.phase===0)S.turn=(S.turn+1)%r.length;
+    save(); renderTurn(); renderCoach(); return;
+  }
+  const j=e.target.closest("[data-jump]"); if(j){e.preventDefault();go(j.dataset.jump,1);}
+});
+
+/* ================= PRIMERA VEZ ================= */
+$("#first").addEventListener("click",e=>{const b=e.target.closest("[data-first]");if(!b)return;
+  if(b.dataset.first==="setup"){$("#fpick").scrollIntoView({behavior:"smooth",block:"center"});return;}
+  go(b.dataset.first,1);});
+
+renderMap(); renderCoach();
 
 renderCount();renderPick();renderReach();renderMixes();renderSetup();renderScore();renderRule();renderTurn();applyBig();
 })();
