@@ -1,1092 +1,1669 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ROOT — Guía del Juego</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ROOT — Guía de Mesa</title>
+<meta name="description" content="Guía interactiva de Root y la expansión Los Ribereños: preparación con alcance, tableros de las 6 facciones, combate, marcador y chuletario." />
+<style>
+/* ===================== TOKENS ===================== */
+:root{
+  --bg:#17110c; --bg2:#1e1611; --panel:#241a13; --panel2:#2c2017;
+  --line:#3d2d1f; --line2:#523b27;
+  --ink:#f3e9d6; --ink2:#c9b391; --ink3:#9a846a;
+  --gold:#e2b45c; --gold-dim:#a8832f;
+  --fox:#e2602f; --rabbit:#e5b53d; --mouse:#cf9163; --bird:#6ba3dd;
+  --cat:#e07c35; --eyrie:#4f84c4; --alliance:#58a567; --vaga:#aab0b4;
+  --cult:#e8c948; --river:#3fb0a6;
+  --ok:#5fb871; --bad:#d8584f;
+  --r:10px; --r2:6px;
+  --fs:16px;
+  --shadow:0 2px 0 rgba(0,0,0,.35), 0 8px 24px -12px rgba(0,0,0,.8);
+}
+html[data-big="1"]{ --fs:18.5px; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  font-size:var(--fs); line-height:1.55;
+  background:var(--bg); color:var(--ink);
+  -webkit-text-size-adjust:100%;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background:
+    radial-gradient(1200px 500px at 15% -5%, rgba(226,180,92,.07), transparent 70%),
+    radial-gradient(900px 500px at 100% 0%, rgba(63,176,166,.05), transparent 70%);
+}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 18px 90px}
+svg.ico{width:1.05em;height:1.05em;vertical-align:-.16em;flex:none}
 
-    body {
-      font-family: 'Georgia', serif;
-      background: #2c1f0e;
-      color: #f0e6d3;
-      min-height: 100vh;
-    }
+/* ===================== HEADER ===================== */
+header.top{
+  background:linear-gradient(#1a130d,#120d09);
+  border-bottom:1px solid var(--line2);
+  padding:20px 18px 16px;
+}
+.top-in{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.brand{display:flex;align-items:baseline;gap:12px;flex:1 1 260px;min-width:0}
+.brand h1{
+  font-size:1.9rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);
+  font-weight:600;line-height:1;text-shadow:0 2px 0 #000;
+}
+.brand span{color:var(--ink3);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
+.top-tools{display:flex;gap:8px;align-items:center;flex:0 1 auto}
+.search{position:relative}
+.search input{
+  background:#0e0a07;border:1px solid var(--line2);color:var(--ink);
+  border-radius:999px;padding:9px 14px 9px 34px;width:220px;font:inherit;font-size:.86rem;
+}
+.search input:focus{outline:none;border-color:var(--gold-dim);box-shadow:0 0 0 3px rgba(226,180,92,.12)}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;opacity:.5}
+.btn{
+  background:var(--panel);border:1px solid var(--line2);color:var(--ink2);
+  font:inherit;font-size:.8rem;padding:9px 13px;border-radius:999px;cursor:pointer;
+  letter-spacing:.04em;transition:.15s;white-space:nowrap;
+}
+.btn:hover{border-color:var(--gold-dim);color:var(--ink)}
+.btn.on{background:var(--gold);color:#201505;border-color:var(--gold);font-weight:600}
 
-    header {
-      background: #1a0f05;
-      padding: 24px 32px;
-      text-align: center;
-      border-bottom: 3px solid #8b6914;
-    }
+/* ===================== NAV ===================== */
+nav.tabs{
+  position:sticky;top:0;z-index:40;
+  background:rgba(14,10,7,.96);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line2);
+}
+.tabs-in{
+  max-width:1180px;margin:0 auto;padding:0 10px;
+  display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+}
+.tabs-in::-webkit-scrollbar{display:none}
+.tb{
+  background:none;border:0;border-bottom:3px solid transparent;
+  color:var(--ink3);font:inherit;font-size:.82rem;letter-spacing:.06em;
+  padding:13px 13px 11px;cursor:pointer;white-space:nowrap;display:flex;gap:7px;align-items:center;
+  transition:.15s;
+}
+.tb:hover{color:var(--ink2)}
+.tb[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--c,var(--gold))}
+.tb .dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--gold));flex:none;opacity:.85}
+.tb .new{font-size:.62rem;background:var(--gold);color:#201505;border-radius:4px;padding:1px 4px;font-weight:700;letter-spacing:.04em}
 
-    header h1 {
-      font-size: 2.4rem;
-      color: #f0c060;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-    }
+/* ===================== PANELS ===================== */
+.panel{display:none;padding-top:26px;animation:fade .18s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 
-    header p {
-      color: #c4a96a;
-      font-size: 0.95rem;
-      margin-top: 6px;
-      font-style: italic;
-    }
+h2.ph{
+  font-size:1.5rem;color:var(--gold);letter-spacing:.06em;display:flex;gap:11px;align-items:center;
+  padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:6px;
+}
+h2.ph small{color:var(--ink3);font-size:.6em;letter-spacing:.12em;text-transform:uppercase;font-weight:400}
+h3{font-size:1.1rem;color:var(--gold);margin:30px 0 12px;letter-spacing:.03em;display:flex;gap:9px;align-items:center}
+h4{font-size:.93rem;color:var(--ink);margin:0 0 7px;letter-spacing:.05em;text-transform:uppercase}
+p{margin:0 0 12px;color:var(--ink2)}
+p.lead{color:var(--ink);font-size:1.03rem}
+a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
+ul,ol{margin:0 0 12px 1.15em;color:var(--ink2)}
+li{margin-bottom:6px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.86em;background:#0e0a07;border:1px solid var(--line);border-radius:4px;padding:1px 5px;color:var(--gold)}
 
-    /* TABS NAV */
-    .tabs-nav {
-      display: flex;
-      flex-wrap: wrap;
-      background: #1a0f05;
-      border-bottom: 3px solid #8b6914;
-      padding: 0 16px;
-      gap: 4px;
-    }
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:17px 19px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
 
-    .tab-btn {
-      background: none;
-      border: none;
-      color: #a89060;
-      padding: 14px 18px;
-      cursor: pointer;
-      font-size: 0.88rem;
-      font-family: 'Georgia', serif;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      border-bottom: 3px solid transparent;
-      margin-bottom: -3px;
-      transition: all 0.2s;
-    }
+.note{border-left:3px solid var(--gold);background:rgba(226,180,92,.07);padding:12px 15px;border-radius:0 var(--r2) var(--r2) 0;margin:14px 0}
+.note.warn{border-color:var(--bad);background:rgba(216,88,79,.08)}
+.note.good{border-color:var(--ok);background:rgba(95,184,113,.08)}
+.note h4{margin-bottom:5px}
+.note p:last-child{margin-bottom:0}
 
-    .tab-btn:hover { color: #f0c060; }
+table{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:.9rem}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line)}
+th{color:var(--gold);font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;font-weight:600;background:#0e0a07}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:rgba(226,180,92,.04)}
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
+.tscroll table{margin:0}
 
-    .tab-btn.active {
-      color: #f0c060;
-      border-bottom-color: #f0c060;
-    }
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--panel2);border:1px solid var(--line2);border-radius:999px;padding:3px 10px;color:var(--ink2)}
+.pill.b{background:var(--c);border-color:var(--c);color:#17110c;font-weight:700}
 
-    .tab-btn.cat.active    { color: #e8834a; border-bottom-color: #e8834a; }
-    .tab-btn.eyrie.active  { color: #6aabdc; border-bottom-color: #6aabdc; }
-    .tab-btn.alliance.active { color: #6dc46d; border-bottom-color: #6dc46d; }
-    .tab-btn.vagabond.active { color: #b088d8; border-bottom-color: #b088d8; }
-    .tab-btn.combat.active   { color: #e05555; border-bottom-color: #e05555; }
-    .tab-btn.faq.active      { color: #5ec4c4; border-bottom-color: #5ec4c4; }
+/* suits & items */
+.s-fox{color:var(--fox)} .s-rabbit{color:var(--rabbit)} .s-mouse{color:var(--mouse)} .s-bird{color:var(--bird)}
+.chip{display:inline-flex;align-items:center;gap:5px;border-radius:var(--r2);padding:2px 8px;font-size:.8rem;
+  background:var(--panel2);border:1px solid var(--line2)}
+.chip.fox{border-color:rgba(226,96,47,.5);color:var(--fox)}
+.chip.rabbit{border-color:rgba(229,181,61,.5);color:var(--rabbit)}
+.chip.mouse{border-color:rgba(207,145,99,.5);color:var(--mouse)}
+.chip.bird{border-color:rgba(107,163,221,.5);color:var(--bird)}
 
-    /* CONTENT */
-    .tab-content { display: none; padding: 32px; max-width: 960px; margin: 0 auto; }
-    .tab-content.active { display: block; }
+/* phases */
+.phase{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel);margin-bottom:14px}
+.phase > .ph-h{display:flex;align-items:center;gap:10px;padding:11px 15px;background:#0e0a07;border-bottom:1px solid var(--line)}
+.phase > .ph-h b{letter-spacing:.09em;text-transform:uppercase;font-size:.82rem}
+.phase > .ph-h .mut{color:var(--ink3);font-size:.78rem;margin-left:auto;text-align:right}
+.ph-body{padding:13px 15px}
+.ph-dawn > .ph-h{border-left:4px solid #e5b53d}
+.ph-day > .ph-h{border-left:4px solid #e2882f}
+.ph-eve > .ph-h{border-left:4px solid #6b7fd0}
 
-    h2 {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #8b6914;
-    }
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:flex;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);align-items:flex-start}
+.steps li:last-child{border-bottom:0}
+.steps .n{flex:none;width:22px;height:22px;border-radius:50%;background:var(--panel2);border:1px solid var(--line2);
+  display:grid;place-items:center;font-size:.72rem;color:var(--gold);font-weight:700;margin-top:2px}
 
-    h3 {
-      font-size: 1.2rem;
-      margin: 24px 0 10px;
-      color: #f0c060;
-    }
+/* checklist */
+.chk{display:flex;gap:11px;align-items:flex-start;padding:9px 11px;border:1px solid var(--line);border-radius:var(--r2);
+  background:var(--panel);margin-bottom:7px;cursor:pointer;transition:.13s}
+.chk:hover{border-color:var(--line2)}
+.chk input{appearance:none;flex:none;width:19px;height:19px;border:1.5px solid var(--line2);border-radius:4px;
+  background:#0e0a07;cursor:pointer;margin-top:2px;position:relative;transition:.13s}
+.chk input:checked{background:var(--ok);border-color:var(--ok)}
+.chk input:checked::after{content:"";position:absolute;left:5px;top:1.5px;width:6px;height:11px;
+  border:solid #0d1a10;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.chk.done{opacity:.45}
+.chk.done .ct{text-decoration:line-through}
+.ct{flex:1;font-size:.92rem;color:var(--ink2)}
+.ct b{color:var(--ink)}
 
-    h4 {
-      font-size: 1rem;
-      margin: 16px 0 6px;
-      color: #d4b07a;
-    }
+/* action rows */
+.act{display:flex;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line);align-items:flex-start}
+.act:last-child{border-bottom:0}
+.act .ai{flex:none;width:34px;height:34px;border-radius:8px;display:grid;place-items:center;
+  background:var(--panel2);border:1px solid var(--line2);font-size:1.05rem}
+.act .ab{flex:1;min-width:0}
+.act .ab b{display:block;color:var(--ink);font-size:.95rem;margin-bottom:2px}
+.act .ab span{font-size:.88rem;color:var(--ink2)}
+.cost{flex:none;font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);
+  background:rgba(226,180,92,.1);border:1px solid rgba(226,180,92,.3);border-radius:999px;padding:3px 9px;white-space:nowrap}
 
-    p { line-height: 1.7; margin-bottom: 10px; color: #e8ddc8; }
+/* faction hero */
+.hero{border:1px solid var(--line);border-left:5px solid var(--c);border-radius:var(--r);
+  background:linear-gradient(100deg,color-mix(in srgb,var(--c) 11%,var(--panel)),var(--panel));
+  padding:19px 21px;margin-bottom:22px}
+.hero .ht{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;margin-bottom:9px}
+.hero .ht h2{font-size:1.45rem;color:var(--ink);letter-spacing:.03em}
+.hero .ht em{color:var(--c);font-style:normal;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.hero p{color:var(--ink2);margin:0}
+.hero .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
 
-    ul, ol { padding-left: 22px; margin-bottom: 12px; }
-    li { line-height: 1.8; color: #e8ddc8; }
+/* stat */
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px;text-align:center}
+.stat b{display:block;font-size:1.6rem;color:var(--gold);line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
 
-    /* COLORS POR FACCION */
-    .cat h2    { color: #e8834a; border-bottom-color: #e8834a; }
-    .cat h3    { color: #e8834a; }
-    .eyrie h2  { color: #6aabdc; border-bottom-color: #6aabdc; }
-    .eyrie h3  { color: #6aabdc; }
-    .alliance h2 { color: #6dc46d; border-bottom-color: #6dc46d; }
-    .alliance h3 { color: #6dc46d; }
-    .vagabond h2 { color: #b088d8; border-bottom-color: #b088d8; }
-    .vagabond h3 { color: #b088d8; }
-    .combat h2   { color: #e05555; border-bottom-color: #e05555; }
-    .combat h3   { color: #e05555; }
-    .faq h2      { color: #5ec4c4; border-bottom-color: #5ec4c4; }
-    .faq h3      { color: #5ec4c4; }
+/* track viz */
+.trk{display:flex;gap:4px;flex-wrap:wrap;margin:10px 0 6px}
+.cellcol{display:flex;flex-direction:column;gap:3px;align-items:center}
+.cellcol .lbl{font-size:.63rem;letter-spacing:.06em;color:var(--ink3);text-transform:uppercase}
+.cell{width:46px;height:40px;border:1px solid var(--line2);border-radius:var(--r2);background:#0e0a07;
+  display:grid;place-items:center;font-size:.95rem;color:var(--ink2);font-variant-numeric:tabular-nums}
+.cell.vp{background:rgba(226,180,92,.1);border-color:rgba(226,180,92,.35);color:var(--gold);font-weight:700}
+.cell.pc{background:var(--panel2)}
+.cell.q{color:var(--ink3);font-size:.85rem}
+.trk-legend{font-size:.8rem;color:var(--ink3);margin-top:4px}
 
-    /* TABLES */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 14px 0;
-      font-size: 0.92rem;
-    }
+/* boxes diagram */
+.boxes{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));margin:12px 0}
+.bx{border:1px solid var(--line2);border-radius:var(--r2);background:#0e0a07;padding:11px 12px;position:relative}
+.bx b{display:block;font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.bx span{font-size:.84rem;color:var(--ink2)}
+.flowarrow{display:grid;place-items:center;color:var(--gold);font-size:1.2rem}
 
-    th {
-      background: #3d2b10;
-      color: #f0c060;
-      padding: 10px 14px;
-      text-align: left;
-      border: 1px solid #5a3e1a;
-    }
+/* search */
+mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0 2px}
+.hidden-by-search{display:none !important}
+#searchInfo{display:none;padding:10px 14px;margin:14px 0;border:1px dashed var(--line2);border-radius:var(--r2);
+  color:var(--ink2);font-size:.88rem;background:var(--panel)}
+#searchInfo.on{display:block}
 
-    td {
-      padding: 9px 14px;
-      border: 1px solid #3d2b10;
-      color: #e8ddc8;
-    }
-
-    tr:nth-child(even) td { background: #2c1f0e; }
-    tr:nth-child(odd) td  { background: #341f08; }
-
-    /* CARDS / BOXES */
-    .box {
-      background: #3d2b10;
-      border: 1px solid #5a3e1a;
-      border-radius: 6px;
-      padding: 16px 20px;
-      margin: 14px 0;
-    }
-
-    .box.warning {
-      border-color: #c0392b;
-      background: #3d1010;
-    }
-
-    .box.tip {
-      border-color: #8b6914;
-      background: #2e2208;
-    }
-
-    .box.highlight {
-      border-color: #6dc46d;
-      background: #0f2b0f;
-    }
-
-    .box h4 { margin-top: 0; }
-
-    /* PHASE BLOCKS */
-    .phase {
-      border-left: 4px solid #8b6914;
-      padding: 12px 16px;
-      margin: 14px 0;
-      background: #2c1f0e;
-    }
-
-    .phase.birdsong { border-left-color: #f0c060; }
-    .phase.daylight { border-left-color: #e8834a; }
-    .phase.evening  { border-left-color: #6aabdc; }
-
-    .phase-title {
-      font-size: 1rem;
-      font-weight: bold;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .birdsong .phase-title { color: #f0c060; }
-    .daylight .phase-title { color: #e8834a; }
-    .evening  .phase-title { color: #6aabdc; }
-
-    /* FACTION CARD SETUP */
-    .faction-setup {
-      border: 2px solid #5a3e1a;
-      border-radius: 8px;
-      padding: 20px;
-      margin: 20px 0;
-    }
-
-    .faction-setup.cat     { border-color: #e8834a; }
-    .faction-setup.eyrie   { border-color: #6aabdc; }
-    .faction-setup.alliance { border-color: #6dc46d; }
-    .faction-setup.vagabond { border-color: #b088d8; }
-
-    .faction-setup h3 { margin-top: 0; }
-    .faction-setup.cat h3     { color: #e8834a; }
-    .faction-setup.eyrie h3   { color: #6aabdc; }
-    .faction-setup.alliance h3 { color: #6dc46d; }
-    .faction-setup.vagabond h3 { color: #b088d8; }
-
-    /* FAQ */
-    .faq-item {
-      margin: 16px 0;
-      border-bottom: 1px solid #3d2b10;
-      padding-bottom: 16px;
-    }
-
-    .faq-question {
-      font-weight: bold;
-      color: #5ec4c4;
-      margin-bottom: 6px;
-      font-size: 1rem;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 3px;
-      font-size: 0.8rem;
-      font-weight: bold;
-      margin-right: 6px;
-    }
-
-    .badge.cat      { background: #e8834a; color: #1a0f05; }
-    .badge.eyrie    { background: #6aabdc; color: #1a0f05; }
-    .badge.alliance { background: #6dc46d; color: #1a0f05; }
-    .badge.vagabond { background: #b088d8; color: #1a0f05; }
-    .badge.all      { background: #f0c060; color: #1a0f05; }
-
-    code {
-      background: #1a0f05;
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-family: monospace;
-      color: #f0c060;
-      font-size: 0.9rem;
-    }
-
-    .turn-order {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      font-size: 1.1rem;
-      margin: 16px 0;
-      flex-wrap: wrap;
-    }
-
-    .turn-step {
-      background: #3d2b10;
-      border: 1px solid #5a3e1a;
-      border-radius: 4px;
-      padding: 8px 16px;
-      font-size: 0.9rem;
-    }
-
-    .arrow { color: #8b6914; font-size: 1.2rem; }
-
-    hr { border: none; border-top: 1px solid #3d2b10; margin: 24px 0; }
-  </style>
+@media print{
+  nav.tabs,.top-tools,.btn{display:none!important}
+  .panel{display:block!important;page-break-before:always}
+  body{background:#fff;color:#000;font-size:11pt}
+  .card,.phase,.hero{border-color:#999;background:#fff;box-shadow:none}
+  h2.ph,h3,.brand h1{color:#000}
+  p,li,.ct,td{color:#222}
+}
+@media (max-width:620px){
+  .brand h1{font-size:1.4rem;letter-spacing:.14em}
+  .search input{width:150px}
+  .cell{width:40px;height:36px;font-size:.85rem}
+}
+</style>
 </head>
 <body>
 
-<header>
-  <h1>⚔ ROOT ⚔</h1>
-  <p>Un juego de poder en el bosque — Guía completa en español</p>
+<!-- ================= SVG SPRITE ================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="i-fox" viewBox="0 0 24 24"><path d="M3.2 3.4 6.6 8.2 12 6l5.4 2.2 3.4-4.8.9 7.2c0 5.6-4.3 9.9-9.7 9.9S2.3 16.2 2.3 10.6z" fill="currentColor" opacity=".22"/><path d="M3.2 3.4 6.6 8.2 12 6l5.4 2.2 3.4-4.8.9 7.2c0 5.6-4.3 9.9-9.7 9.9S2.3 16.2 2.3 10.6z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="9" cy="11.5" r="1.1" fill="currentColor"/><circle cx="15" cy="11.5" r="1.1" fill="currentColor"/><path d="M12 15v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-rabbit" viewBox="0 0 24 24"><path d="M8.6 9.8C8 7 7.4 1.8 9.3 1.4s2.3 4.9 2.3 8.1M15.4 9.8C16 7 16.6 1.8 14.7 1.4s-2.3 4.9-2.3 8.1" fill="currentColor" opacity=".22"/><path d="M8.6 9.8C8 7 7.4 1.8 9.3 1.4s2.3 4.9 2.3 8.1M15.4 9.8C16 7 16.6 1.8 14.7 1.4s-2.3 4.9-2.3 8.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="15.6" r="6.1" fill="currentColor" opacity=".22"/><circle cx="12" cy="15.6" r="6.1" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="9.9" cy="14.6" r="1" fill="currentColor"/><circle cx="14.1" cy="14.6" r="1" fill="currentColor"/><path d="M12 17v1.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <symbol id="i-mouse" viewBox="0 0 24 24"><circle cx="5.6" cy="7.4" r="4" fill="currentColor" opacity=".22"/><circle cx="18.4" cy="7.4" r="4" fill="currentColor" opacity=".22"/><circle cx="5.6" cy="7.4" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="18.4" cy="7.4" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="14.4" r="6.3" fill="currentColor" opacity=".22"/><circle cx="12" cy="14.4" r="6.3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="9.8" cy="13.4" r="1" fill="currentColor"/><circle cx="14.2" cy="13.4" r="1" fill="currentColor"/><path d="M12 15.6v1.6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <symbol id="i-bird" viewBox="0 0 24 24"><path d="M2 14c4.5.6 7.4-1.2 9.3-4.2C13 7 15 4.4 18.6 3.6c2 .6 2.9 2.4 2.6 4.4-.3 2.2-1.8 3.2-3.6 3.6.4 3.6-2.4 7.6-7.2 8-3.4.3-6.4-1.4-8.4-5.6z" fill="currentColor" opacity=".22"/><path d="M2 14c4.5.6 7.4-1.2 9.3-4.2C13 7 15 4.4 18.6 3.6c2 .6 2.9 2.4 2.6 4.4-.3 2.2-1.8 3.2-3.6 3.6.4 3.6-2.4 7.6-7.2 8-3.4.3-6.4-1.4-8.4-5.6z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="18" cy="7" r=".9" fill="currentColor"/></symbol>
+  <symbol id="i-boot" viewBox="0 0 24 24"><path d="M7 3h4.2l.6 7.4c2.6.3 5 1 6.6 2.4 1.6 1.4 2.2 3.3 2.2 5.4v2.4H3.6V3z" fill="currentColor" opacity=".2"/><path d="M7 3h4.2l.6 7.4c2.6.3 5 1 6.6 2.4 1.6 1.4 2.2 3.3 2.2 5.4v2.4H3.6V3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3.6 17.2h17" stroke="currentColor" stroke-width="1.3"/></symbol>
+  <symbol id="i-sword" viewBox="0 0 24 24"><path d="M12 1.8 15 7v8H9V7z" fill="currentColor" opacity=".2"/><path d="M12 1.8 15 7v8H9V7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6 15h12M12 18v4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-crossbow" viewBox="0 0 24 24"><path d="M3 4c0 5.5 4 9.6 9 9.6S21 9.5 21 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M3 4h4M17 4h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 2v20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M8.6 17.4h6.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-hammer" viewBox="0 0 24 24"><path d="M3.4 6.6 8 2l4.6 4.6-2.2 2.2-1.4-1.4-1.6 1.6 1.4 1.4-2.2 2.2z" fill="currentColor" opacity=".2"/><path d="M3.4 6.6 8 2l4.6 4.6-2.2 2.2-1.4-1.4-1.6 1.6 1.4 1.4-2.2 2.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10.4 10.4 20.8 20.8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-torch" viewBox="0 0 24 24"><path d="M12 1.6c2.6 2.8 4.6 5 4.6 7.6a4.6 4.6 0 1 1-9.2 0c0-2.6 2-4.8 4.6-7.6z" fill="currentColor" opacity=".25"/><path d="M12 1.6c2.6 2.8 4.6 5 4.6 7.6a4.6 4.6 0 1 1-9.2 0c0-2.6 2-4.8 4.6-7.6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 14v8.2M9.4 16.6h5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-tea" viewBox="0 0 24 24"><path d="M4 9h12v5.4A4.6 4.6 0 0 1 11.4 19H8.6A4.6 4.6 0 0 1 4 14.4z" fill="currentColor" opacity=".2"/><path d="M4 9h12v5.4A4.6 4.6 0 0 1 11.4 19H8.6A4.6 4.6 0 0 1 4 14.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 10.6h2.2a2.4 2.4 0 0 1 0 4.8H16" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.4 21.4h15.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M8 6.4c0-1.4 1.6-1.4 1.6-3M12 6.4c0-1.4 1.6-1.4 1.6-3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.4" fill="currentColor" opacity=".2"/><circle cx="12" cy="12" r="9.4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.8" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M12 7.2v9.6" stroke="currentColor" stroke-width="1.3"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M8 7.6h8l4 13.4H4z" fill="currentColor" opacity=".2"/><path d="M8 7.6h8l4 13.4H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 7.6c0-3 1.4-4.8 3-4.8s3 1.8 3 4.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.6 15.6 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-vp" viewBox="0 0 24 24"><path d="M12 2.2 14.9 9h7.3l-5.9 4.4 2.2 7.2L12 16.3l-6.5 4.3 2.2-7.2L1.8 9h7.3z" fill="currentColor"/></symbol>
+</defs>
+</svg>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <h1>Root</h1>
+      <span>Guía de mesa · base + Los Ribereños</span>
+    </div>
+    <div class="top-tools">
+      <label class="search">
+        <svg class="ico"><use href="#i-search"/></svg>
+        <input id="q" type="search" placeholder="Buscar regla…" autocomplete="off" aria-label="Buscar en la guía" />
+      </label>
+      <button class="btn" id="bigBtn" title="Texto grande para la mesa">Aa</button>
+      <button class="btn" id="resetBtn" title="Borrar marcas, marcador y preparación">Reiniciar</button>
+    </div>
+  </div>
 </header>
 
-<!-- NAV TABS -->
-<nav class="tabs-nav">
-  <button class="tab-btn active"         onclick="showTab('setup')">📋 Setup Inicial</button>
-  <button class="tab-btn cat"            onclick="showTab('cat')">🐱 Marquise de Cat</button>
-  <button class="tab-btn eyrie"          onclick="showTab('eyrie')">🦅 Eyrie Dynasties</button>
-  <button class="tab-btn alliance"       onclick="showTab('alliance')">🌿 Woodland Alliance</button>
-  <button class="tab-btn vagabond"       onclick="showTab('vagabond')">🦝 Vagabond</button>
-  <button class="tab-btn"               onclick="showTab('general')">📖 Reglas Generales</button>
-  <button class="tab-btn combat"         onclick="showTab('combat')">⚔️ Combate</button>
-  <button class="tab-btn faq"            onclick="showTab('faq')">❓ Preguntas Frecuentes</button>
-</nav>
+<nav class="tabs"><div class="tabs-in" id="tabs" role="tablist"></div></nav>
 
-<!-- ===================== SETUP ===================== -->
-<div id="setup" class="tab-content active">
-  <h2>📋 Setup Inicial</h2>
+<div class="wrap">
+<div id="searchInfo"></div>
 
-  <div class="box tip">
-    <h4>🃏 Antes de empezar</h4>
-    <p>Retira las <strong>4 cartas de Dominancia</strong> del mazo para tu primera partida. Con 2 jugadores también se retiran siempre.</p>
+<!-- ============================================================ PREPARAR -->
+<section class="panel on" id="p-setup" role="tabpanel">
+  <h2 class="ph"><svg class="ico"><use href="#i-vp"/></svg> Preparar la partida <small>paso a paso</small></h2>
+  <p class="lead">Elige cuántos sois y qué facciones jugáis. La guía comprueba el <strong>alcance</strong> y te genera la lista de montaje exacta para esas facciones.</p>
+
+  <h3>1 · ¿Cuántos jugáis?</h3>
+  <div id="pcount" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+
+  <h3>2 · ¿Qué facciones?</h3>
+  <p>Cada facción tiene un <strong>alcance</strong>: cuánto empuja el juego. Suma los alcances de las facciones elegidas y compara con el mínimo de tu número de jugadores. Es la regla oficial para que una mezcla no sea sosa.</p>
+  <div class="grid g3" id="fpick" style="margin-bottom:14px"></div>
+
+  <div class="card" id="reachBox" style="border-left:4px solid var(--line2)">
+    <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center">
+      <div><div style="font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)">Alcance elegido</div>
+        <div style="font-size:2.1rem;color:var(--gold);line-height:1.1;font-variant-numeric:tabular-nums" id="reachSum">0</div></div>
+      <div style="font-size:1.6rem;color:var(--ink3)">/</div>
+      <div><div style="font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)">Mínimo necesario</div>
+        <div style="font-size:2.1rem;color:var(--ink2);line-height:1.1;font-variant-numeric:tabular-nums" id="reachNeed">—</div></div>
+      <div style="flex:1;min-width:200px" id="reachMsg"></div>
+    </div>
   </div>
 
-  <h3>Pasos Generales — en orden</h3>
-  <ol>
-    <li><strong>Elige quién juega qué facción</strong> (ver tabla de combinaciones abajo)</li>
-    <li><strong>Coloca el mapa</strong> en la mesa</li>
-    <li><strong>Marcadores de puntuación en 0</strong> — todos en el track de puntos</li>
-    <li><strong>Coloca las 4 ruinas</strong> en los claros marcados con "R" — con objetos ocultos debajo</li>
-    <li><strong>Suministro compartido de objetos</strong> cerca del mapa:</li>
+  <h3>3 · Mezclas recomendadas</h3>
+  <p>Las del propio reglamento, por si no queréis calcular. Toca una para cargarla.</p>
+  <div class="grid g2" id="mixes"></div>
+
+  <h3>4 · Lista de montaje</h3>
+  <div class="note">
+    <h4>El orden importa</h4>
+    <p>Las facciones se montan en el orden de la <strong>letra impresa en cada tablero</strong> (A, B, C…). El orden habitual es el de esta lista: la Marquesa planta la fortaleza primero porque las Águilas y el Culto se colocan en relación a ella, y el Vagabundo va último porque necesita las ruinas llenas y un marcador por cada facción en juego.</p>
+  </div>
+  <div id="setupList"></div>
+  <div id="setupProg" style="margin-top:10px;font-size:.86rem;color:var(--ink3)"></div>
+
+  <h3>Tabla de alcance completa</h3>
+  <div class="grid g2">
+    <div class="tscroll"><table>
+      <thead><tr><th>Jugadores</th><th>Alcance mínimo</th></tr></thead>
+      <tbody>
+        <tr><td>2</td><td><strong>17</strong></td></tr>
+        <tr><td>3</td><td><strong>18</strong></td></tr>
+        <tr><td>4</td><td><strong>21</strong></td></tr>
+        <tr><td>5</td><td><strong>25</strong></td></tr>
+        <tr><td>6</td><td><strong>28</strong></td></tr>
+      </tbody>
+    </table></div>
+    <div class="tscroll"><table>
+      <thead><tr><th>Facción</th><th>Alcance</th></tr></thead>
+      <tbody>
+        <tr><td><span class="s-fox">●</span> Marquesa de los Gatos</td><td><strong>10</strong></td></tr>
+        <tr><td><span style="color:var(--eyrie)">●</span> Dinastías de las Águilas</td><td><strong>7</strong></td></tr>
+        <tr><td><span style="color:var(--vaga)">●</span> Vagabundo <small>(1.º / 2.º)</small></td><td><strong>5 / 2</strong></td></tr>
+        <tr><td><span style="color:var(--river)">●</span> Compañía del Río</td><td><strong>5</strong></td></tr>
+        <tr><td><span style="color:var(--alliance)">●</span> Alianza del Bosque</td><td><strong>3</strong></td></tr>
+        <tr><td><span style="color:var(--cult)">●</span> Culto Reptiliano</td><td><strong>2</strong></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <p style="font-size:.84rem;color:var(--ink3)">Con <strong>dos vagabundos</strong> el segundo cuenta solo 2 de alcance, y hay reglas propias: dos objetos «R» por ruina, orden de montaje al azar entre ellos y las tres misiones se comparten.</p>
+
+  <h3>Pasos generales, antes de las facciones</h3>
+  <ol class="steps" style="list-style:none">
+    <li><span class="n">1</span><div><b>Reparte facciones y primer jugador.</b> Al azar el orden de asiento.</div></li>
+    <li><span class="n">2</span><div><b>Marcadores de puntuación</b> al 0 del marcador.</div></li>
+    <li><span class="n">3</span><div><b>Manos iniciales:</b> 3 cartas cada uno. <strong>A 2 jugadores, quita del mazo las 4 cartas de dominio.</strong></div></li>
+    <li><span class="n">4</span><div><b>Ruinas:</b> una en cada hueco marcado con «R» (4 en total).</div></li>
+    <li><span class="n">5</span><div><b>Reserva de objetos</b> junto al mapa: 2 <svg class="ico"><use href="#i-boot"/></svg> botas, 2 <svg class="ico"><use href="#i-bag"/></svg> bolsas, 1 <svg class="ico"><use href="#i-crossbow"/></svg> ballesta, 1 <svg class="ico"><use href="#i-hammer"/></svg> martillo, 2 <svg class="ico"><use href="#i-sword"/></svg> espadas, 2 <svg class="ico"><use href="#i-tea"/></svg> teteras, 2 <svg class="ico"><use href="#i-coin"/></svg> monedas.</div></li>
+    <li><span class="n">6</span><div><b>Resto de piezas:</b> reparte las 16 cartas de resumen de facción y deja los <strong>dos dados</strong> junto al mapa.</div></li>
+    <li><span class="n">7</span><div><b>Monta las facciones</b> en orden de letra.</div></li>
+  </ol>
+</section>
+
+<!-- ============================================================ MESA -->
+<section class="panel" id="p-mesa" role="tabpanel">
+  <h2 class="ph"><svg class="ico"><use href="#i-vp"/></svg> Mesa <small>durante la partida</small></h2>
+  <p class="lead">Las cuatro cosas que hacen falta con la partida en marcha: el marcador, quién gobierna, resolver un combate y de quién es el turno.</p>
+
+  <h3>Marcador</h3>
+  <p>Gana quien llega a <strong>30</strong>. Si varios llegan a la vez, gana <strong>quien está jugando el turno</strong>.</p>
+  <div id="scoreboard"></div>
+  <p style="font-size:.84rem;color:var(--ink3)">Se guarda en este navegador. «Reiniciar», arriba, lo borra todo.</p>
+
+  <h3>¿Quién gobierna este claro?</h3>
+  <p>El gobernante es quien tiene <strong>más guerreros + edificios</strong> en el claro. <strong>Los tokens y los peones no cuentan.</strong> En empate <strong>nadie</strong> gobierna… salvo las Águilas, que sí gobiernan empatando, y el Culto, que gobierna cualquier claro donde tenga un jardín.</p>
+  <div class="card">
+    <div class="tscroll"><table>
+      <thead><tr><th>Facción</th><th>Guerreros</th><th>Edificios</th><th>Total</th></tr></thead>
+      <tbody id="ruleRows"></tbody>
+    </table></div>
+    <div id="ruleOut" style="margin-top:14px"></div>
+  </div>
+
+  <h3>Resolver un combate</h3>
+  <p>Tira los dos dados de verdad y mete aquí los resultados. La guía aplica el tope de guerreros, el bonus de indefenso y la Guerra de Guerrillas de la Alianza.</p>
+  <div class="card" id="combatBox">
+    <div class="grid g2" style="margin-bottom:14px">
+      <div>
+        <h4 style="color:var(--fox)">Atacante</h4>
+        <label style="display:block;font-size:.82rem;color:var(--ink3);margin-bottom:4px">Guerreros en el claro</label>
+        <input id="atkW" type="number" min="0" max="25" value="3" class="numin">
+        <label style="display:block;font-size:.82rem;color:var(--ink3);margin:10px 0 4px">Golpes extra (habilidades, cartas)</label>
+        <input id="atkX" type="number" min="0" max="10" value="0" class="numin">
+      </div>
+      <div>
+        <h4 style="color:var(--eyrie)">Defensor</h4>
+        <label style="display:block;font-size:.82rem;color:var(--ink3);margin-bottom:4px">Guerreros en el claro</label>
+        <input id="defW" type="number" min="0" max="25" value="2" class="numin">
+        <label style="display:block;font-size:.82rem;color:var(--ink3);margin:10px 0 4px">Golpes extra</label>
+        <input id="defX" type="number" min="0" max="10" value="0" class="numin">
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:14px">
+      <div><label style="display:block;font-size:.82rem;color:var(--ink3);margin-bottom:4px">Dado alto</label>
+        <select id="d1" class="numin"></select></div>
+      <div><label style="display:block;font-size:.82rem;color:var(--ink3);margin-bottom:4px">Dado bajo</label>
+        <select id="d2" class="numin"></select></div>
+      <button class="btn" id="rollBtn">Tirar por mí</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+      <label class="chk" style="margin:0;flex:1 1 220px"><input type="checkbox" id="cGuerrilla"><span class="ct">El <b>defensor es la Alianza</b> (Guerra de Guerrillas)</span></label>
+      <label class="chk" style="margin:0;flex:1 1 220px"><input type="checkbox" id="cVagaAtk"><span class="ct">El atacante es el <b>Vagabundo</b> (tope = espadas sanas)</span></label>
+    </div>
+    <div id="combatOut"></div>
+  </div>
+
+  <h3>Turnos</h3>
+  <div class="card" id="turnBox"></div>
+</section>
+
+<!-- ============================================================ MARQUESA -->
+<section class="panel" id="p-cat" role="tabpanel" style="--c:var(--cat)">
+  <div class="hero">
+    <div class="ht"><h2>Marquesa de los Gatos</h2><em>Marquise de Cat · letra A</em></div>
+    <p>Ocupa el bosque y quiere convertirlo en una potencia industrial. Puntúa <strong>construyendo</strong>: cuantos más edificios del mismo tipo tenga, más puntos le da el siguiente. Para construir necesita <strong>madera</strong>, y la madera solo viaja por claros que ella gobierne.</p>
+    <div class="meta">
+      <span class="pill b">Alcance 10</span>
+      <span class="pill">25 guerreros</span>
+      <span class="pill">8 maderas</span>
+      <span class="pill">6+6+6 edificios</span>
+      <span class="pill">Fabrica con talleres</span>
+    </div>
+  </div>
+
+  <h3>Habilidades</h3>
+  <div class="grid g2">
+    <div class="card"><h4>La Fortaleza</h4><p style="margin:0">Solo la Marquesa puede <strong>colocar</strong> piezas en el claro de la fortaleza. Otros sí pueden <strong>mover</strong> piezas hacia ahí. Si le retiran el token de fortaleza, se va a la caja: no vuelve.</p></div>
+    <div class="card"><h4>Hospitales de Campaña</h4><p style="margin:0">Cada vez que le retiran un guerrero —en combate o por cualquier motivo— puede <strong>gastar una carta del palo del claro donde estaba</strong> y colocar ese guerrero en el claro de la fortaleza. Un guerrero por carta.</p></div>
+    <div class="card"><h4>Fabricar</h4><p style="margin:0">Fabrica en el <strong>Daylight</strong>, activando <strong>talleres</strong>. El palo de un taller es el del claro donde está.</p></div>
+  </div>
+
+  <h3>La economía de la madera</h3>
+  <div class="boxes">
+    <div class="bx"><b>Aserradero</b><span>Pone 1 madera en su claro cada Birdsong</span></div>
+    <div class="bx"><b>Taller</b><span>Pieza de fabricación. No produce nada</span></div>
+    <div class="bx"><b>Reclutador</b><span>1 guerrero al usar Reclutar</span></div>
+  </div>
+  <div class="note warn">
+    <h4>La regla que más se juega mal</h4>
+    <p>Para pagar un edificio puedes gastar madera del claro elegido, de <strong>claros adyacentes que gobiernes</strong>, o de claros conectados al elegido <strong>a través de cualquier cadena de claros que gobiernes</strong>. Si te rompen la cadena —basta que dejes de gobernar un claro intermedio—, la madera del otro lado deja de servir. Partir la cadena de la Marquesa es la mejor forma de frenarla.</p>
+  </div>
+
+  <h3>Los tres tracks de edificios</h3>
+  <p>Cada track tiene <strong>6 espacios</strong>. En el montaje se llenan todos <strong>menos el de más a la izquierda</strong> (ahí va el edificio que ya plantas en el mapa). Al construir coges <strong>el edificio de más a la izquierda que quede</strong>: pagas la madera que indica la cabecera de su columna y, al levantarlo, anotas los puntos que quedan al descubierto debajo.</p>
+  <div class="trk">
+    <div class="cellcol"><span class="lbl">1.º</span><div class="cell pc">vacío</div></div>
+    <div class="cellcol"><span class="lbl">2.º</span><div class="cell">🪵</div></div>
+    <div class="cellcol"><span class="lbl">3.º</span><div class="cell">🪵</div></div>
+    <div class="cellcol"><span class="lbl">4.º</span><div class="cell">🪵</div></div>
+    <div class="cellcol"><span class="lbl">5.º</span><div class="cell">🪵</div></div>
+    <div class="cellcol"><span class="lbl">6.º</span><div class="cell">🪵</div></div>
+  </div>
+  <p class="trk-legend">Coste en madera y puntos crecen hacia la derecha. <strong>Los números exactos están impresos en tu tablero</strong> — no los reproduzco aquí para no equivocarme: míralos en la cabecera (coste) y debajo del edificio (puntos).</p>
+  <div class="note"><p>Si te <strong>destruyen</strong> un edificio, vuelve al <strong>espacio vacío de más a la derecha</strong> de su track. Es decir: el siguiente que construyas vuelve a dar los puntos altos. Destruir edificios de la Marquesa la frena, pero también le reabre los puntos buenos.</p></div>
+
+  <h3>El turno</h3>
+  <div class="phase ph-dawn"><div class="ph-h"><b>Birdsong</b><span class="mut">automático</span></div>
+    <div class="ph-body"><p style="margin:0">Coloca <strong>una madera en cada aserradero</strong>. Nada más.</p></div></div>
+
+  <div class="phase ph-day"><div class="ph-h"><b>Daylight</b><span class="mut">fabricar + 3 acciones</span></div>
+    <div class="ph-body">
+      <p>Primero puedes <strong>fabricar</strong> activando talleres. Después, hasta <strong>3 acciones</strong> en cualquier orden y combinación. ¿Quieres una cuarta? <strong>Gasta una carta de pájaro por cada acción extra.</strong></p>
+      <div class="act"><div class="ai">⚔️</div><div class="ab"><b>Batallar</b><span>Inicia un combate.</span></div></div>
+      <div class="act"><div class="ai">🥾</div><div class="ab"><b>Marchar</b><span>Dos movimientos. Cuenta como <strong>una sola</strong> de las tres acciones.</span></div><span class="cost">2 movimientos</span></div>
+      <div class="act"><div class="ai">🪖</div><div class="ab"><b>Reclutar</b><span>Un guerrero <strong>en cada reclutador</strong>. Solo <strong>una vez por turno</strong>, aunque gastes pájaros.</span></div><span class="cost">1×/turno</span></div>
+      <div class="act"><div class="ai">🏗️</div><div class="ab"><b>Construir</b><span>Elige tipo, mira el coste de su columna, paga madera de claros tuyos conectados, coloca en un claro que <strong>gobiernes</strong> y anota los puntos descubiertos.</span></div><span class="cost">madera</span></div>
+      <div class="act"><div class="ai">🪵</div><div class="ab"><b>Sobrecargar</b><span>Gasta una carta del palo del claro de un aserradero → una madera extra ahí.</span></div><span class="cost">1 carta</span></div>
+    </div></div>
+
+  <div class="phase ph-eve"><div class="ph-h"><b>Evening</b></div>
+    <div class="ph-body"><p style="margin:0">Roba 1 carta + 1 por cada <strong>bonus de robo descubierto</strong> en tu tablero. Si pasas de 5 cartas, descarta hasta 5.</p></div></div>
+
+  <h3>Puntos</h3>
+  <div class="tscroll"><table><thead><tr><th>Cómo</th><th>Cuánto</th></tr></thead><tbody>
+    <tr><td>Construir un edificio</td><td>Los que quedan al descubierto en el track</td></tr>
+    <tr><td>Retirar un edificio o token enemigo</td><td>1 por pieza</td></tr>
+    <tr><td>Fabricar un objeto</td><td>Los de la carta</td></tr>
+  </tbody></table></div>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card" style="border-left:3px solid var(--ok)"><h4>Cómo gana</h4><p style="margin:0">Encadenando claros gobernados para que la madera fluya, y subiendo los tres tracks a la vez: el 5.º y 6.º edificio de cada tipo son el grueso de sus 30 puntos. Arranca con <strong>todo el mapa ocupado</strong> con un guerrero por claro.</p></div>
+    <div class="card" style="border-left:3px solid var(--bad)"><h4>Cómo se le frena</h4><p style="margin:0">No le mates guerreros sueltos: <strong>córtale la red</strong>. Quítale el gobierno de un claro intermedio y su madera queda aislada. Destruirle aserraderos duele más que matarle tropa, y cada edificio que le tiras te da un punto.</p></div>
+  </div>
+</section>
+
+<!-- ============================================================ ÁGUILAS -->
+<section class="panel" id="p-eyrie" role="tabpanel" style="--c:var(--eyrie)">
+  <div class="hero">
+    <div class="ht"><h2>Dinastías de las Águilas</h2><em>Eyrie Dynasties · letra B</em></div>
+    <p>El ejército más fuerte del juego, atado a su propia burocracia. Puntúa <strong>cada Evening</strong> según cuántos nidos tenga en el mapa. Pero cada turno <strong>añade cartas al Decreto</strong> y tiene que cumplirlo entero: el día que no pueda, cae en <strong>Tumulto</strong> y pierde puntos.</p>
+    <div class="meta">
+      <span class="pill b">Alcance 7</span>
+      <span class="pill">20 guerreros</span>
+      <span class="pill">7 nidos</span>
+      <span class="pill">4 líderes</span>
+      <span class="pill">Fabrica con nidos</span>
+    </div>
+  </div>
+
+  <h3>Habilidades</h3>
+  <div class="grid g2">
+    <div class="card"><h4>Señores del Bosque</h4><p style="margin:0">Gobiernan un claro <strong>incluso empatando</strong> en guerreros + edificios. Pero <strong>no gobiernan claros vacíos</strong>. Es la única facción que gana los empates… y el Culto se la salta: donde el Culto tiene un jardín, gobierna el Culto.</p></div>
+    <div class="card"><h4>Desdén por el Comercio</h4><p style="margin:0">Cuando fabrican un <strong>objeto</strong>, ignoran los puntos de la carta y anotan <strong>solo 1</strong>. Los efectos inmediatos y persistentes les funcionan normal: son malas vendiendo, no fabricando.</p></div>
+    <div class="card"><h4>Fabricar</h4><p style="margin:0">Fabrican en el Daylight <strong>antes</strong> de resolver el Decreto, activando <strong>nidos</strong>.</p></div>
+  </div>
+
+  <h3>El Decreto</h3>
+  <p>Cuatro columnas. Cada carta que metes es una acción que <strong>tendrás que cumplir todos los turnos a partir de ahora</strong>, y el palo de la carta dice <strong>dónde</strong>.</p>
+  <div class="boxes" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+    <div class="bx" style="border-left:3px solid var(--cat)"><b>I · Reclutar</b><span>1 guerrero en un claro <strong>con nido</strong> del palo de la carta</span></div>
+    <div class="bx" style="border-left:3px solid var(--rabbit)"><b>II · Mover</b><span>Mueve al menos 1 guerrero <strong>desde</strong> un claro del palo</span></div>
+    <div class="bx" style="border-left:3px solid var(--bad)"><b>III · Batallar</b><span>Inicia combate en un claro del palo</span></div>
+    <div class="bx" style="border-left:3px solid var(--alliance)"><b>IV · Construir</b><span>1 nido en un claro del palo que <strong>gobiernes</strong> y <strong>sin nido</strong></span></div>
+  </div>
+  <div class="note warn"><h4>Tres trampas del Decreto</h4>
+    <ul style="margin:0 0 0 1.1em">
+      <li>Las columnas se resuelven <strong>de izquierda a derecha</strong>. Dentro de una columna, las cartas en el orden que quieras.</li>
+      <li>Una <strong>carta de pájaro</strong> es comodín: sirve para cualquier palo. Por eso un pájaro en el Decreto es flexible… y por eso Tumulto te cuesta un punto por cada pájaro que haya ahí.</li>
+      <li>Reclutar exige <strong>nido del palo correcto</strong>. Construir exige claro <strong>sin nido</strong> del palo correcto. Son las dos que más Tumultos provocan.</li>
+    </ul></div>
+
+  <h3>Tumulto</h3>
+  <p>Si no puedes cumplir una acción del Decreto —por cualquier motivo—, cae el Tumulto <strong>inmediatamente</strong>:</p>
+  <ol class="steps" style="list-style:none">
+    <li><span class="n">1</span><div><b>Humillar.</b> Pierde <strong>1 punto por cada carta de pájaro</strong> del Decreto, incluidos los Visires Leales.</div></li>
+    <li><span class="n">2</span><div><b>Purgar.</b> Descarta todo el Decreto <strong>menos los Visires Leales</strong>.</div></li>
+    <li><span class="n">3</span><div><b>Deponer.</b> Gira tu líder boca abajo y apártalo. Elige un líder nuevo de los que siguen boca arriba y mete los Visires en las columnas que diga. <em>Si no queda ninguno boca arriba, gíralos todos y vuelve a elegir.</em></div></li>
+    <li><span class="n">4</span><div><b>Descansar.</b> Termina el Daylight y pasa al Evening — <strong>sí puntúas tus nidos</strong> ese turno.</div></li>
   </ol>
 
-  <table>
-    <tr><th>Objeto</th><th>Cantidad</th></tr>
-    <tr><td>👢 Botas</td><td>2</td></tr>
-    <tr><td>🎒 Bolsas</td><td>2</td></tr>
-    <tr><td>💰 Monedas</td><td>1</td></tr>
-    <tr><td>🔨 Martillos</td><td>1</td></tr>
-    <tr><td>⚔️ Espadas</td><td>2</td></tr>
-    <tr><td>🔦 Antorchas</td><td>2</td></tr>
-    <tr><td>🏹 Arcos</td><td>2</td></tr>
-  </table>
+  <h3>Los cuatro líderes</h3>
+  <div class="grid g2">
+    <div class="card"><h4>Constructor</h4><p style="margin:0">Visires en <strong>Reclutar + Mover</strong>. Al fabricar <strong>ignora el Desdén por el Comercio</strong>: cobra los puntos completos de la carta.</p></div>
+    <div class="card"><h4>Carismático</h4><p style="margin:0">Visires en <strong>Reclutar + Batallar</strong>. Cada Reclutar coloca <strong>dos</strong> guerreros en vez de uno.</p></div>
+    <div class="card"><h4>Comandante</h4><p style="margin:0">Visires en <strong>Mover + Batallar</strong>. Como atacante inflige <strong>un golpe extra</strong>.</p></div>
+    <div class="card"><h4>Despótico</h4><p style="margin:0">Visires en <strong>Mover + Construir</strong>. Cada vez que retira <strong>al menos un</strong> edificio o token enemigo en combate, gana <strong>1 punto extra</strong>.</p></div>
+  </div>
 
-  <ol start="6">
-    <li><strong>Baraja el mazo</strong> y reparte <strong>3 cartas</strong> a cada jugador</li>
-    <li><strong>Setup de cada facción</strong> en este orden:</li>
+  <h3>El turno</h3>
+  <div class="phase ph-dawn"><div class="ph-h"><b>Birdsong</b><span class="mut">3 pasos, en orden</span></div>
+    <div class="ph-body"><ol class="steps" style="list-style:none">
+      <li><span class="n">1</span><div><b>Órdenes de emergencia.</b> Si no tienes <strong>ninguna</strong> carta en mano, roba una.</div></li>
+      <li><span class="n">2</span><div><b>Añade al Decreto.</b> <strong>Obligatorio: una o dos cartas</strong>, y <strong>como máximo una puede ser pájaro</strong>. A cualquier columna; una columna aguanta todas las cartas que quieras.</div></li>
+      <li><span class="n">3</span><div><b>Nuevo nido.</b> Si no tienes nidos en el mapa, coloca 1 nido y 3 guerreros en el claro con <strong>menos guerreros</strong>.</div></li>
+    </ol></div></div>
+
+  <div class="phase ph-day"><div class="ph-h"><b>Daylight</b><span class="mut">fabricar, luego el Decreto</span></div>
+    <div class="ph-body"><p style="margin:0"><strong>1.</strong> Fabrica activando nidos. <strong>2.</strong> Resuelve el Decreto entero, columna a columna de izquierda a derecha. Si algo no se puede cumplir del todo → Tumulto.</p></div></div>
+
+  <div class="phase ph-eve"><div class="ph-h"><b>Evening</b><span class="mut">aquí es donde puntúa</span></div>
+    <div class="ph-body">
+      <p><strong>1. Puntúa:</strong> los puntos del <strong>espacio vacío de más a la derecha</strong> de tu track de nidos. Cuantos más nidos en el mapa, más track descubierto, más puntos cada turno.</p>
+      <div class="trk">
+        <div class="cellcol"><span class="lbl">1.º</span><div class="cell pc">vacío</div></div>
+        <div class="cellcol"><span class="lbl">2.º</span><div class="cell">🪺</div></div>
+        <div class="cellcol"><span class="lbl">3.º</span><div class="cell">🪺</div></div>
+        <div class="cellcol"><span class="lbl">4.º</span><div class="cell">🪺</div></div>
+        <div class="cellcol"><span class="lbl">5.º</span><div class="cell">🪺</div></div>
+        <div class="cellcol"><span class="lbl">6.º</span><div class="cell">🪺</div></div>
+        <div class="cellcol"><span class="lbl">7.º</span><div class="cell">🪺</div></div>
+      </div>
+      <p class="trk-legend">7 espacios; en el montaje se llenan los 6 de la derecha. <strong>Los valores están impresos en tu tablero.</strong></p>
+      <p style="margin:0"><strong>2. Roba y descarta:</strong> 1 carta + 1 por bonus de robo descubierto. Descarta hasta 5.</p>
+    </div></div>
+
+  <h3>Montaje</h3>
+  <ol class="steps" style="list-style:none">
+    <li><span class="n">1</span><div>Reserva de <b>20 guerreros</b>.</div></li>
+    <li><span class="n">2</span><div><b>1 nido y 6 guerreros</b> en el claro de esquina <strong>diagonalmente opuesto</strong> al de la fortaleza de la Marquesa. <em>Si la Marquesa no juega, la esquina que quieras.</em></div></li>
+    <li><span class="n">3</span><div>Elige <b>1 de los 4 líderes</b>; los otros tres boca arriba a tu lado.</div></li>
+    <li><span class="n">4</span><div>Mete tus <b>2 Visires Leales</b> en las columnas que diga el líder, mostrando el palo.</div></li>
+    <li><span class="n">5</span><div>Los <b>6 nidos restantes</b> al track, llenando todo menos el espacio de la izquierda.</div></li>
   </ol>
 
-  <div class="turn-order">
-    <span class="turn-step" style="color:#e8834a">🐱 Marquise</span>
-    <span class="arrow">→</span>
-    <span class="turn-step" style="color:#6aabdc">🦅 Eyrie</span>
-    <span class="arrow">→</span>
-    <span class="turn-step" style="color:#6dc46d">🌿 Alliance</span>
-    <span class="arrow">→</span>
-    <span class="turn-step" style="color:#b088d8">🦝 Vagabond</span>
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card" style="border-left:3px solid var(--ok)"><h4>Cómo gana</h4><p style="margin:0">Llegando rápido a 4–5 nidos y manteniéndolos: a partir de ahí puntúa solo, cada turno, sin hacer nada. Su combate es brutal porque puede mover pilas enormes.</p></div>
+    <div class="card" style="border-left:3px solid var(--bad)"><h4>Cómo se le frena</h4><p style="margin:0"><strong>Destrúyele nidos.</strong> Le bajas el track, le das puntos a ti y, mejor aún, le puedes dejar sin claros válidos para las órdenes de Reclutar y Construir → Tumulto. Un Decreto largo es una bomba: cada pájaro que haya metido es un punto que pierde.</p></div>
   </div>
+</section>
 
-  <hr>
-
-  <div class="faction-setup cat">
-    <h3>🐱 Marquise de Cat — Setup</h3>
-    <ol>
-      <li>Toma <strong>25 guerreros</strong> y <strong>8 tokens de madera</strong> como reserva</li>
-      <li>Elige una esquina del mapa → coloca el <strong>Keep</strong> ahí</li>
-      <li>Coloca <strong>1 guerrero en cada claro del mapa</strong> excepto la esquina diagonalmente opuesta al Keep</li>
-      <li>Coloca <strong>1 aserradero + 1 taller + 1 reclutador</strong> entre el claro del Keep y sus claros adyacentes</li>
-      <li>Los edificios restantes (5 de cada tipo) van en tu tablero de derecha a izquierda</li>
-    </ol>
-    <div class="box tip">
-      <p>La Marquise empieza con presencia en <strong>casi todos los claros</strong> — es la facción más extendida desde el inicio.</p>
+<!-- ============================================================ ALIANZA -->
+<section class="panel" id="p-alliance" role="tabpanel" style="--c:var(--alliance)">
+  <div class="hero">
+    <div class="ht"><h2>Alianza del Bosque</h2><em>Woodland Alliance · letra C</em></div>
+    <p>Empieza <strong>sin nada en el mapa</strong> y gana haciéndose imprescindible. Puntúa cada vez que coloca un <strong>token de simpatía</strong>, y cuanta más simpatía tiene, más vale la siguiente. Su recurso son los <strong>partidarios</strong>, y los partidarios se los regalan sus enemigos cada vez que la pisan.</p>
+    <div class="meta">
+      <span class="pill b">Alcance 3</span>
+      <span class="pill">10 guerreros</span>
+      <span class="pill">10 simpatías</span>
+      <span class="pill">3 bases</span>
+      <span class="pill">Fabrica con simpatías</span>
     </div>
   </div>
 
-  <div class="faction-setup eyrie">
-    <h3>🦅 Eyrie Dynasties — Setup</h3>
-    <ol>
-      <li>Toma <strong>20 guerreros</strong> como reserva</li>
-      <li>Coloca <strong>1 posadero + 6 guerreros</strong> en la esquina diagonalmente opuesta al Keep de la Marquise</li>
-      <li>Elige <strong>1 líder</strong> y colócalo en tu tablero. Los otros 3 quedan boca arriba cerca de ti</li>
-      <li>Coloca los <strong>2 Vizires Leales</strong> en el Decreto según tu líder:</li>
-    </ol>
-    <table>
-      <tr><th>Líder</th><th>Vizir 1</th><th>Vizir 2</th><th>Habilidad</th></tr>
-      <tr><td>Constructor</td><td>Reclutar</td><td>Mover</td><td>Ignora Desdén al fabricar</td></tr>
-      <tr><td>Carismático</td><td>Reclutar</td><td>Batallar</td><td>Recluta 2 guerreros en vez de 1</td></tr>
-      <tr><td>Comandante</td><td>Mover</td><td>Batallar</td><td>+1 hit al atacar</td></tr>
-      <tr><td>Déspota</td><td>Mover</td><td>Construir</td><td>+1VP por edificio/token destruido en batalla</td></tr>
-    </table>
-    <ol start="5">
-      <li>Los 6 posaderos restantes van en tu tablero de derecha a izquierda</li>
-    </ol>
+  <h3>Habilidades</h3>
+  <div class="grid g2">
+    <div class="card" style="border-left:3px solid var(--bad)"><h4>Guerra de Guerrillas</h4><p style="margin:0">Cuando la Alianza <strong>defiende</strong>, los dados se leen al revés: <strong>ella</strong> inflige los golpes del <strong>dado alto</strong> y el <strong>atacante</strong> los del <strong>bajo</strong>. Atacarla de frente es casi siempre mal negocio.</p></div>
+    <div class="card" style="border-left:3px solid var(--gold)"><h4>Indignación</h4><p style="margin:0">Si otro jugador <strong>retira un token de simpatía</strong> o <strong>mueve guerreros hacia un claro simpático</strong>, tiene que darle una carta de su mano del palo de ese claro. Si no tiene ninguna (<strong>ni pájaros</strong>), le <strong>enseña la mano</strong> y la Alianza roba una del mazo. Atacarla la alimenta.</p></div>
+    <div class="card"><h4>Fabricar</h4><p style="margin:0">Fabrica en el <strong>Daylight</strong> activando <strong>tokens de simpatía</strong>. Los tokens no ocupan hueco de edificio ni gobiernan nada, pero sirven de pieza de fabricación.</p></div>
   </div>
 
-  <div class="faction-setup alliance">
-    <h3>🌿 Woodland Alliance — Setup</h3>
-    <ol>
-      <li>Toma <strong>10 guerreros</strong>, guárdalos en tu tablero</li>
-      <li>Coloca tus <strong>3 bases</strong> (🦊🐰🐭) en los espacios correspondientes de tu tablero</li>
-      <li>Coloca tus <strong>10 tokens de simpatía</strong> en el track de simpatía</li>
-      <li>Roba <strong>3 cartas</strong> y ponlas boca abajo como Supporters iniciales</li>
-    </ol>
-    <div class="box tip">
-      <p>La Alliance empieza con <strong>nada en el mapa</strong> — es invisible al inicio pero crece desde las sombras.</p>
+  <h3>El montón de Partidarios</h3>
+  <p>Son cartas boca abajo, al lado del tablero. <strong>No cuentan para el límite de 5 cartas en mano</strong> y solo se gastan <strong>por su palo</strong>. Puedes mirarlas cuando quieras.</p>
+  <div class="boxes">
+    <div class="bx" style="border-left:3px solid var(--bad)"><b>Sin bases</b><span>Capacidad <strong>máxima 5</strong>. Lo que entre de más, <strong>se descarta</strong>.</span></div>
+    <div class="bx" style="border-left:3px solid var(--ok)"><b>Con 1+ base</b><span>Capacidad <strong>ilimitada</strong>.</span></div>
+  </div>
+  <div class="note warn"><h4>Si le destruyen una base</h4>
+    <ul style="margin:0 0 0 1.1em">
+      <li>Descarta <strong>todos</strong> los partidarios de ese palo <strong>y todos los pájaros</strong>.</li>
+      <li>Retira <strong>la mitad de sus oficiales, redondeando hacia arriba</strong>.</li>
+      <li>Si era la última base y le quedan más de 5 partidarios, descarta hasta 5.</li>
+    </ul></div>
+
+  <h3>El track de simpatía</h3>
+  <p>10 tokens. Cada token que colocas descubre un espacio y anotas <strong>los puntos de ese espacio</strong>. Encima de cada token está impreso <strong>cuántos partidarios cuesta colocarlo</strong>: el precio sube a medida que te expandes.</p>
+  <div class="trk">
+    <div class="cellcol"><span class="lbl">1</span><div class="cell">🟢</div></div>
+    <div class="cellcol"><span class="lbl">2</span><div class="cell">🟢</div></div>
+    <div class="cellcol"><span class="lbl">3</span><div class="cell">🟢</div></div>
+    <div class="cellcol"><span class="lbl">4</span><div class="cell">🟢</div></div>
+    <div class="cellcol"><span class="lbl">5</span><div class="cell">🟢</div></div>
+    <div class="cellcol"><span class="lbl">6</span><div class="cell">🟢</div></div>
+    <div class="cellcol"><span class="lbl">7</span><div class="cell">🟢</div></div>
+    <div class="cellcol"><span class="lbl">8</span><div class="cell">🟢</div></div>
+    <div class="cellcol"><span class="lbl">9</span><div class="cell">🟢</div></div>
+    <div class="cellcol"><span class="lbl">10</span><div class="cell">🟢</div></div>
+  </div>
+  <p class="trk-legend"><strong>Coste y puntos están impresos en tu tablero</strong>: el coste <em>encima</em> del token, los puntos <em>debajo</em>. Lee siempre el espacio que acabas de descubrir.</p>
+  <div class="note"><h4>Ley Marcial</h4><p>Si el claro al que quieres llevar simpatía tiene <strong>3 o más guerreros de otro jugador</strong>, pagas <strong>un partidario más</strong> del mismo palo. Llenar un claro de tropa es cómo se le encarece la expansión.</p></div>
+
+  <h3>El turno</h3>
+  <div class="phase ph-dawn"><div class="ph-h"><b>Birdsong</b><span class="mut">las dos, tantas veces como quieras</span></div>
+    <div class="ph-body">
+      <div class="act"><div class="ai">⚡</div><div class="ab"><b>Revuelta</b><span>En un claro <strong>simpático</strong> cuyo palo tenga una <strong>base aún sin construir</strong>: gasta <strong>2 partidarios de ese palo</strong> → retira <strong>todas</strong> las piezas enemigas del claro (1 punto por cada edificio o token), coloca ahí la base de ese palo, coloca <strong>tantos guerreros como claros simpáticos de ese palo haya en el mapa</strong>, y pon <strong>1 guerrero en la caja de Oficiales</strong>.</span></div><span class="cost">2 partidarios</span></div>
+      <div class="act"><div class="ai">🟢</div><div class="ab"><b>Extender Simpatía</b><span>Elige un claro <strong>sin simpatía adyacente a uno simpático</strong> — si no tienes ninguna simpatía en el mapa, cualquier claro. Paga los partidarios del palo del claro que indique el track (+1 por Ley Marcial), coloca el token y anota los puntos descubiertos.</span></div><span class="cost">según track</span></div>
+    </div></div>
+
+  <div class="phase ph-day"><div class="ph-h"><b>Daylight</b><span class="mut">solo tres acciones, sin límite de veces</span></div>
+    <div class="ph-body">
+      <div class="act"><div class="ai">🔨</div><div class="ab"><b>Fabricar</b><span>Activa tokens de simpatía.</span></div></div>
+      <div class="act"><div class="ai">📥</div><div class="ab"><b>Movilizar</b><span>Pasa una carta de tu mano al montón de partidarios.</span></div></div>
+      <div class="act"><div class="ai">🎖️</div><div class="ab"><b>Entrenar</b><span>Gasta una carta del palo de una <strong>base construida</strong> → 1 guerrero a la caja de Oficiales.</span></div><span class="cost">1 carta</span></div>
+      <div class="note warn" style="margin-bottom:0"><p><strong>Ojo:</strong> en el Daylight la Alianza <strong>no mueve, no batalla, no recluta y no organiza</strong>. Todo eso es Evening, y solo con oficiales.</p></div>
+    </div></div>
+
+  <div class="phase ph-eve"><div class="ph-h"><b>Evening</b><span class="mut">operaciones militares + ingresos</span></div>
+    <div class="ph-body">
+      <p><strong>Operaciones militares:</strong> tantas acciones como <strong>oficiales</strong> tengas, en cualquier orden y combinación (puedes repetir la misma):</p>
+      <div class="act"><div class="ai">🥾</div><div class="ab"><b>Mover</b><span>Un movimiento.</span></div></div>
+      <div class="act"><div class="ai">⚔️</div><div class="ab"><b>Batallar</b><span>Inicia un combate.</span></div></div>
+      <div class="act"><div class="ai">🪖</div><div class="ab"><b>Reclutar</b><span>1 guerrero en cualquier claro <strong>con base</strong>.</span></div></div>
+      <div class="act"><div class="ai">🟢</div><div class="ab"><b>Organizar</b><span>Retira <strong>uno de tus guerreros</strong> de un claro <strong>sin</strong> simpatía, coloca ahí un token de simpatía y anota los puntos descubiertos. <strong>Gratis: no cuesta partidarios.</strong></span></div></div>
+      <p style="margin:12px 0 0"><strong>Ingresos:</strong> roba 1 carta + 1 por bonus de robo descubierto. Descarta hasta 5.</p>
+    </div></div>
+
+  <h3>Montaje</h3>
+  <ol class="steps" style="list-style:none">
+    <li><span class="n">1</span><div>Reserva de <b>10 guerreros</b>. <em>No colocas nada en el mapa.</em></div></li>
+    <li><span class="n">2</span><div>Las <b>3 bases</b> en sus espacios del tablero.</div></li>
+    <li><span class="n">3</span><div>Los <b>10 tokens de simpatía</b> en el track.</div></li>
+    <li><span class="n">4</span><div><b>Roba 3 cartas</b> y ponlas boca abajo como partidarios iniciales.</div></li>
+  </ol>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card" style="border-left:3px solid var(--ok)"><h4>Cómo gana</h4><p style="margin:0">Extendiendo simpatía sin parar: el track es casi todos sus puntos. La primera base lo cambia todo —partidarios ilimitados y oficiales—, y con oficiales el Evening se convierte en un turno entero. Organizar es su mejor acción: convierte tropa en puntos gratis.</p></div>
+    <div class="card" style="border-left:3px solid var(--bad)"><h4>Cómo se le frena</h4><p style="margin:0"><strong>Pronto o nunca.</strong> Mátala en los primeros turnos, antes de la primera base, cuando solo aguanta 5 partidarios y no tiene oficiales. Tirarle una base es devastador. Pero cada vez que entras en un claro suyo le das una carta: ataca con intención, no de paso.</p></div>
+  </div>
+</section>
+
+<!-- ============================================================ VAGABUNDO -->
+<section class="panel" id="p-vagabond" role="tabpanel" style="--c:var(--vaga)">
+  <div class="hero">
+    <div class="ht"><h2>El Vagabundo</h2><em>Vagabond · se monta último</em></div>
+    <p>No tiene guerreros, ni territorio, ni ejército: tiene <strong>objetos</strong> y <strong>relaciones</strong>. Juega a dos bandas, se mueve por donde quiere y puntúa <strong>ayudando</strong> a los demás, <strong>explorando ruinas</strong> y <strong>cumpliendo misiones</strong>. Un peón, y nadie lo puede sacar del mapa.</p>
+    <div class="meta">
+      <span class="pill b">Alcance 5 <small>(2.º: 2)</small></span>
+      <span class="pill">1 peón</span>
+      <span class="pill">Sin guerreros</span>
+      <span class="pill">Fabrica con martillos</span>
     </div>
   </div>
 
-  <div class="faction-setup vagabond">
-    <h3>🦝 Vagabond — Setup</h3>
-    <ol>
-      <li>Elige un <strong>personaje</strong> y coloca su carta en tu tablero</li>
-      <li>Coloca tu <strong>peón en cualquier bosque</strong> del mapa</li>
-      <li>Baraja el mazo de misiones, roba <strong>3 cartas de misión</strong> boca arriba</li>
-      <li>Coloca objetos ocultos debajo de las 4 ruinas (ya colocadas en pasos generales)</li>
-      <li>Toma los <strong>objetos iniciales</strong> indicados en tu carta de personaje</li>
-      <li>Coloca todos los <strong>marcadores de relación</strong> en "Indiferente"</li>
-    </ol>
+  <h3>Habilidades</h3>
+  <div class="grid g2">
+    <div class="card"><h4>Caminante Solitario</h4><p style="margin:0">El peón <strong>no es un guerrero</strong>: no gobierna, no impide gobernar a otro, y <strong>no se puede retirar del mapa</strong>. Puede estar en claros <em>y</em> en bosques.</p></div>
+    <div class="card"><h4>Ágil</h4><p style="margin:0">Se mueve <strong>sin importar quién gobierne</strong> el origen o el destino. Es el único que ignora esa regla.</p></div>
+    <div class="card"><h4>Indefenso</h4><p style="margin:0">En combate está indefenso si <strong>no tiene ninguna espada sana</strong> — el atacante le inflige un golpe extra.</p></div>
+    <div class="card"><h4>Golpes y daños</h4><p style="margin:0">Su <strong>máximo de golpes por dados</strong> es el número de <strong>espadas sanas</strong> en su morral (boca arriba o boca abajo). Cada golpe que recibe <strong>daña un objeto sano</strong>. Si no le queda ninguno sano, <strong>ignora el resto de golpes</strong>.</p></div>
   </div>
 
-  <hr>
-
-  <h3>Combinaciones de Facciones Recomendadas</h3>
-  <table>
-    <tr><th>Jugadores</th><th>Facciones</th></tr>
-    <tr><td>2 jugadores</td><td>🐱 Marquise + 🦅 Eyrie <em>(sin Dominancia)</em></td></tr>
-    <tr><td>3 jugadores</td><td>🐱 Marquise + 🦅 Eyrie + 🌿 Alliance</td></tr>
-    <tr><td>4 jugadores</td><td>🐱 Marquise + 🦅 Eyrie + 🌿 Alliance + 🦝 Vagabond</td></tr>
-  </table>
-</div>
-
-<!-- ===================== MARQUISE ===================== -->
-<div id="cat" class="tab-content cat">
-  <h2>🐱 Marquise de Cat</h2>
-  <p>Los gatos ocupan el bosque y quieren convertirlo en una potencia industrial y militar. Ganan puntos <strong>construyendo edificios</strong> y necesitan mantener una economía de madera sólida para expandirse.</p>
-
-  <h3>Habilidades Especiales</h3>
-  <div class="box">
-    <h4>🏰 El Keep</h4>
-    <p>Solo la Marquise puede <strong>colocar piezas</strong> en el claro con el Keep. Otras facciones pueden mover guerreros ahí para atacar pero no pueden construir. Si el Keep es destruido, se retira del juego permanentemente.</p>
+  <h3>Los objetos</h3>
+  <p>Cada acción se paga <strong>agotando</strong> (girando boca abajo) el objeto que la permite. Pueden estar <strong>boca arriba</strong>, <strong>boca abajo</strong> (agotado) o <strong>dañado</strong>.</p>
+  <div class="grid g4">
+    <div class="card" style="text-align:center"><svg class="ico" style="width:1.9em;height:1.9em;color:var(--ink)"><use href="#i-boot"/></svg><h4 style="margin:7px 0 3px">Bota</h4><p style="margin:0;font-size:.85rem">Mover</p></div>
+    <div class="card" style="text-align:center"><svg class="ico" style="width:1.9em;height:1.9em;color:var(--bad)"><use href="#i-sword"/></svg><h4 style="margin:7px 0 3px">Espada</h4><p style="margin:0;font-size:.85rem">Batallar · fija su tope de golpes</p></div>
+    <div class="card" style="text-align:center"><svg class="ico" style="width:1.9em;height:1.9em;color:var(--ink)"><use href="#i-crossbow"/></svg><h4 style="margin:7px 0 3px">Ballesta</h4><p style="margin:0;font-size:.85rem">Golpear</p></div>
+    <div class="card" style="text-align:center"><svg class="ico" style="width:1.9em;height:1.9em;color:var(--gold)"><use href="#i-hammer"/></svg><h4 style="margin:7px 0 3px">Martillo</h4><p style="margin:0;font-size:.85rem">Reparar · fabricar</p></div>
+    <div class="card" style="text-align:center"><svg class="ico" style="width:1.9em;height:1.9em;color:var(--fox)"><use href="#i-torch"/></svg><h4 style="margin:7px 0 3px">Antorcha</h4><p style="margin:0;font-size:.85rem">Explorar · acción especial</p></div>
+    <div class="card" style="text-align:center;border-color:rgba(226,180,92,.4)"><svg class="ico" style="width:1.9em;height:1.9em;color:var(--rabbit)"><use href="#i-tea"/></svg><h4 style="margin:7px 0 3px">Tetera</h4><p style="margin:0;font-size:.85rem"><strong>Track.</strong> +2 objetos refrescados cada Birdsong</p></div>
+    <div class="card" style="text-align:center;border-color:rgba(226,180,92,.4)"><svg class="ico" style="width:1.9em;height:1.9em;color:var(--gold)"><use href="#i-coin"/></svg><h4 style="margin:7px 0 3px">Moneda</h4><p style="margin:0;font-size:.85rem"><strong>Track.</strong> +1 carta cada Evening</p></div>
+    <div class="card" style="text-align:center;border-color:rgba(226,180,92,.4)"><svg class="ico" style="width:1.9em;height:1.9em;color:var(--mouse)"><use href="#i-bag"/></svg><h4 style="margin:7px 0 3px">Bolsa</h4><p style="margin:0;font-size:.85rem"><strong>Track.</strong> +2 de límite de objetos</p></div>
   </div>
-  <div class="box">
-    <h4>🏥 Hospitales de Campo</h4>
-    <p>Cuando te eliminan guerreros en cualquier claro, puedes gastar <strong>1 carta del palo de ese claro</strong> para recuperarlos todos y colocarlos en el claro del Keep. Solo cuesta 1 carta sin importar cuántos guerreros recuperas.</p>
-  </div>
-  <div class="box warning">
-    <h4>🛡️ Indefenso (regla general)</h4>
-    <p>Si el defensor no tiene guerreros en el claro atacado, el atacante hace <strong>1 hit extra</strong> automático. Aplica a todas las facciones.</p>
-  </div>
-
-  <hr>
-
-  <h3>Estructura del Turno</h3>
-
-  <div class="phase birdsong">
-    <div class="phase-title">🌅 Birdsong</div>
-    <p>Coloca <strong>1 token de madera</strong> en cada claro que tenga un aserradero (1 por aserradero).</p>
-  </div>
-
-  <div class="phase daylight">
-    <div class="phase-title">☀️ Daylight</div>
-    <p><strong>Primero (opcional):</strong> Fabrica cartas usando talleres activos.</p>
-    <p><strong>Luego:</strong> Toma hasta <strong>3 acciones</strong>. Puedes gastar una carta 🐦 pájaro para obtener +1 acción extra.</p>
-    <table>
-      <tr><th>Acción</th><th>Descripción</th></tr>
-      <tr><td>⚔️ Batallar</td><td>Inicia una batalla en un claro donde tengas guerreros</td></tr>
-      <tr><td>🚶 Marchar</td><td>Realiza hasta 2 movimientos (mover guerreros por senderos)</td></tr>
-      <tr><td>🪖 Reclutar</td><td>Coloca 1 guerrero en cada claro con reclutador. Solo una vez por turno</td></tr>
-      <tr><td>🏗️ Construir</td><td>Construye 1 edificio en un claro que gobiernes pagando madera</td></tr>
-      <tr><td>🪵 Trabajar Extra</td><td>Gasta una carta del palo de un claro con aserradero → coloca 1 madera ahí</td></tr>
-    </table>
-    <div class="box tip">
-      <h4>🏗️ Cómo construir</h4>
-      <ol>
-        <li>Elige el tipo de edificio y mira su costo en el tablero</li>
-        <li>Elige un claro que gobiernes con slot vacío</li>
-        <li>Retira madera del claro o de claros adyacentes que también gobernar</li>
-        <li>Coloca el edificio y anota los puntos del espacio descubierto</li>
-      </ol>
-    </div>
-  </div>
-
-  <div class="phase evening">
-    <div class="phase-title">🌙 Evening</div>
-    <ol>
-      <li>Roba <strong>1 carta</strong> + 1 por cada bonus de robo descubierto en tu tablero</li>
-      <li>Descarta hasta tener máximo <strong>5 cartas</strong></li>
-    </ol>
-  </div>
-
-  <hr>
-
-  <h3>Los 3 Edificios</h3>
-  <table>
-    <tr><th>Edificio</th><th>Función</th></tr>
-    <tr><td>🪵 Aserradero</td><td>Produce 1 madera por Birdsong</td></tr>
-    <tr><td>🔨 Taller</td><td>Permite fabricar cartas en el Daylight</td></tr>
-    <tr><td>🪖 Reclutador</td><td>Da 1 guerrero al Reclutar</td></tr>
-  </table>
-
-  <h3>Puntos de Victoria</h3>
-  <table>
-    <tr><th>Acción</th><th>Puntos</th></tr>
-    <tr><td>Construir un edificio</td><td>Los indicados en el tablero (sube con cada edificio)</td></tr>
-    <tr><td>Destruir edificio/token enemigo</td><td>1 punto por pieza</td></tr>
-  </table>
-</div>
-
-<!-- ===================== EYRIE ===================== -->
-<div id="eyrie" class="tab-content eyrie">
-  <h2>🦅 Eyrie Dynasties</h2>
-  <p>Las águilas quieren recuperar su gloria en el bosque. Son el ejército más poderoso del juego pero están atados por su <strong>Decreto</strong> — una lista de acciones obligatorias que crece cada turno.</p>
-
-  <h3>Habilidades Especiales</h3>
-  <div class="box">
-    <h4>👑 Señores del Bosque</h4>
-    <p>La Eyrie <strong>gobierna un claro en empate</strong> — cuando hay igual número de guerreros+edificios que el oponente. Las demás facciones no gobiernan en empate.</p>
-  </div>
-  <div class="box warning">
-    <h4>📉 Desdén por el Comercio</h4>
-    <p>Cuando la Eyrie fabrica un objeto, ignora los puntos indicados y solo gana <strong>1 punto</strong>. Son malos fabricando — su fuerza está en el combate.</p>
-  </div>
-
-  <hr>
-
-  <h3>El Decreto 📜</h3>
-  <p>El Decreto tiene 4 columnas. Cada turno añades cartas y debes cumplir <strong>todas</strong> las acciones acumuladas.</p>
-
-  <table>
-    <tr><th>Columna 1</th><th>Columna 2</th><th>Columna 3</th><th>Columna 4</th></tr>
-    <tr><td>Reclutar</td><td>Mover</td><td>Batallar</td><td>Construir</td></tr>
-  </table>
-
-  <div class="box">
-    <p>El <strong>palo de cada carta</strong> en el Decreto determina dónde debes ejecutar esa acción. El 🐦 pájaro es comodín — vale para cualquier claro.</p>
-  </div>
-
-  <div class="box warning">
-    <h4>⚠️ Los Vizires Leales</h4>
-    <p>Son 2 cartas pájaro especiales que <strong>nunca abandonan el Decreto</strong>. Permanecen incluso después de una Caída. Son la deuda mínima permanente de la Eyrie.</p>
-  </div>
-
-  <hr>
-
-  <h3>Estructura del Turno</h3>
-
-  <div class="phase birdsong">
-    <div class="phase-title">🌅 Birdsong</div>
-    <ol>
-      <li><strong>Órdenes de Emergencia:</strong> Si no tienes cartas en mano, roba 1</li>
-      <li><strong>Añadir al Decreto:</strong> Debes añadir 1 o 2 cartas de tu mano. Máximo 1 puede ser 🐦 pájaro</li>
-      <li><strong>Nuevo Posadero:</strong> Si no tienes posaderos en el mapa, coloca 1 posadero + 3 guerreros en el claro con menos guerreros</li>
-    </ol>
-  </div>
-
-  <div class="phase daylight">
-    <div class="phase-title">☀️ Daylight</div>
-    <ol>
-      <li><strong>Fabricar (opcional):</strong> Activa posaderos para fabricar cartas</li>
-      <li><strong>Resolver el Decreto (obligatorio):</strong> Ejecuta todas las acciones de izquierda a derecha</li>
-    </ol>
-    <table>
-      <tr><th>Columna</th><th>Acción</th><th>Dónde</th></tr>
-      <tr><td>Reclutar</td><td>Coloca 1 guerrero en un claro con posadero</td><td>Palo de la carta</td></tr>
-      <tr><td>Mover</td><td>Mueve al menos 1 guerrero</td><td>Desde claro del palo de la carta</td></tr>
-      <tr><td>Batallar</td><td>Inicia una batalla</td><td>En claro del palo de la carta</td></tr>
-      <tr><td>Construir</td><td>Coloca 1 posadero en claro que gobiernes sin posadero</td><td>Palo de la carta</td></tr>
-    </table>
-    <div class="box warning">
-      <p>Si <strong>no puedes cumplir</strong> cualquier acción del Decreto → <strong>La Caída</strong> inmediata.</p>
-    </div>
-  </div>
-
-  <div class="phase evening">
-    <div class="phase-title">🌙 Evening</div>
-    <ol>
-      <li><strong>Anotar puntos:</strong> Anota los puntos del espacio más a la derecha descubierto en tu track de posaderos</li>
-      <li><strong>Robar y descartar:</strong> Roba 1 carta + bonus. Descarta hasta máx. 5</li>
-    </ol>
-  </div>
-
-  <hr>
-
-  <h3>⚡ La Caída (Turmoil)</h3>
-  <p>Ocurre cuando no puedes cumplir alguna acción del Decreto.</p>
-
-  <div class="box warning">
-    <ol>
-      <li><strong>Humillación:</strong> Pierde 1VP por cada carta 🐦 pájaro en el Decreto (incluyendo Vizires)</li>
-      <li><strong>Purga:</strong> Descarta todas las cartas del Decreto excepto los 2 Vizires Leales</li>
-      <li><strong>Destronamiento:</strong> Tu líder cae. Elige uno nuevo. Coloca los Vizires según el nuevo líder</li>
-      <li><strong>Descanso:</strong> Tu Daylight termina. Pasa al Evening</li>
-    </ol>
-    <p style="margin-top:10px;">Si no quedan líderes disponibles → voltea todos boca arriba de nuevo.</p>
-  </div>
-
-  <h3>Puntos de Victoria</h3>
-  <table>
-    <tr><th>Acción</th><th>Puntos</th></tr>
-    <tr><td>Cada Evening (automático)</td><td>Los indicados en el track de posaderos</td></tr>
-    <tr><td>Destruir edificio/token enemigo</td><td>1 punto por pieza</td></tr>
-    <tr><td>Fabricar cartas</td><td>Solo 1 punto (Desdén por el Comercio)</td></tr>
-    <tr><td>La Caída</td><td>-1 punto por cada 🐦 en el Decreto</td></tr>
-  </table>
-</div>
-
-<!-- ===================== ALLIANCE ===================== -->
-<div id="alliance" class="tab-content alliance">
-  <h2>🌿 Woodland Alliance</h2>
-  <p>Los habitantes del bosque hartos de ser gobernados. Una guerrilla insurgente que empieza sin nada en el mapa pero crece silenciosamente a través de la simpatía popular.</p>
-
-  <h3>Habilidades Especiales</h3>
-  <div class="box">
-    <h4>🛡️ Guerra de Guerrillas</h4>
-    <p>Como <strong>defensora en batalla</strong>, la Alliance usa el <strong>dado mayor</strong> y el atacante usa el menor. (Normalmente es al revés.) Hace que atacarlos sea muy costoso.</p>
-  </div>
-  <div class="box">
-    <h4>😡 Indignación</h4>
-    <p>Cada vez que alguien <strong>mueve guerreros a un claro simpático</strong> o <strong>destruye un token de simpatía</strong>, ese jugador debe darte 1 carta del palo de ese claro. Si no tiene, te enseña su mano y robas 1 del mazo.</p>
-  </div>
-
-  <hr>
-
-  <h3>Las 3 Piezas Clave</h3>
-  <table>
-    <tr><th>Pieza</th><th>Función</th><th>Cantidad</th></tr>
-    <tr><td>🟢 Tokens de Simpatía</td><td>Presencia política. Dan puntos y provocan Indignación. No ocupan slots ni gobiernan</td><td>10</td></tr>
-    <tr><td>🏕️ Bases</td><td>Cuarteles. Permiten reclutar y entrenar Oficiales. 1 por palo (🦊🐰🐭)</td><td>3</td></tr>
-    <tr><td>📚 Supporters</td><td>Cartas boca abajo. Recurso principal para simpatía y revueltas</td><td>Ilimitadas con bases</td></tr>
-  </table>
-
-  <div class="box tip">
-    <h4>Límite del stack de Supporters</h4>
-    <ul>
-      <li>Sin bases en el mapa → máximo <strong>5 Supporters</strong></li>
-      <li>Con al menos 1 base → <strong>ilimitado</strong></li>
-    </ul>
-  </div>
-
-  <h3>Costo de Extender Simpatía</h3>
-  <table>
-    <tr><th>Tokens en el mapa</th><th>Costo</th></tr>
-    <tr><td>0–1</td><td>1 Supporter</td></tr>
-    <tr><td>2–3</td><td>2 Supporters</td></tr>
-    <tr><td>4–5</td><td>3 Supporters</td></tr>
-    <tr><td>6–7</td><td>4 Supporters</td></tr>
-    <tr><td>8–9</td><td>5 Supporters</td></tr>
-  </table>
-  <div class="box warning">
-    <p><strong>Ley Marcial:</strong> Si el claro objetivo tiene 3 o más guerreros enemigos, paga 1 Supporter adicional.</p>
-  </div>
-
-  <hr>
-
-  <h3>Estructura del Turno</h3>
-
-  <div class="phase birdsong">
-    <div class="phase-title">🌅 Birdsong</div>
-    <p>Puedes hacer cada acción las veces que quieras:</p>
-    <div class="box">
-      <h4>⚡ Revuelta</h4>
-      <p>Requiere un claro simpático cuyo palo tenga base disponible aún no colocada.</p>
-      <ol>
-        <li>Elige un claro simpático del palo correcto</li>
-        <li>Paga <strong>2 Supporters</strong> del palo de ese claro</li>
-        <li>Elimina <strong>todas las piezas enemigas</strong> del claro (ganas 1VP por edificio/token)</li>
-        <li>Coloca la <strong>base</strong> de ese palo en el claro</li>
-        <li>Coloca guerreros = número de claros simpáticos de ese palo en el mapa</li>
-        <li>Coloca 1 guerrero en la caja de <strong>Oficiales</strong></li>
-      </ol>
-    </div>
-    <div class="box">
-      <h4>🟢 Extender Simpatía</h4>
-      <p>Coloca un token en un claro adyacente a uno ya simpático (cualquiera si no tienes tokens). Paga Supporters del palo del claro. Anota puntos del espacio descubierto.</p>
-    </div>
-  </div>
-
-  <div class="phase daylight">
-    <div class="phase-title">☀️ Daylight</div>
-    <p>Todas las acciones son opcionales y sin límite de veces:</p>
-    <table>
-      <tr><th>Acción</th><th>Descripción</th></tr>
-      <tr><td>🔨 Fabricar</td><td>Activa tokens de simpatía para fabricar cartas (palo del token = palo de la pieza de fabricación)</td></tr>
-      <tr><td>📥 Movilizar</td><td>Pasa 1 carta de tu mano al stack de Supporters</td></tr>
-      <tr><td>🪖 Entrenar</td><td>Gasta 1 carta del palo de una base construida → 1 guerrero en caja de Oficiales</td></tr>
-      <tr><td>🟢 Organizar</td><td>Retira 1 guerrero de un claro sin simpatía → coloca token ahí → anota puntos</td></tr>
-      <tr><td>🪖 Reclutar</td><td>Coloca 1 guerrero en cualquier claro con base</td></tr>
-    </table>
-  </div>
-
-  <div class="phase evening">
-    <div class="phase-title">🌙 Evening</div>
-    <ol>
-      <li><strong>Operaciones Militares:</strong> Toma acciones militares hasta tu número de Oficiales (Mover, Batallar, Reclutar)</li>
-      <li><strong>Robar y descartar:</strong> Roba 1 carta + 1 por cada base en el mapa. Descarta hasta máx. 5</li>
-    </ol>
-  </div>
-
-  <hr>
-
-  <h3>Destrucción de una Base</h3>
-  <div class="box warning">
-    <p>Cuando destruyen una base:</p>
-    <ol>
-      <li>Descarta todos los Supporters del palo de esa base <strong>+ todos los pájaros</strong></li>
-      <li>Pierde la mitad de tus Oficiales (redondeado arriba)</li>
-      <li>Si era la última base y tienes más de 5 Supporters → descarta hasta 5</li>
-      <li>Robas 1 carta menos cada Evening</li>
-    </ol>
-  </div>
-
-  <h3>Puntos de Victoria</h3>
-  <table>
-    <tr><th>Acción</th><th>Puntos</th></tr>
-    <tr><td>Colocar token de simpatía</td><td>Los indicados en el track de simpatía</td></tr>
-    <tr><td>Organizar (guerrero → token)</td><td>Los indicados en el track</td></tr>
-    <tr><td>Revuelta (destruye piezas)</td><td>1VP por edificio/token destruido</td></tr>
-    <tr><td>Destruir edificio/token en combate</td><td>1VP por pieza</td></tr>
-  </table>
-</div>
-
-<!-- ===================== VAGABOND ===================== -->
-<div id="vagabond" class="tab-content vagabond">
-  <h2>🦝 Vagabond</h2>
-  <p>Un aventurero solitario que vaga por el bosque haciendo favores, explorando ruinas y formando alianzas o enemistades. Solo tiene 1 pieza en el mapa y gana de formas únicas.</p>
-
-  <h3>Características Únicas</h3>
-  <div class="box">
-    <ul>
-      <li><strong>1 sola pieza</strong> en el mapa — su peón</li>
-      <li><strong>No gobierna</strong> ningún claro</li>
-      <li><strong>No puede ser eliminado</strong> — su peón no se remueve</li>
-      <li><strong>Se mueve libremente</strong> — no importa quién gobierne el claro</li>
-      <li>Recibe hits como <strong>objetos dañados</strong>, no pierde guerreros</li>
-    </ul>
-  </div>
-
-  <hr>
-
-  <h3>Los Objetos</h3>
-  <table>
-    <tr><th>Símbolo</th><th>Objeto</th><th>Para qué sirve</th></tr>
-    <tr><td>🔦 T</td><td>Antorcha</td><td>Explorar ruinas. Acción especial del personaje</td></tr>
-    <tr><td>👢 M</td><td>Bota</td><td>Mover (1 bota = 1 movimiento)</td></tr>
-    <tr><td>⚔️ S</td><td>Espada</td><td>Batallar. Determina hits máximos en combate</td></tr>
-    <tr><td>🔨 H</td><td>Martillo</td><td>Fabricar cartas y Reparar objetos dañados</td></tr>
-    <tr><td>🏹 X</td><td>Arco</td><td>Track propio. +1 carta al robar en Evening</td></tr>
-    <tr><td>🍵 F</td><td>Té</td><td>Refrescar objetos en el Birdsong</td></tr>
-    <tr><td>💰 C</td><td>Moneda</td><td>Track propio. Golpe (eliminar pieza enemiga)</td></tr>
-    <tr><td>🎒 B</td><td>Bolsa</td><td>Track propio. Aumenta capacidad de la Mochila en +2</td></tr>
-  </table>
-
-  <div class="box tip">
-    <h4>Estados de los objetos</h4>
-    <ul>
-      <li><strong>Boca arriba</strong> → disponible para usar</li>
-      <li><strong>Boca abajo (agotado)</strong> → ya lo usaste este turno</li>
-      <li><strong>Dañado</strong> → recibido como hit en combate. No se puede usar</li>
-    </ul>
-  </div>
-
-  <div class="box">
-    <h4>Capacidad de la Mochila</h4>
-    <p>Límite = <strong>6 + 2 por cada bolsa 🎒</strong> boca arriba en su track. Si superas el límite al final del Evening, eliminas el exceso permanentemente.</p>
-  </div>
-
-  <hr>
+  <div class="note"><h4>Morral y tracks</h4>
+    <p><strong>Tetera, moneda y bolsa</strong> van a <strong>tracks</strong> (máx. 3 de cada). <strong>Bota, espada, ballesta, antorcha y martillo</strong> van al <strong>morral</strong>. Puedes mover libremente teteras, monedas y bolsas <em>boca arriba y sin daño</em> entre su track y el morral — pero en el morral dejan de dar su bonus.</p>
+    <p style="margin:0"><strong>Límite de objetos:</strong> 6 + 2 por cada bolsa boca arriba en su track. Se comprueba al final del Evening, contando morral + dañados; lo que pase, a la caja.</p></div>
 
   <h3>Relaciones</h3>
-  <table>
-    <tr><th>Estado</th><th>Efecto</th></tr>
-    <tr><td>😐 Indiferente</td><td>Sin efectos especiales</td></tr>
-    <tr><td>🤝 Aliado</td><td>Puedes mover sus guerreros. Puedes usarlos en combate. +2VP al ayudarlo</td></tr>
-    <tr><td>😡 Hostil</td><td>Gastas 1 bota extra para entrar a sus claros. +1VP al eliminar sus piezas</td></tr>
-  </table>
-
-  <div class="box warning">
-    <p>Eliminar un guerrero de alguien que <strong>no era Hostil</strong> → se vuelve Hostil automáticamente.</p>
+  <p>Un marcador por cada facción en juego. Todos empiezan en <strong>Indiferente</strong>.</p>
+  <div class="boxes" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr))">
+    <div class="bx"><b>Indiferente</b><span>Punto de partida</span></div>
+    <div class="bx"><b>Aliado →</b><span>4 espacios. Cada avance da los puntos de ese espacio</span></div>
+    <div class="bx" style="border-left:3px solid var(--bad)"><b>Hostil</b><span>Irreversible con Ayudar</span></div>
   </div>
-
-  <div class="box tip">
-    <h4>Mejorar relaciones con Ayudar</h4>
-    <p>Cada vez que ayudas a un jugador no Hostil, avanzas su marcador hacia Aliado. Ganas puntos por cada mejora. El número de Ayudas necesarias para avanzar está indicado en el track.</p>
-  </div>
-
-  <hr>
-
-  <h3>Estructura del Turno</h3>
-
-  <div class="phase birdsong">
-    <div class="phase-title">🌅 Birdsong</div>
-    <ol>
-      <li><strong>Refrescar objetos:</strong> Por cada té 🍵 boca arriba → voltea 2 objetos agotados. Luego voltea 3 objetos más automáticamente</li>
-      <li><strong>Deslizarse (opcional):</strong> Muévete gratis a un claro adyacente o bosque, sin gastar botas. Funciona incluso en claros Hostiles</li>
-    </ol>
-  </div>
-
-  <div class="phase daylight">
-    <div class="phase-title">☀️ Daylight</div>
-    <p>Sin límite de acciones — solo limitado por objetos disponibles:</p>
-    <table>
-      <tr><th>Acción</th><th>Costo</th><th>Descripción</th></tr>
-      <tr><td>🚶 Mover</td><td>1 bota (+1 si claro Hostil)</td><td>Muévete a un claro adyacente. No puedes entrar a un bosque desde un claro</td></tr>
-      <tr><td>⚔️ Batallar</td><td>1 espada</td><td>Inicia combate en tu claro</td></tr>
-      <tr><td>🔍 Explorar</td><td>1 antorcha 🔦</td><td>Toma 1 objeto de una ruina en tu claro. +1VP</td></tr>
-      <tr><td>🤝 Ayudar</td><td>Cualquier objeto</td><td>Da 1 carta del palo de tu claro a otro jugador con piezas ahí. Toma 1 objeto de su caja de fabricados. Mejora relación</td></tr>
-      <tr><td>📜 Misión</td><td>2 objetos indicados</td><td>Completa misión cuyo palo = tu claro. Gana puntos escalonados o roba 2 cartas</td></tr>
-      <tr><td>🔨 Reparar</td><td>1 martillo</td><td>Mueve 1 objeto dañado de vuelta a Mochila o track</td></tr>
-      <tr><td>🔨 Fabricar</td><td>Martillos del palo</td><td>Fabrica una carta de tu mano</td></tr>
-      <tr><td>💰 Golpe</td><td>1 moneda</td><td>Elimina 1 guerrero enemigo. Si no hay guerreros, elimina edificio o token</td></tr>
-      <tr><td>⭐ Acción Especial</td><td>1 antorcha 🔦</td><td>La acción única de tu carta de personaje</td></tr>
-    </table>
-  </div>
-
-  <div class="phase evening">
-    <div class="phase-title">🌙 Evening</div>
-    <ol>
-      <li><strong>Descanso Nocturno:</strong> Si estás en un bosque → todos los objetos dañados se reparan. Los pones en Mochila/track</li>
-      <li><strong>Robar cartas:</strong> Roba 1 carta + 1 por cada arco 🏹 boca arriba</li>
-      <li><strong>Descartar:</strong> Hasta máx. 5 cartas</li>
-      <li><strong>Verificar capacidad:</strong> Si tienes más objetos que tu límite (6 + 2 por bolsa), elimina el exceso permanentemente</li>
-    </ol>
-  </div>
-
-  <hr>
-
-  <h3>Misiones — Puntos Escalonados</h3>
-  <table>
-    <tr><th>Misiones del mismo palo</th><th>Puntos de esta misión</th></tr>
-    <tr><td>1ra</td><td>1 punto</td></tr>
-    <tr><td>2da</td><td>2 puntos</td></tr>
-    <tr><td>3ra</td><td>3 puntos</td></tr>
-  </table>
-  <p>O puedes elegir <strong>robar 2 cartas</strong> en vez de los puntos.</p>
-
-  <h3>Puntos de Victoria</h3>
-  <table>
-    <tr><th>Acción</th><th>Puntos</th></tr>
-    <tr><td>Explorar una ruina</td><td>1 punto</td></tr>
-    <tr><td>Mejorar relación</td><td>Los indicados en el track de relaciones</td></tr>
-    <tr><td>Ayudar a un Aliado</td><td>2 puntos por cada vez</td></tr>
-    <tr><td>Completar misiones</td><td>Escalonados: 1, 2, 3... por palo</td></tr>
-    <tr><td>Eliminar guerrero Hostil</td><td>1 punto por guerrero</td></tr>
-    <tr><td>Destruir edificio/token</td><td>1 punto por pieza</td></tr>
-  </table>
-</div>
-
-<!-- ===================== REGLAS GENERALES ===================== -->
-<div id="general" class="tab-content">
-  <h2>📖 Reglas Generales</h2>
-
-  <h3>Objetivo del Juego</h3>
-  <div class="box highlight">
-    <p>El primero en llegar a <strong>30 puntos de victoria</strong> gana inmediatamente.</p>
-  </div>
-
-  <hr>
-
-  <h3>El Mapa</h3>
   <ul>
-    <li><strong>12 claros</strong> conectados por senderos (paths)</li>
-    <li>Cada claro tiene un <strong>palo</strong>: 🦊 zorro, 🐰 conejo o 🐭 ratón</li>
-    <li>Cada claro tiene entre <strong>1 y 3 slots</strong> para edificios</li>
-    <li>Los <strong>bosques</strong> están entre claros — no tienen palo ni slots</li>
+    <li><strong>Mejorar:</strong> se mejora <strong>Ayudando</strong>. El número de Ayudas necesarias para pasar al siguiente espacio está impreso <strong>entre los dos espacios</strong>, y hay que darlas <strong>en el mismo turno</strong>. Una Ayuda cuenta para una sola mejora.</li>
+    <li><strong>Aliado</strong> (último espacio): cada Ayuda a ese aliado da <strong>2 puntos</strong>. Además puedes <strong>mover con sus guerreros</strong> (siguen las reglas de movimiento de ellos, sin tu Agilidad) y <strong>atacar con ellos</strong> — tu tope de golpes pasa a ser <em>sus guerreros ahí + tus espadas sanas</em>. No puedes usarlos si el aliado es el defensor.</li>
+    <li><strong>Hostil:</strong> en cuanto <strong>retiras un guerrero</strong> de una facción no hostil, pasa a Hostil al instante. Entonces ganas <strong>1 punto por cada pieza suya que retires en combate</strong> (<em>no</em> por el guerrero que la volvió hostil) y necesitas <strong>una bota extra</strong> para entrar en claros con sus guerreros.</li>
+    <li><strong>Encajar golpes con un aliado:</strong> puedes retirar guerreros aliados en vez de dañar objetos. Pero si en un mismo combate retiras más guerreros aliados que objetos dañados, <strong>ese aliado se vuelve Hostil</strong>.</li>
   </ul>
 
-  <h3>Gobernar un Claro</h3>
-  <div class="box">
-    <p>Gobiernas un claro si tienes <strong>más guerreros + edificios combinados</strong> que cualquier otro jugador.</p>
-    <ul>
-      <li>Los tokens <strong>no</strong> cuentan para gobernar</li>
-      <li>El peón del Vagabond <strong>no</strong> cuenta para gobernar</li>
-      <li>En empate → nadie gobierna (excepto la Eyrie que sí gobierna)</li>
-    </ul>
+  <h3>El turno</h3>
+  <div class="phase ph-dawn"><div class="ph-h"><b>Birdsong</b></div>
+    <div class="ph-body"><ol class="steps" style="list-style:none">
+      <li><span class="n">1</span><div><b>Refrescar.</b> Gira boca arriba <strong>2 objetos agotados por cada tetera boca arriba</strong> al empezar el Birdsong, y luego <strong>3 más</strong>.</div></li>
+      <li><span class="n">2</span><div><b>Escabullirse.</b> Puedes moverte a un claro o bosque adyacente <strong>sin agotar ninguna bota</strong>, incluso hacia un claro hostil.</div></li>
+    </ol></div></div>
+
+  <div class="phase ph-day"><div class="ph-h"><b>Daylight</b><span class="mut">agota objetos, sin límite de acciones</span></div>
+    <div class="ph-body">
+      <div class="act"><div class="ai"><svg class="ico"><use href="#i-boot"/></svg></div><div class="ab"><b>Mover</b><span>+1 bota si el destino tiene guerreros hostiles. <strong>No puede entrar en un bosque</strong> desde un claro; si está en un bosque, solo puede salir a un claro adyacente.</span></div><span class="cost">1 bota</span></div>
+      <div class="act"><div class="ai"><svg class="ico"><use href="#i-sword"/></svg></div><div class="ab"><b>Batallar</b><span>Luego comprueba tu relación con el defensor.</span></div><span class="cost">1 espada</span></div>
+      <div class="act"><div class="ai"><svg class="ico"><use href="#i-torch"/></svg></div><div class="ab"><b>Explorar</b><span>Coge un objeto bajo una ruina de tu claro, revélalo, colócalo y <strong>anota 1 punto</strong>. Si vacías la ruina, retírala.</span></div><span class="cost">1 antorcha</span></div>
+      <div class="act"><div class="ai">🤝</div><div class="ab"><b>Ayudar</b><span>Da una carta <strong>del palo de tu claro</strong> a cualquier jugador que esté ahí — <strong>incluso hostil</strong>. Después puedes coger <strong>un objeto</strong> de su caja de Objetos Fabricados. Luego comprueba la relación.</span></div><span class="cost">1 objeto cualquiera</span></div>
+      <div class="act"><div class="ai">📜</div><div class="ab"><b>Misión</b><span>Misión <strong>del palo de tu claro</strong>: agota los <strong>dos objetos</strong> que indique. Ponla en tu zona, roba una misión nueva, y elige: <strong>1 punto por cada misión completada de ese palo</strong> (contando esta) <strong>o robar 2 cartas</strong>.</span></div><span class="cost">2 objetos</span></div>
+      <div class="act"><div class="ai"><svg class="ico"><use href="#i-crossbow"/></svg></div><div class="ab"><b>Golpear</b><span>Retira <strong>un guerrero</strong> de tu claro. Si ese jugador no tiene guerreros ahí, retira <strong>un edificio o token</strong> suyo. Luego comprueba la relación: <strong>esto vuelve hostil</strong>.</span></div><span class="cost">1 ballesta</span></div>
+      <div class="act"><div class="ai"><svg class="ico"><use href="#i-hammer"/></svg></div><div class="ab"><b>Reparar</b><span>Un objeto dañado vuelve al morral o a su track, boca arriba.</span></div><span class="cost">1 martillo</span></div>
+      <div class="act"><div class="ai">🔨</div><div class="ab"><b>Fabricar</b><span>Agota los martillos del palo indicado. <strong>Todos tus martillos valen el palo de tu claro.</strong> Si fabricas un objeto, te lo puedes quedar.</span></div><span class="cost">martillos</span></div>
+      <div class="act"><div class="ai">⭐</div><div class="ab"><b>Acción especial</b><span>La de tu carta de personaje.</span></div><span class="cost">1 antorcha</span></div>
+    </div></div>
+
+  <div class="phase ph-eve"><div class="ph-h"><b>Evening</b><span class="mut">4 pasos</span></div>
+    <div class="ph-body"><ol class="steps" style="list-style:none">
+      <li><span class="n">1</span><div><b>Descanso.</b> <strong>Si estás en un bosque</strong>, todos tus objetos dañados vuelven boca arriba al morral o a su track.</div></li>
+      <li><span class="n">2</span><div><b>Roba</b> 1 carta + 1 por cada <strong>moneda boca arriba en su track</strong>.</div></li>
+      <li><span class="n">3</span><div><b>Descarta</b> hasta 5 cartas en mano.</div></li>
+      <li><span class="n">4</span><div><b>Límite de objetos:</b> 6 + 2 por bolsa en track. Devuelve el exceso a la caja.</div></li>
+    </ol></div></div>
+
+  <h3>Los seis personajes</h3>
+  <p>Tres vienen en el juego base y <strong>tres los añade Los Ribereños</strong>.</p>
+  <div class="grid g2">
+    <div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><h4 style="margin:0">Ladrón</h4><span class="pill">base</span></div>
+      <p style="margin:8px 0 6px;font-size:.88rem">Empieza con <svg class="ico"><use href="#i-boot"/></svg> <svg class="ico"><use href="#i-torch"/></svg> <svg class="ico"><use href="#i-tea"/></svg> <svg class="ico"><use href="#i-sword"/></svg></p>
+      <p style="margin:0"><strong>Robar:</strong> coge una carta <strong>al azar</strong> de un jugador de tu claro.</p></div>
+    <div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><h4 style="margin:0">Manitas</h4><span class="pill">base</span></div>
+      <p style="margin:8px 0 6px;font-size:.88rem">Empieza con <svg class="ico"><use href="#i-boot"/></svg> <svg class="ico"><use href="#i-torch"/></svg> <svg class="ico"><use href="#i-bag"/></svg> <svg class="ico"><use href="#i-hammer"/></svg></p>
+      <p style="margin:0"><strong>Jornal:</strong> coge del <strong>descarte</strong> una carta del palo de tu claro. <em>Un pájaro siempre vale.</em></p></div>
+    <div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><h4 style="margin:0">Explorador</h4><span class="pill">base</span></div>
+      <p style="margin:8px 0 6px;font-size:.88rem">Empieza con <svg class="ico"><use href="#i-boot"/></svg> <svg class="ico"><use href="#i-torch"/></svg> <svg class="ico"><use href="#i-crossbow"/></svg> <svg class="ico"><use href="#i-sword"/></svg></p>
+      <p style="margin:0"><strong>Guarida:</strong> repara <strong>tres</strong> objetos y <strong>termina el Daylight inmediatamente</strong>.</p></div>
+    <div class="card" style="border-color:rgba(226,180,92,.45)"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><h4 style="margin:0">Errante</h4><span class="pill b" style="--c:var(--gold)">Los Ribereños</span></div>
+      <p style="margin:8px 0 6px;font-size:.88rem">Empieza con <svg class="ico"><use href="#i-coin"/></svg> <svg class="ico"><use href="#i-torch"/></svg> <svg class="ico"><use href="#i-boot"/></svg></p>
+      <p style="margin:0"><strong>Instigar:</strong> agota una antorcha para <strong>iniciar un combate entre otros dos</strong> en tu claro. <strong>Tú eliges quién ataca y quién defiende</strong>, tú eliges el orden en que cada uno retira edificios y tokens, y tú retiras las piezas. <em>Anotas 1 punto por cada edificio o token retirado de cualquiera de los dos, y por cada pieza hostil retirada.</em></p></div>
+    <div class="card" style="border-color:rgba(226,180,92,.45)"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><h4 style="margin:0">Canalla</h4><span class="pill b" style="--c:var(--gold)">Los Ribereños</span></div>
+      <p style="margin:8px 0 6px;font-size:.88rem">Empieza con <svg class="ico"><use href="#i-torch"/></svg> <svg class="ico"><use href="#i-boot"/></svg> <svg class="ico"><use href="#i-boot"/></svg> <svg class="ico"><use href="#i-crossbow"/></svg></p>
+      <p style="margin:0"><strong>Tierra Quemada:</strong> <strong>coloca la antorcha en tu claro</strong> — la pierdes. Retira <strong>todas</strong> las piezas enemigas de ahí. A partir de entonces <strong>nadie puede colocar ni mover piezas a ese claro</strong>. Una sola vez, y cambia la partida.</p></div>
+    <div class="card" style="border-color:rgba(226,180,92,.45)"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><h4 style="margin:0">Árbitro</h4><span class="pill b" style="--c:var(--gold)">Los Ribereños</span></div>
+      <p style="margin:8px 0 6px;font-size:.88rem">Empieza con <svg class="ico"><use href="#i-torch"/></svg> <svg class="ico"><use href="#i-boot"/></svg> <svg class="ico"><use href="#i-sword"/></svg> <svg class="ico"><use href="#i-sword"/></svg></p>
+      <p style="margin:0"><strong>Protector:</strong> <em>no es su acción, es una habilidad permanente.</em> Justo <strong>antes de tirar los dados</strong> en un combate, el <strong>defensor</strong> puede reclutar al Árbitro si está en el claro. El Árbitro <strong>anota 1 punto</strong> y suma <strong>todas sus espadas sanas</strong> al máximo de golpes del defensor. No puede reclutarse a sí mismo.</p></div>
   </div>
 
-  <h3>Las 3 Categorías de Piezas</h3>
-  <table>
-    <tr><th>Tipo</th><th>Ejemplos</th><th>¿Gobiernan?</th><th>¿Ocupan slot?</th></tr>
-    <tr><td>⚔️ Guerreros</td><td>Soldados de cualquier facción</td><td>✅ Sí</td><td>❌ No</td></tr>
-    <tr><td>🏗️ Edificios</td><td>Aserradero, taller, posadero, base</td><td>✅ Sí</td><td>✅ Sí</td></tr>
-    <tr><td>🪙 Tokens</td><td>Simpatía, madera, Keep</td><td>❌ No</td><td>❌ No</td></tr>
-  </table>
-
-  <hr>
-
-  <h3>Movimiento</h3>
-  <ul>
-    <li>Mueves <strong>cualquier cantidad</strong> de guerreros de un claro a uno adyacente</li>
-    <li>Debes gobernar el claro de <strong>origen</strong>, el de <strong>destino</strong>, o ambos</li>
-    <li>El Vagabond puede moverse <strong>sin gobernar</strong></li>
-    <li>No hay límite de movimientos por pieza en un turno</li>
-  </ul>
-
-  <hr>
-
-  <h3>Las Cartas</h3>
-  <table>
-    <tr><th>Palo</th><th>Descripción</th></tr>
-    <tr><td>🦊 Zorro</td><td>Palo estándar</td></tr>
-    <tr><td>🐰 Conejo</td><td>Palo estándar</td></tr>
-    <tr><td>🐭 Ratón</td><td>Palo estándar</td></tr>
-    <tr><td>🐦 Pájaro</td><td><strong>Comodín</strong> — vale como cualquier palo</td></tr>
-  </table>
-  <ul>
-    <li>Mano máxima al final del Evening: <strong>5 cartas</strong></li>
-    <li>Tu mano es privada, pero la cantidad de cartas es pública</li>
-    <li>Si el mazo se vacía, baraja el descarte para formar uno nuevo</li>
-  </ul>
-
-  <hr>
-
-  <h3>Fabricar Cartas</h3>
-  <ol>
-    <li>Mira el <strong>costo</strong> en la esquina inferior izquierda de la carta</li>
-    <li>Activa <strong>piezas de fabricación</strong> en claros del palo correcto</li>
-    <li>Cada pieza solo puede activarse <strong>una vez por turno</strong></li>
+  <h3>Montaje</h3>
+  <ol class="steps" style="list-style:none">
+    <li><span class="n">1</span><div><b>Elige personaje</b> y pon su carta en el hueco.</div></li>
+    <li><span class="n">2</span><div><b>Coloca el peón en cualquier bosque.</b></div></li>
+    <li><span class="n">3</span><div><b>Misiones:</b> baraja tu mazo de misiones y saca <b>3 boca arriba</b>.</div></li>
+    <li><span class="n">4</span><div><b>Llena las ruinas:</b> coge las 4 ruinas del mapa y los objetos marcados «R» (<svg class="ico"><use href="#i-bag"/></svg> bolsa, <svg class="ico"><use href="#i-boot"/></svg> bota, <svg class="ico"><use href="#i-hammer"/></svg> martillo, <svg class="ico"><use href="#i-sword"/></svg> espada). Uno debajo de cada ruina, baraja cada montón y devuélvelos a los huecos.</div></li>
+    <li><span class="n">5</span><div><b>Objetos iniciales:</b> los marcados «S» que diga tu personaje. El resto de «S», a la caja.</div></li>
+    <li><span class="n">6</span><div><b>Relaciones:</b> un marcador por cada facción en juego, todos en <b>Indiferente</b>.</div></li>
   </ol>
-  <table>
-    <tr><th>Facción</th><th>Pieza de fabricación</th></tr>
-    <tr><td>🐱 Marquise</td><td>Talleres</td></tr>
-    <tr><td>🦅 Eyrie</td><td>Posaderos</td></tr>
-    <tr><td>🌿 Alliance</td><td>Tokens de simpatía</td></tr>
-    <tr><td>🦝 Vagabond</td><td>Martillos (palo = claro actual)</td></tr>
-  </table>
+
+  <div class="note"><h4>Coaliciones — solo con 4 o más jugadores</h4>
+    <p style="margin:0">El Vagabundo puede activar una carta de <strong>dominio</strong> para formar coalición con <strong>el jugador con menos puntos</strong> (aparte de él), poniendo su marcador en el tablero de ese jugador. Si ese jugador gana, él también. <strong>Deja de puntuar.</strong> No puede coaligarse con quien ya activó un dominio. Si se coaliga con una facción hostil, su marcador vuelve a Indiferente.</p></div>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card" style="border-left:3px solid var(--ok)"><h4>Cómo gana</h4><p style="margin:0">Vaciando ruinas pronto (1 punto y un objeto por antorcha), subiendo relaciones a Aliado —cada avance puntúa, y después cada Ayuda son 2 puntos fijos— y acumulando misiones del mismo palo: la cuarta misión de un palo da 4 puntos de golpe.</p></div>
+    <div class="card" style="border-left:3px solid var(--bad)"><h4>Cómo se le frena</h4><p style="margin:0"><strong>No le des cartas.</strong> Lo que le hace daño es atacarlo: cada golpe le daña un objeto y los objetos son sus acciones. No lo puedes matar, pero lo puedes dejar sin nada que agotar. Y vigila cuando sube a Aliado de alguien: deja de ser neutral.</p></div>
+  </div>
+</section>
+
+<!-- ============================================================ CULTO -->
+<section class="panel" id="p-cult" role="tabpanel" style="--c:var(--cult)">
+  <div class="hero">
+    <div class="ht"><h2>Culto Reptiliano</h2><em>Lizard Cult · Los Ribereños</em></div>
+    <p>Predica. No gasta cartas: las <strong>revela</strong> y se las queda, turno tras turno, hasta tener la congregación perfecta. Donde gobierna planta <strong>jardines</strong>, y los jardines le dan los puntos. Mover y pelear le cuesta carísimo: solo lo hacen sus <strong>acólitos</strong>, y los acólitos nacen de los mártires.</p>
+    <div class="meta">
+      <span class="pill b">Alcance 2</span>
+      <span class="pill">25 guerreros</span>
+      <span class="pill">15 jardines</span>
+      <span class="pill">Fabrica en el Evening</span>
+      <span class="pill" style="border-color:var(--bad);color:var(--bad)">Los pájaros NO son comodín</span>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <h4>Si el Culto juega, cambia una regla para todos</h4>
+    <p style="margin:0">Mientras el Culto esté en la partida, <strong>toda carta que cualquiera gaste o descarte va al montón de Almas Perdidas del Culto</strong>, no al descarte. Ese montón es lo que decide a quién persigue el Culto este turno. <strong>Lo que descartas lo estás eligiendo tú, sin querer.</strong></p>
+  </div>
+
+  <h3>Habilidades</h3>
+  <div class="grid g2">
+    <div class="card" style="border-left:3px solid var(--cult)"><h4>Peregrinos</h4><p style="margin:0">El Culto <strong>gobierna cualquier claro donde tenga un jardín</strong>, aunque sea uno solo y no tenga ni un guerrero. <strong>Se salta incluso a los Señores del Bosque</strong> de las Águilas.</p></div>
+    <div class="card" style="border-left:3px solid var(--bad)"><h4>Odio a los Pájaros</h4><p style="margin:0">Las <strong>cartas de pájaro no son comodín</strong> para sus rituales. Solo sirven para <strong>Sacrificar</strong>. Es su gran limitación.</p></div>
+    <div class="card" style="border-left:3px solid var(--ok)"><h4>Venganza</h4><p style="margin:0">Cada vez que le retiran un guerrero <strong>defendiendo en combate</strong>, ese guerrero <strong>no vuelve a la reserva: va a la caja de Acólitos</strong>. Pegarle es darle combustible.</p></div>
+    <div class="card"><h4>Fabricar</h4><p style="margin:0">Fabrica en el <strong>Evening</strong> —no en el Daylight— activando los <strong>jardines del palo del Paria</strong>.</p></div>
+  </div>
+
+  <h3>El Paria</h3>
+  <p>El palo al que el Culto puede atacar este turno. Sale del montón de Almas Perdidas, así que lo marcan los demás jugadores con sus descartes.</p>
+  <div class="boxes" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
+    <div class="bx"><b>1 · Mira las Almas Perdidas</b><span><strong>Ignorando los pájaros.</strong> Si un palo tiene más cartas que cualquier otro, ese palo es el nuevo Paria.</span></div>
+    <div class="bx"><b>2 · ¿Ya era el Paria?</b><span>Entonces pasa a <strong>Paria Odiado</strong>: gira el marcador. En empate, el marcador se queda donde está (y si no estaba odiado, se gira).</span></div>
+    <div class="bx" style="border-left:3px solid var(--gold)"><b>3 · Paria Odiado</b><span><strong>Todas las conspiraciones cuestan 1 acólito menos.</strong></span></div>
+  </div>
+
+  <h3>Las tres conspiraciones — Birdsong</h3>
+  <p>Se pagan con <strong>acólitos</strong> y solo funcionan en <strong>claros del palo del Paria</strong>.</p>
+  <div class="card">
+    <div class="act"><div class="ai">⚔️</div><div class="ab"><b>Cruzada</b><span>Batalla en un claro del Paria, <strong>o</strong> mueve desde un claro del Paria y luego, si quieres, batalla en el destino.</span></div><span class="cost">2 acólitos · 1 si odiado</span></div>
+    <div class="act"><div class="ai">🔁</div><div class="ab"><b>Convertir</b><span>Retira un <strong>guerrero</strong> enemigo de un claro del Paria y coloca uno tuyo ahí. Cambias su tropa por la tuya.</span></div><span class="cost">2 acólitos · 1 si odiado</span></div>
+    <div class="act"><div class="ai">🌿</div><div class="ab"><b>Santificar</b><span>Retira un <strong>edificio</strong> enemigo de un claro del Paria y coloca un <strong>jardín</strong> ahí. <em>Ganas el punto por el edificio retirado.</em></span></div><span class="cost">3 acólitos · 2 si odiado</span></div>
+  </div>
+  <div class="note good"><p style="margin:0"><strong>Santificar es su mejor acción:</strong> un punto por el edificio, un jardín nuevo que sube el track, y gobierno automático de ese claro por Peregrinos. Tres cosas con una.</p></div>
+
+  <h3>Los cuatro rituales — Daylight</h3>
+  <p>Revela <strong>cuantas cartas quieras</strong> de tu mano y haz <strong>un ritual por carta</strong>. Las cartas reveladas <strong>vuelven a tu mano en el Evening</strong>: no las pierdes… salvo las que gastes en Puntuar. Una carta revelada no se puede usar para nada más durante el Daylight.</p>
+  <div class="card">
+    <div class="act"><div class="ai">🌿</div><div class="ab"><b>Construir</b><span>Revela una carta del palo de un claro que <strong>gobiernes</strong> → jardín ahí.</span></div><span class="cost">revelar</span></div>
+    <div class="act"><div class="ai">🪖</div><div class="ab"><b>Reclutar</b><span>Revela una carta → un guerrero en un claro de ese palo. <strong>No hace falta gobernarlo.</strong></span></div><span class="cost">revelar</span></div>
+    <div class="act"><div class="ai">🕊️</div><div class="ab"><b>Sacrificar</b><span>Revela una <strong>carta de pájaro</strong> → un guerrero de tu reserva a la caja de <strong>Acólitos</strong>. La única cosa para la que te sirven los pájaros.</span></div><span class="cost">revelar pájaro</span></div>
+    <div class="act"><div class="ai"><svg class="ico"><use href="#i-vp"/></svg></div><div class="ab"><b>Puntuar</b><span><strong>Gasta</strong> la carta revelada (va a Almas Perdidas) y anota los puntos de la columna del <strong>espacio vacío de más a la derecha</strong> de ese palo en tu track de jardines. <strong>Una vez por palo y turno.</strong> No puedes puntuar un palo del que no tengas ningún jardín en el mapa.</span></div><span class="cost">gastar carta</span></div>
+  </div>
+
+  <h3>El track de jardines</h3>
+  <p>Tres filas —zorro, conejo, ratón— de <strong>5 espacios</strong> cada una. En el montaje se llenan de derecha a izquierda, así que el único espacio vacío al empezar es el del palo del jardín que plantaste. Cada jardín que pones en el mapa <strong>destapa un espacio más</strong>, y el valor que cobras es el del <strong>vacío más a la derecha</strong>.</p>
+  <div class="trk">
+    <div class="cellcol"><span class="lbl">1 jardín</span><div class="cell vp">0</div></div>
+    <div class="cellcol"><span class="lbl">2</span><div class="cell vp">2</div></div>
+    <div class="cellcol"><span class="lbl">3</span><div class="cell vp">2</div></div>
+    <div class="cellcol"><span class="lbl">4</span><div class="cell vp">3</div></div>
+    <div class="cellcol"><span class="lbl">5</span><div class="cell vp">4</div></div>
+  </div>
+  <p class="trk-legend">Por fila de palo. <strong>El primer jardín de un palo no puntúa nada</strong> — hacen falta dos para empezar a cobrar. <em>Confirma los valores en tu tablero.</em></p>
+  <div class="note"><h4>Ancho, no alto</h4><p style="margin:0"><strong>2 jardines en cada uno de los tres palos</strong> dan 2+2+2 = <strong>6 puntos por turno</strong>, y solo son 6 jardines. Los 5 jardines de un mismo palo dan 4. La expansión horizontal es muy superior — y además te hace gobernar seis claros repartidos.</p></div>
+
+  <h3>El turno</h3>
+  <div class="phase ph-dawn"><div class="ph-h"><b>Birdsong</b><span class="mut">3 pasos, en orden</span></div>
+    <div class="ph-body"><ol class="steps" style="list-style:none">
+      <li><span class="n">1</span><div><b>Ajusta el Paria</b> mirando las Almas Perdidas, ignorando pájaros.</div></li>
+      <li><span class="n">2</span><div><b>Vacía las Almas Perdidas</b> al montón de descarte.</div></li>
+      <li><span class="n">3</span><div><b>Conspiraciones:</b> gasta acólitos en Cruzada, Convertir y Santificar, las veces que puedas pagar.</div></li>
+    </ol></div></div>
+  <div class="phase ph-day"><div class="ph-h"><b>Daylight</b><span class="mut">rituales</span></div>
+    <div class="ph-body"><p style="margin:0">Revela cartas y haz un ritual por carta: Construir, Reclutar, Sacrificar, Puntuar.</p></div></div>
+  <div class="phase ph-eve"><div class="ph-h"><b>Evening</b><span class="mut">3 pasos</span></div>
+    <div class="ph-body"><ol class="steps" style="list-style:none">
+      <li><span class="n">1</span><div><b>Recupera</b> las cartas reveladas a tu mano.</div></li>
+      <li><span class="n">2</span><div><b>Fabrica</b> activando los <strong>jardines del palo del Paria</strong>.</div></li>
+      <li><span class="n">3</span><div><b>Roba</b> 1 + bonus descubiertos y <b>descarta</b> hasta 5.</div></li>
+    </ol></div></div>
+
+  <h3>Montaje</h3>
+  <ol class="steps" style="list-style:none">
+    <li><span class="n">1</span><div>Reserva de <b>25 guerreros</b>.</div></li>
+    <li><span class="n">2</span><div><b>4 guerreros y 1 jardín</b> del palo impreso en un <b>claro de esquina</b> que no sea la esquina inicial de otro jugador y, si se puede, <b>diagonalmente opuesto</b> a una esquina inicial.</div></li>
+    <li><span class="n">3</span><div><b>1 guerrero en cada claro adyacente</b> a ese.</div></li>
+    <li><span class="n">4</span><div>Los <b>14 jardines restantes</b> en sus tracks, <b>de derecha a izquierda</b>.</div></li>
+    <li><span class="n">5</span><div>El <b>marcador de Paria</b> en el palo que quieras.</div></li>
+    <li><span class="n">6</span><div>La caja de <b>Acólitos empieza vacía</b>.</div></li>
+  </ol>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card" style="border-left:3px solid var(--ok)"><h4>Cómo gana</h4><p style="margin:0">Dos jardines en cada palo y una mano con los tres palos. A partir de ahí puntúa 6 por turno sin moverse. Los acólitos llegan solos si alguien le ataca; si nadie le ataca, Sacrificar con pájaros es su grifo.</p></div>
+    <div class="card" style="border-left:3px solid var(--bad)"><h4>Cómo se le frena</h4><p style="margin:0"><strong>Quítale jardines, no guerreros</strong> — matarle guerreros defendiendo le da acólitos. Y controla <strong>qué descartas</strong>: tú decides su Paria. Si descartas siempre el palo donde no tiene nada, se queda sin conspiraciones.</p></div>
+  </div>
+</section>
+
+<!-- ============================================================ RIBEREÑOS -->
+<section class="panel" id="p-riverfolk" role="tabpanel" style="--c:var(--river)">
+  <div class="hero">
+    <div class="ht"><h2>Compañía del Río</h2><em>Riverfolk Company · Los Ribereños</em></div>
+    <p>No conquista: <strong>vende</strong>. Les alquila a los demás cartas, barcos y mercenarios, y les cobra <strong>en guerreros</strong>. Esos guerreros ajenos son su dinero: con ellos mueve, pelea, fabrica y planta <strong>puestos comerciales</strong>. Puntúa por cada puesto y por <strong>tener el cajón lleno</strong>.</p>
+    <div class="meta">
+      <span class="pill b">Alcance 5</span>
+      <span class="pill">15 guerreros</span>
+      <span class="pill">9 puestos</span>
+      <span class="pill">Mano boca arriba</span>
+      <span class="pill">Nada por el río</span>
+    </div>
+  </div>
+
+  <h3>Habilidades</h3>
+  <div class="grid g2">
+    <div class="card" style="border-left:3px solid var(--river)"><h4>Nadadores</h4><p style="margin:0">Tratan <strong>los ríos como caminos</strong>, y pueden moverse entre dos claros unidos por un río <strong>sin importar quién gobierne</strong> el origen ni el destino. Es su gran ventaja de movilidad.</p></div>
+    <div class="card"><h4>Se Vende</h4><p style="margin:0">Su mano está siempre <strong>boca arriba</strong>, encima del tablero. Todos ven lo que hay en venta. Si alguien le roba una carta al azar, se barajan boca abajo primero.</p></div>
+    <div class="card" style="border-left:3px solid var(--bad)"><h4>Comercio Interrumpido</h4><p style="margin:0">Cuando le retiran un <strong>puesto comercial</strong>: pierde <strong>la mitad de sus fondos</strong> y <strong>ese puesto se va a la caja — no se puede reconstruir</strong>. Nueve puestos, y cada uno destruido es uno menos para siempre.</p></div>
+    <div class="card"><h4>Exportar</h4><p style="margin:0">Al fabricar, en vez de cobrar el efecto de la carta puede <strong>descartarla y poner un guerrero en su caja de Pagos</strong>. Convierte cartas en dinero.</p></div>
+  </div>
+
+  <h3>Los tres cajones: Pagos → Fondos → Compromisos</h3>
+  <div class="boxes" style="grid-template-columns:1fr auto 1fr auto 1fr;align-items:center">
+    <div class="bx" style="border-left:3px solid var(--gold)"><b>Pagos</b><span>Entra lo que te pagan los demás, con <strong>sus</strong> guerreros</span></div>
+    <div class="flowarrow">→</div>
+    <div class="bx" style="border-left:3px solid var(--river)"><b>Fondos</b><span>Tu dinero disponible. <strong>Aquí se cuentan los dividendos</strong></span></div>
+    <div class="flowarrow">→</div>
+    <div class="bx"><b>Compromisos</b><span>Lo gastado este turno. Vuelve a Fondos el Birdsong siguiente</span></div>
+  </div>
+  <div class="note warn"><h4>Comprometer no es gastar</h4>
+    <p><strong>Comprometer</strong> = mover el guerrero a Compromisos; vuelve a tus Fondos el próximo Birdsong. <strong>Gastar</strong> = devolver el guerrero <strong>a la reserva de su dueño</strong>; ese se va para siempre. Mover, batallar, fabricar y robar <em>comprometen</em>. Reclutar y poner un puesto <em>gastan</em>.</p>
+    <p style="margin:0">Y el detalle que decide partidas: para <strong>poner un puesto comercial hay que gastar fondos de la facción que gobierna ese claro</strong>. Si la Marquesa no te ha comprado nada, no puedes poner un puesto en territorio de la Marquesa.</p></div>
+
+  <h3>Los tres servicios</h3>
+  <p>Precio de <strong>1 a 4 guerreros</strong>, que <strong>la Compañía fija en su Evening</strong> moviendo los marcadores del track de servicios.</p>
+  <div class="grid g3">
+    <div class="card"><h4>Carta de la mano</h4><p style="margin:0;font-size:.9rem">El comprador <strong>elige</strong> una carta de la mano (visible) de la Compañía y se la queda.</p></div>
+    <div class="card"><h4>Barcos fluviales</h4><p style="margin:0;font-size:.9rem">El comprador trata <strong>los ríos como caminos hasta el final de su turno</strong>.</p></div>
+    <div class="card"><h4>Mercenarios</h4><p style="margin:0;font-size:.9rem">Durante <strong>su Daylight y Evening</strong>, el comprador trata los guerreros ribereños <strong>como propios para gobernar y para combatir</strong>. <em>No los mueve ni los retira: los usa donde están.</em></p></div>
+  </div>
+  <div class="note"><h4>Cuándo y cuánto se compra</h4>
+    <p>Al <strong>principio del Birdsong de cada otro jugador</strong>, ese jugador puede comprar <strong>un servicio</strong>, <strong>más uno adicional por cada claro que tenga un puesto comercial y alguna pieza suya</strong>.</p>
+    <p style="margin:0">Paga cogiendo guerreros <strong>de su propia reserva</strong> y metiéndolos en la caja de <strong>Pagos</strong> de la Compañía.</p></div>
+
+  <h3>El turno</h3>
+  <div class="phase ph-dawn"><div class="ph-h"><b>Birdsong</b><span class="mut">3 pasos, y el orden es crítico</span></div>
+    <div class="ph-body"><ol class="steps" style="list-style:none">
+      <li><span class="n">1</span><div><b>Si la caja de Pagos está vacía</b>, pon <strong>2 de tus guerreros</strong> en ella. Es tu renta mínima cuando nadie te compra nada.</div></li>
+      <li><span class="n">2</span><div><b>Dividendos:</b> si tienes <strong>algún puesto comercial en el mapa</strong>, anota <strong>1 punto por cada 2 fondos</strong> (guerreros en la caja de <em>Fondos</em>). <span style="color:var(--gold)">Sin puestos, no hay dividendos.</span></div></li>
+      <li><span class="n">3</span><div><b>Recoge:</b> mueve <strong>todos</strong> los guerreros de tu tablero a la caja de <b>Fondos</b>.</div></li>
+    </ol>
+    <div class="note warn" style="margin-bottom:0"><p style="margin:0">Los dividendos se cuentan <strong>antes</strong> de recoger los pagos de este turno. Lo que te acaban de pagar <strong>puntúa el turno que viene</strong>, no ahora. Por eso interesa <strong>no gastarlo todo</strong>: los fondos que sobran son puntos.</p></div>
+    </div></div>
+
+  <div class="phase ph-day"><div class="ph-h"><b>Daylight</b><span class="mut">gasta y compromete fondos</span></div>
+    <div class="ph-body">
+      <div class="act"><div class="ai">🥾</div><div class="ab"><b>Mover</b><span>Un movimiento.</span></div><span class="cost">comprometer 1</span></div>
+      <div class="act"><div class="ai">⚔️</div><div class="ab"><b>Batallar</b><span>Inicia un combate.</span></div><span class="cost">comprometer 1</span></div>
+      <div class="act"><div class="ai">🃏</div><div class="ab"><b>Robar</b><span>Roba una carta.</span></div><span class="cost">comprometer 1</span></div>
+      <div class="act"><div class="ai">🔨</div><div class="ab"><b>Fabricar</b><span>Compromete fondos por el coste de la carta, pero <strong>en vez de ir a Compromisos</strong> esos guerreros van a <strong>espacios vacíos del track de Puestos Comerciales del palo correspondiente</strong>. Es decir: <strong>solo puedes fabricar palos de los que ya hayas sacado un puesto al mapa.</strong></span></div><span class="cost">comprometer</span></div>
+      <div class="act"><div class="ai">🪖</div><div class="ab"><b>Reclutar</b><span>Un guerrero en <strong>cualquier claro con río</strong>.</span></div><span class="cost">gastar 1</span></div>
+      <div class="act"><div class="ai">🏪</div><div class="ab"><b>Puesto comercial con guarnición</b><span>Coloca un <strong>puesto y un guerrero</strong> en un claro. <strong>Gasta 2 fondos de la facción que gobierna ese claro.</strong> Un puesto por claro. <strong>Anota 2 puntos.</strong></span></div><span class="cost">gastar 2 (del dueño)</span></div>
+    </div></div>
+
+  <div class="phase ph-eve"><div class="ph-h"><b>Evening</b><span class="mut">aquí pones los precios</span></div>
+    <div class="ph-body"><ol class="steps" style="list-style:none">
+      <li><span class="n">1</span><div><b>Descarta</b> hasta 5 cartas en mano.</div></li>
+      <li><span class="n">2</span><div><b>Fija los precios</b> de tus tres servicios moviendo los marcadores del track (1–4). <em>Rigen hasta tu próximo Evening.</em></div></li>
+    </ol></div></div>
+
+  <h3>Puntos</h3>
+  <div class="tscroll"><table><thead><tr><th>Cómo</th><th>Cuánto</th></tr></thead><tbody>
+    <tr><td>Poner un puesto comercial</td><td><strong>2</strong></td></tr>
+    <tr><td>Dividendos, cada Birdsong <em>(si hay algún puesto en el mapa)</em></td><td><strong>1 por cada 2 fondos</strong></td></tr>
+    <tr><td>Retirar un edificio o token enemigo</td><td>1 por pieza</td></tr>
+    <tr><td>Fabricar un objeto</td><td>Los de la carta</td></tr>
+  </tbody></table></div>
+
+  <h3>Montaje</h3>
+  <ol class="steps" style="list-style:none">
+    <li><span class="n">1</span><div>Reserva de <b>15 guerreros</b>.</div></li>
+    <li><span class="n">2</span><div><b>4 guerreros</b> repartidos en <b>claros con río</b>.</div></li>
+    <li><span class="n">3</span><div><b>3 guerreros en la caja de Pagos</b> — tu capital inicial.</div></li>
+    <li><span class="n">4</span><div>Los <b>9 puestos comerciales</b> en sus tracks.</div></li>
+    <li><span class="n">5</span><div>Un <b>marcador de servicio en el espacio que quieras</b> de cada uno de los tres tracks: así de caro empiezas.</div></li>
+  </ol>
+
+  <div class="note good"><h4>El precio es su jugada</h4>
+    <p style="margin:0">Barato = te compran mucho = muchos fondos = dividendos y puestos, pero armas a tus rivales. Caro = cobras poco y puede que nadie compre. Y el truco fino: <strong>sube el precio de lo que le hace falta al líder y baja el de lo que necesita el último.</strong> La Compañía no gana peleando, gana decidiendo quién puede pelear.</p></div>
+
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card" style="border-left:3px solid var(--ok)"><h4>Cómo gana</h4><p style="margin:0">Un puesto pronto —2 puntos y abre los dividendos— y después caja grande sin gastarla: 10 fondos son 5 puntos por turno sin tocar el mapa. Nadar por el río le deja poner puestos donde nadie lo espera.</p></div>
+    <div class="card" style="border-left:3px solid var(--bad)"><h4>Cómo se le frena</h4><p style="margin:0"><strong>No le compres.</strong> Sin pagos vive con 2 guerreros de renta, y con 2 fondos no puntúa. Y si le tiras un puesto, pierde la mitad de la caja <em>y</em> el puesto no vuelve. Lo malo: necesitas sus servicios tanto como ella tu dinero. Ahí está el juego.</p></div>
+  </div>
+</section>
+
+<!-- ============================================================ AUTÓMATA -->
+<section class="panel" id="p-bot" role="tabpanel" style="--c:var(--cat)">
+  <div class="hero">
+    <div class="ht"><h2>Marquesa Mecánica</h2><em>Mechanical Marquise · Los Ribereños</em></div>
+    <p>Un jugador automático. Sirve para <strong>sustituir a la Marquesa humana</strong> en una partida competitiva, o como <strong>enemigo común</strong> en una partida <strong>cooperativa de 1 a 4 jugadores</strong>. Usa las piezas de la Marquesa, así que <strong>las dos no pueden jugar a la vez</strong>.</p>
+    <div class="meta"><span class="pill b">1–4 jugadores en cooperativo</span><span class="pill">Sin mano de cartas</span><span class="pill">No se le puede emboscar</span></div>
+  </div>
+
+  <h3>Sus dos reglas raras</h3>
+  <div class="grid g2">
+    <div class="card"><h4>Mala Destreza Manual</h4><p style="margin:0">No tiene mano de cartas. <strong>No se la puede obligar a descartar.</strong> Si tuvieras que <strong>cogerle</strong> una carta, robas del mazo. Si tuvieras que <strong>darle</strong> una carta, la descartas y <strong>ella anota 1 punto</strong>.</p></div>
+    <div class="card"><h4>Odia las Sorpresas</h4><p style="margin:0">Las cartas de <strong>Emboscada no se pueden jugar contra ella</strong>.</p></div>
+  </div>
+
+  <h3>Cambios en el montaje</h3>
+  <ol class="steps" style="list-style:none">
+    <li><span class="n">1</span><div><b>Asiento al azar</b>, como si fuera un jugador más. <strong>Un jugador de al lado</strong> se encarga de montarla y jugar sus turnos.</div></li>
+    <li><span class="n">3</span><div><b>Antes de barajar: quita las 4 cartas de dominio y mete las 4 cartas de espía.</b> Roba <b>5</b> cartas para ella (no 3) y ponlas en fila en un atril, de forma que <strong>solo se vea el dorso</strong>. Esa fila es su <b>Agenda de Órdenes</b>.</div></li>
+    <li><span class="n">4</span><div>Coge de la reserva <b>1 espada, 1 bota, 1 bolsa y 1 tetera</b> y ponlos en su caja de <b>Objetos en Venta</b>.</div></li>
+    <li><span class="n">7</span><div>Monta como la Marquesa <b>pero sin los pasos 4 y 5</b>: la Mecánica <strong>no usa edificios</strong>.</div></li>
+  </ol>
+
+  <h3>Su turno</h3>
+  <div class="phase ph-dawn"><div class="ph-h"><b>Birdsong</b></div>
+    <div class="ph-body"><p style="margin:0">Anota <strong>2 puntos por cada claro que gobierne donde tenga al menos 3 guerreros</strong>.</p></div></div>
+  <div class="phase ph-day"><div class="ph-h"><b>Daylight</b><span class="mut">revela la orden de la izquierda y descártala al final</span></div>
+    <div class="ph-body">
+      <p>Mover y batallar ocurren en <strong>todos los claros del palo de la orden</strong>. Reclutar depende del <strong>coste de fabricación</strong> impreso en la carta.</p>
+      <ol class="steps" style="list-style:none">
+        <li><span class="n">1</span><div><b>Batallar.</b> Un combate en <strong>cada</strong> claro donde tenga guerreros y haya piezas enemigas. Si hay varios enemigos, el defensor se elige así: <strong>más piezas allí</strong> → <strong>más puntos de victoria</strong> → <strong>letra de montaje más alta</strong> (A, B, C…).</div></li>
+        <li><span class="n">2</span><div><b>Mover.</b> Empezando por el número <strong>más bajo</strong> de la caja de Prioridad de Claros y subiendo: mueve desde cada claro que gobierne con <strong>4 o más</strong> guerreros. En cada movimiento mueve <strong>todos sus guerreros menos tres</strong>. El destino es el claro adyacente con <strong>más piezas enemigas</strong>; en empate, el de <strong>prioridad más baja</strong>.</div></li>
+        <li><span class="n">3</span><div><b>Reclutar</b>, según el coste de fabricación de la orden revelada:
+          <ul style="margin:6px 0 0 1.1em">
+            <li><strong>1–3 de un mismo palo</strong> → tantos guerreros como el coste <strong>en cada claro que gobierne de ese palo</strong>.</li>
+            <li><strong>1 de cada palo</strong> → 1 guerrero <strong>en cada claro que gobierne</strong>.</li>
+            <li><strong>4 de cualquier palo</strong> → 4 guerreros <strong>en el claro de la fortaleza</strong>.</li>
+            <li><strong>Sin coste de fabricación</strong> → reinicia el Daylight revelando <strong>la siguiente orden</strong>. Si no quedan órdenes, pasa al Evening.</li>
+          </ul></div></li>
+      </ol>
+    </div></div>
+  <div class="phase ph-eve"><div class="ph-h"><b>Evening</b></div>
+    <div class="ph-body"><p style="margin:0">Roba cartas y añádelas <strong>por la derecha</strong> de la Agenda hasta que vuelva a tener <strong>5</strong>.</p></div></div>
+
+  <h3>Cartas de espía</h3>
+  <p>Funcionan como las de dominio para jugarlas, descartarlas y cogerlas cuando quedan disponibles, pero <strong>no cambian tu condición de victoria</strong>.</p>
+  <div class="card"><p style="margin:0">Con una espía en tu zona de juego puedes <strong>revelar una carta de orden durante tu Daylight</strong>. Si el palo de esa orden <strong>coincide</strong> con tu espía, <strong>descartas la espía inmediatamente</strong> — y aquí <strong>los pájaros no son comodín</strong>. Si la espía sobrevive, puedes <strong>intercambiar dos órdenes cualesquiera</strong> de la Agenda.</p></div>
+
+  <h3>Cooperativo</h3>
+  <div class="note good"><h4>Cómo se gana en equipo</h4>
+    <p style="margin:0">Ganáis <strong>si todos y cada uno llegáis a 30 puntos antes que la Mecánica</strong>. No vale que llegue uno.</p></div>
   <ul>
-    <li><strong>Efecto inmediato</strong> → se resuelve y se descarta la carta</li>
-    <li><strong>Efecto persistente</strong> → va a tu tablero, dura toda la partida. No puedes tener duplicados</li>
+    <li>En su Birdsong, la Mecánica anota además <strong>1 punto por cada jugador humano</strong>.</li>
+    <li>Recluta en <strong>todos</strong> los claros del palo del coste de fabricación, <strong>gobierne o no</strong>.</li>
+    <li><strong>En solitario:</strong> quita del mazo <strong>Favor de los Zorros, Favor de los Conejos y Favor de los Ratones</strong> antes de empezar.</li>
   </ul>
 
-  <hr>
+  <h3>Campaña cooperativa</h3>
+  <p>Partidas enlazadas. Cada vez que el equipo gana:</p>
+  <ul>
+    <li>La Mecánica empieza la siguiente con <strong>3 puntos más</strong> (acumulativo).</li>
+    <li>Cada jugador empieza con <strong>una carta fabricada</strong> elegida de su zona de juego al final de la partida anterior (también acumulativo: una por victoria).</li>
+  </ul>
+</section>
 
-  <h3>Puntos de Victoria — Regla General</h3>
-  <div class="box highlight">
-    <p>Cualquier facción gana <strong>1 punto de victoria por cada edificio o token enemigo destruido</strong> en combate.</p>
+<!-- ============================================================ REGLAS -->
+<section class="panel" id="p-reglas" role="tabpanel">
+  <h2 class="ph">Reglas base <small>valen para todos</small></h2>
+
+  <h3>Cómo se gana</h3>
+  <div class="grid g2">
+    <div class="card" style="border-left:3px solid var(--gold)"><h4>30 puntos</h4><p style="margin:0">El <strong>primero en llegar a 30 gana inmediatamente</strong>. Si varios llegan a 30 o más <strong>a la vez</strong>, gana <strong>quien está jugando el turno</strong>.</p></div>
+    <div class="card" style="border-left:3px solid var(--bird)"><h4>Cartas de dominio</h4><p style="margin:0">Ganar <strong>sin llegar a 30</strong>. Se activan <strong>en tu Daylight con al menos 10 puntos</strong>: quitas tu marcador del marcador y <strong>dejas de puntuar para siempre</strong>.</p></div>
   </div>
+  <div class="tscroll" style="margin-top:12px"><table>
+    <thead><tr><th>Dominio</th><th>Ganas si, al empezar tu Birdsong…</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip fox"><svg class="ico"><use href="#i-fox"/></svg> zorro</span> <span class="chip rabbit"><svg class="ico"><use href="#i-rabbit"/></svg> conejo</span> <span class="chip mouse"><svg class="ico"><use href="#i-mouse"/></svg> ratón</span></td><td>Gobiernas <strong>3 claros</strong> del palo de la carta</td></tr>
+      <tr><td><span class="chip bird"><svg class="ico"><use href="#i-bird"/></svg> pájaro</span></td><td>Gobiernas <strong>2 claros en esquinas opuestas</strong></td></tr>
+    </tbody></table></div>
+  <ul style="margin-top:10px">
+    <li>Una carta de dominio activada <strong>no cuenta para el límite de mano</strong> y <strong>no se puede retirar</strong> ni cambiar por otra.</li>
+    <li>Un dominio también se puede <strong>gastar por su palo</strong>. Cuando iría al descarte, en vez de eso se deja <strong>junto al mapa, disponible</strong>.</li>
+    <li>En tu Daylight puedes <strong>coger un dominio disponible</strong> gastando una carta de su mismo palo.</li>
+    <li><strong>A 2 jugadores los 4 dominios se quitan del mazo.</strong></li>
+  </ul>
 
-  <h3>Estructura del Turno (todas las facciones)</h3>
-  <div class="turn-order">
-    <span class="turn-step">🌅 Birdsong</span>
-    <span class="arrow">→</span>
-    <span class="turn-step">☀️ Daylight</span>
-    <span class="arrow">→</span>
-    <span class="turn-step">🌙 Evening</span>
+  <h3>Gobernar un claro</h3>
+  <div class="note"><h4>La regla</h4>
+    <p>Gobierna quien tiene <strong>más guerreros + edificios</strong> en el claro. <strong>Los tokens y los peones NO cuentan.</strong> Si hay empate, <strong>nadie</strong> gobierna.</p>
+    <p style="margin:0">Tres excepciones: las <strong>Águilas</strong> gobiernan empatando (pero no claros vacíos); el <strong>Culto</strong> gobierna donde tenga un <strong>jardín</strong>, aunque sea uno y sin tropa, y eso se salta a las Águilas; los <strong>Mercenarios</strong> comprados a la Compañía cuentan como guerreros propios para gobernar durante el Daylight y Evening del comprador.</p></div>
+
+  <h3>Las tres categorías de piezas</h3>
+  <div class="grid g3">
+    <div class="card"><h4>Guerreros</h4><p style="margin:0;font-size:.9rem">Cuentan para gobernar. Tope de golpes en combate. Van a la reserva al morir.</p></div>
+    <div class="card"><h4>Edificios</h4><p style="margin:0;font-size:.9rem">Ocupan un <strong>hueco de edificio</strong> del claro. Cuentan para gobernar. Al colocarlos sale el <strong>de más a la izquierda</strong> del track; al retirarlos vuelven al <strong>espacio vacío de más a la derecha</strong>.</p></div>
+    <div class="card"><h4>Tokens</h4><p style="margin:0;font-size:.9rem">No ocupan hueco y <strong>no cuentan para gobernar</strong>. Misma lógica de track que los edificios; si no hay track, van a la reserva.</p></div>
   </div>
-</div>
+  <p style="font-size:.86rem;color:var(--ink3)">Retirar un edificio o token enemigo da <strong>1 punto</strong> — a cualquiera. Retirar guerreros no da puntos (salvo Infamia del Vagabundo contra facciones hostiles).</p>
 
-<!-- ===================== COMBATE ===================== -->
-<div id="combat" class="tab-content combat">
-  <h2>⚔️ Combate</h2>
+  <h3>Mover</h3>
+  <ul>
+    <li>Coges <strong>cuantos guerreros quieras</strong> de <strong>un</strong> claro y los llevas a <strong>un</strong> claro adyacente.</li>
+    <li><strong>Hay que gobernar el origen, el destino, o los dos.</strong></li>
+    <li>Sin límite de movimientos por pieza: una misma pila puede moverse varias veces si tienes acciones.</li>
+    <li>Excepciones: el <strong>Vagabundo</strong> se mueve sin gobernar nada (Ágil); la <strong>Compañía</strong> usa los ríos como caminos sin gobernar (Nadadores) y puede vender ese privilegio.</li>
+  </ul>
 
-  <h3>¿Cuándo puedes atacar?</h3>
-  <p>Cuando tienes <strong>al menos 1 guerrero o tu peón</strong> en un claro. Tú eres el atacante y eliges quién es el defensor.</p>
+  <h3>Fabricar</h3>
+  <ul>
+    <li>Activas <strong>piezas de fabricación</strong> de los palos que pida la esquina inferior izquierda de la carta. El palo de una pieza es <strong>el del claro donde está</strong>. Un <strong>«?» tricolor</strong> acepta cualquier palo.</li>
+    <li><strong>Cada pieza se activa una sola vez por turno.</strong></li>
+    <li><strong>Efecto inmediato:</strong> se resuelve y la carta se descarta. Si muestra un objeto, coges ese objeto de la reserva y va a tu caja de Objetos Fabricados. <strong>Si el objeto no está en la reserva, la carta no se puede fabricar.</strong></li>
+    <li><strong>Efecto persistente:</strong> la carta se queda en tu zona de juego. <strong>No puedes tener dos persistentes idénticas.</strong></li>
+  </ul>
+  <div class="tscroll"><table><thead><tr><th>Facción</th><th>Pieza de fabricación</th><th>Cuándo</th></tr></thead><tbody>
+    <tr><td style="color:var(--cat)">Marquesa</td><td>Talleres</td><td>Daylight</td></tr>
+    <tr><td style="color:var(--eyrie)">Águilas</td><td>Nidos</td><td>Daylight, <strong>antes</strong> del Decreto</td></tr>
+    <tr><td style="color:var(--alliance)">Alianza</td><td>Tokens de simpatía</td><td>Daylight</td></tr>
+    <tr><td style="color:var(--vaga)">Vagabundo</td><td>Martillos <em>(valen el palo de su claro)</em></td><td>Daylight</td></tr>
+    <tr><td style="color:var(--cult)">Culto</td><td>Jardines <strong>del palo del Paria</strong></td><td><strong>Evening</strong></td></tr>
+    <tr><td style="color:var(--river)">Compañía</td><td>Fondos → al track de puestos del palo</td><td>Daylight</td></tr>
+  </tbody></table></div>
 
-  <hr>
+  <h3>Las cartas</h3>
+  <ul>
+    <li>Límite de mano: <strong>5 al final de tu Evening</strong>. Durante tu turno puedes tener más.</li>
+    <li>Los <strong>pájaros son comodín</strong> de palo… <strong>excepto para los rituales del Culto</strong> y excepto para descartar una carta de espía.</li>
+    <li>Si el mazo se agota, <strong>baraja el descarte</strong> y forma uno nuevo.</li>
+    <li><strong>Con el Culto en mesa, todo lo gastado y descartado va a las Almas Perdidas</strong>, no al descarte.</li>
+  </ul>
 
-  <h3>Los 3 Pasos del Combate</h3>
+  <h3>El mapa</h3>
+  <ul>
+    <li><strong>Claros</strong> con palo (zorro, conejo, ratón) y un número de <strong>huecos de edificio</strong>.</li>
+    <li>Dos claros son <strong>adyacentes</strong> si los une un <strong>camino</strong>.</li>
+    <li>Un <strong>bosque</strong> es adyacente a todos los claros que lo tocan sin cruzar un camino, y a los bosques separados por un solo camino. <strong>Solo el Vagabundo entra en los bosques.</strong></li>
+    <li>Los <strong>ríos</strong> no son caminos — salvo para la Compañía y para quien le compre Barcos.</li>
+    <li><strong>4 ruinas</strong> en los huecos marcados «R». Mientras haya una ruina, su hueco de edificio está bloqueado: solo el Vagabundo la puede vaciar explorando.</li>
+    <li><strong>Esquinas:</strong> los 4 claros de las esquinas. Importan para el montaje y para el dominio de pájaro.</li>
+  </ul>
+</section>
 
-  <div class="box">
-    <h4>Paso 1 — El defensor puede jugar una Emboscada</h4>
-    <p>Antes de tirar dados, el defensor puede jugar una carta de <strong>Emboscada</strong> cuyo palo coincida con el claro de batalla → inflige <strong>2 hits inmediatos</strong> al atacante.</p>
-    <ul>
-      <li>Si el atacante se queda sin guerreros/peón → la batalla termina inmediatamente</li>
-      <li>El atacante puede <strong>cancelarla</strong> jugando su propia carta de Emboscada del mismo palo</li>
-    </ul>
+<!-- ============================================================ COMBATE -->
+<section class="panel" id="p-combate" role="tabpanel">
+  <h2 class="ph">⚔️ Combate</h2>
+  <p class="lead">Atacas eligiendo un claro donde tengas <strong>guerreros o tu peón</strong>. Tú eres el <strong>atacante</strong>; eliges a <strong>otro jugador presente</strong> como <strong>defensor</strong>. No hace falta gobernar el claro.</p>
+
+  <h3>Los tres pasos</h3>
+  <div class="phase"><div class="ph-h" style="border-left:4px solid var(--rabbit)"><b>Paso 1 · El defensor puede emboscar</b></div>
+    <div class="ph-body">
+      <p>El defensor puede jugar una carta de <strong>Emboscada del palo del claro</strong> (o un pájaro). Si no se la anulan, <strong>inflige 2 golpes inmediatamente</strong> y después descarta la carta.</p>
+      <ul style="margin-bottom:0">
+        <li><strong>Si no queda ningún guerrero atacante, el combate termina aquí.</strong> Los 2 golpes se cobran antes de cualquier dado.</li>
+        <li><strong>Anular:</strong> el atacante puede jugar <em>también</em> una Emboscada del mismo claro para cancelar el efecto. El defensor descarta la suya igualmente.</li>
+        <li>No se puede emboscar a la <strong>Marquesa Mecánica</strong>.</li>
+      </ul>
+    </div></div>
+
+  <div class="phase"><div class="ph-h" style="border-left:4px solid var(--fox)"><b>Paso 2 · Tira los dados y suma golpes extra</b></div>
+    <div class="ph-body">
+      <p>Se tiran <strong>los dos dados</strong>. El <strong>atacante</strong> inflige los golpes del <strong>resultado alto</strong>; el <strong>defensor</strong>, los del <strong>bajo</strong>. Si salen iguales, los dos infligen lo mismo.</p>
+      <div class="grid g3">
+        <div class="card"><h4>Tope por dados</h4><p style="margin:0;font-size:.9rem">Nunca puedes infligir por dados <strong>más golpes que guerreros tengas en el claro</strong>, ataques o defiendas. El <strong>Vagabundo</strong> usa sus <strong>espadas sanas</strong> en vez de guerreros.</p></div>
+        <div class="card"><h4>Golpes extra</h4><p style="margin:0;font-size:.9rem">Los que dan habilidades y cartas persistentes se suman <strong>después</strong> y <strong>no tienen tope</strong>.</p></div>
+        <div class="card"><h4>Indefenso</h4><p style="margin:0;font-size:.9rem">Si el <strong>defensor no tiene ningún guerrero</strong> en el claro, el atacante inflige <strong>1 golpe extra</strong>.</p></div>
+      </div>
+      <div class="note warn" style="margin-bottom:0"><p style="margin:0"><strong>Guerra de Guerrillas:</strong> cuando la <strong>Alianza defiende</strong>, se invierte — ella cobra el <strong>dado alto</strong> y el atacante el <strong>bajo</strong>.</p></div>
+    </div></div>
+
+  <div class="phase"><div class="ph-h" style="border-left:4px solid var(--bad)"><b>Paso 3 · Repartid los golpes, a la vez</b></div>
+    <div class="ph-body">
+      <p>Atacante y defensor se infligen los golpes <strong>simultáneamente</strong>: nadie se salva por haber muerto primero. Cada golpe retira <strong>una pieza</strong>.</p>
+      <div class="note"><h4>El orden no es libre</h4><p style="margin:0">Quien recibe elige qué pierde, <strong>pero tiene que retirar todos sus guerreros del claro antes de tocar sus edificios y tokens</strong>. Después, entre edificios y tokens, en el orden que quiera.</p></div>
+      <p style="margin:0"><strong>1 punto por cada edificio o token enemigo retirado.</strong></p>
+    </div></div>
+
+  <h3>Peculiaridades por facción</h3>
+  <div class="tscroll"><table><thead><tr><th>Facción</th><th>En combate</th></tr></thead><tbody>
+    <tr><td style="color:var(--cat)">Marquesa</td><td><strong>Hospitales de Campaña:</strong> por cada guerrero que pierda puede gastar una carta del palo de ese claro y recolocarlo en la fortaleza.</td></tr>
+    <tr><td style="color:var(--eyrie)">Águilas</td><td><strong>Comandante:</strong> +1 golpe como atacante. <strong>Despótico:</strong> +1 punto si retira al menos un edificio o token.</td></tr>
+    <tr><td style="color:var(--alliance)">Alianza</td><td><strong>Guerra de Guerrillas</strong> al defender. Y si entras en un claro suyo con simpatía, <strong>Indignación</strong>: le das una carta.</td></tr>
+    <tr><td style="color:var(--vaga)">Vagabundo</td><td>Tope = <strong>espadas sanas</strong>. Cada golpe recibido <strong>daña un objeto</strong>; sin objetos sanos, ignora el resto. <strong>Indefenso</strong> sin espadas sanas. Retirar un guerrero <strong>lo vuelve hostil</strong>. El <strong>Árbitro</strong> puede ser reclutado por el defensor antes de tirar.</td></tr>
+    <tr><td style="color:var(--cult)">Culto</td><td><strong>Venganza:</strong> cada guerrero que pierda <strong>defendiendo</strong> va a Acólitos, no a la reserva.</td></tr>
+    <tr><td style="color:var(--river)">Compañía</td><td>Batallar <strong>cuesta comprometer 1 fondo</strong>. Sus guerreros pueden estar alquilados como <strong>Mercenarios</strong> a otro jugador.</td></tr>
+  </tbody></table></div>
+
+  <div class="note" style="margin-top:18px"><h4>Resolver uno ahora</h4><p style="margin:0">La calculadora de combate está en la pestaña <strong>Mesa</strong>, junto al marcador.</p></div>
+</section>
+
+<!-- ============================================================ CHULETA -->
+<section class="panel" id="p-chuleta" role="tabpanel">
+  <h2 class="ph">Chuletario <small>una pantalla, todo lo que se olvida</small></h2>
+
+  <h3>Resumen de turno por facción</h3>
+  <div class="tscroll"><table>
+    <thead><tr><th>Facción</th><th>Birdsong</th><th>Daylight</th><th>Evening</th><th>Puntúa…</th></tr></thead>
+    <tbody>
+      <tr><td style="color:var(--cat)"><strong>Marquesa</strong></td><td>1 madera por aserradero</td><td>Fabricar + <strong>3 acciones</strong> (pájaro = acción extra)</td><td>Robar y descartar</td><td>Al <strong>construir</strong></td></tr>
+      <tr><td style="color:var(--eyrie)"><strong>Águilas</strong></td><td>Emergencia · <strong>añadir 1–2 al Decreto</strong> · nido nuevo</td><td>Fabricar, luego <strong>cumplir el Decreto</strong></td><td><strong>Puntuar nidos</strong> · robar</td><td><strong>Cada Evening</strong>, por nidos</td></tr>
+      <tr><td style="color:var(--alliance)"><strong>Alianza</strong></td><td><strong>Revuelta</strong> · <strong>Extender simpatía</strong></td><td>Fabricar · Movilizar · Entrenar</td><td><strong>Ops. militares (= oficiales)</strong> · ingresos</td><td>Al poner <strong>simpatía</strong></td></tr>
+      <tr><td style="color:var(--vaga)"><strong>Vagabundo</strong></td><td>Refrescar · <strong>Escabullirse</strong></td><td>Agotar objetos: mover, batallar, explorar, ayudar, misión, golpear, reparar, fabricar, especial</td><td>Descanso · robar · descartar · límite de objetos</td><td><strong>Explorar · Ayudar · Misiones</strong></td></tr>
+      <tr><td style="color:var(--cult)"><strong>Culto</strong></td><td><strong>Paria</strong> · vaciar Almas Perdidas · <strong>conspiraciones</strong></td><td><strong>Rituales</strong>: construir, reclutar, sacrificar, puntuar</td><td>Recuperar reveladas · <strong>fabricar</strong> · robar</td><td>Ritual <strong>Puntuar</strong></td></tr>
+      <tr><td style="color:var(--river)"><strong>Compañía</strong></td><td>Renta si Pagos vacío · <strong>dividendos</strong> · recoger a Fondos</td><td>Gastar/comprometer: mover, batallar, robar, fabricar, reclutar, <strong>puesto</strong></td><td>Descartar · <strong>fijar precios</strong></td><td><strong>Puestos (2)</strong> y <strong>dividendos</strong></td></tr>
+    </tbody></table></div>
+
+  <h3>Puntos: todas las vías</h3>
+  <div class="tscroll"><table>
+    <thead><tr><th>Acción</th><th>Puntos</th><th>Quién</th></tr></thead>
+    <tbody>
+      <tr><td>Retirar un <strong>edificio o token</strong> enemigo</td><td>1 por pieza</td><td>Todos</td></tr>
+      <tr><td><strong>Fabricar un objeto</strong></td><td>Los de la carta</td><td>Todos — <em>las Águilas solo 1</em></td></tr>
+      <tr><td>Construir edificio</td><td>Track</td><td>Marquesa</td></tr>
+      <tr><td>Nidos en el mapa</td><td>Track, cada Evening</td><td>Águilas</td></tr>
+      <tr><td>Poner simpatía / Organizar</td><td>Track</td><td>Alianza</td></tr>
+      <tr><td>Explorar una ruina</td><td>1</td><td>Vagabundo</td></tr>
+      <tr><td>Mejorar relación</td><td>El del espacio nuevo</td><td>Vagabundo</td></tr>
+      <tr><td>Ayudar a un <strong>Aliado</strong></td><td>2</td><td>Vagabundo</td></tr>
+      <tr><td>Completar misión</td><td>1 por misión del mismo palo, <em>o</em> 2 cartas</td><td>Vagabundo</td></tr>
+      <tr><td>Retirar pieza de facción <strong>hostil</strong> (Infamia)</td><td>+1</td><td>Vagabundo</td></tr>
+      <tr><td>Ritual <strong>Puntuar</strong></td><td>Track de jardines (1×/palo/turno)</td><td>Culto</td></tr>
+      <tr><td>Puesto comercial</td><td><strong>2</strong></td><td>Compañía</td></tr>
+      <tr><td><strong>Dividendos</strong></td><td>1 por cada 2 fondos</td><td>Compañía</td></tr>
+      <tr><td>Claro gobernado con 3+ guerreros</td><td>2, cada Birdsong</td><td>Marquesa Mecánica</td></tr>
+      <tr><td>Que le intenten dar una carta</td><td>1</td><td>Marquesa Mecánica</td></tr>
+    </tbody></table></div>
+
+  <h3>Lo que más se juega mal</h3>
+  <div class="grid g2">
+    <div class="card"><h4>Tokens y peones no gobiernan</h4><p style="margin:0;font-size:.9rem">Simpatía, madera, fortaleza, puestos y el peón del Vagabundo <strong>no cuentan</strong> para gobernar. Guerreros y edificios, sí.</p></div>
+    <div class="card"><h4>Los golpes son simultáneos</h4><p style="margin:0;font-size:.9rem">El defensor pega aunque muera. Y <strong>primero caen todos los guerreros</strong>, luego edificios y tokens.</p></div>
+    <div class="card"><h4>Marchar es una acción</h4><p style="margin:0;font-size:.9rem">La Marquesa mueve <strong>dos veces</strong> gastando <strong>una</strong> de sus tres acciones.</p></div>
+    <div class="card"><h4>La Alianza no pelea en Daylight</h4><p style="margin:0;font-size:.9rem">Mover, batallar, reclutar y organizar son <strong>Evening</strong>, y limitados por sus <strong>oficiales</strong>.</p></div>
+    <div class="card"><h4>El Decreto es obligatorio</h4><p style="margin:0;font-size:.9rem">Las Águilas <strong>tienen</strong> que meter 1 o 2 cartas cada Birdsong. No es opcional.</p></div>
+    <div class="card"><h4>Al Culto los pájaros no le valen</h4><p style="margin:0;font-size:.9rem">No son comodín para rituales. Solo para <strong>Sacrificar</strong>.</p></div>
+    <div class="card"><h4>Dividendos antes de recoger</h4><p style="margin:0;font-size:.9rem">La Compañía cuenta los fondos <strong>antes</strong> de meter los pagos del turno. Lo que te pagan puntúa <strong>el turno siguiente</strong>.</p></div>
+    <div class="card"><h4>Puesto destruido = puesto perdido</h4><p style="margin:0;font-size:.9rem">Va a la caja. <strong>No se reconstruye</strong>, y encima pierde la mitad de los fondos.</p></div>
+    <div class="card"><h4>Un edificio retirado vuelve a la derecha</h4><p style="margin:0;font-size:.9rem">Al <strong>espacio vacío de más a la derecha</strong> de su track. El siguiente que construyan vuelve a dar los puntos altos.</p></div>
+    <div class="card"><h4>El Vagabundo no se puede matar</h4><p style="margin:0;font-size:.9rem">Su peón <strong>nunca</strong> sale del mapa. Los golpes le dañan objetos.</p></div>
   </div>
+</section>
 
-  <div class="box">
-    <h4>Paso 2 — Tirar los 2 dados</h4>
-    <table>
-      <tr><th>Dado</th><th>Quién</th></tr>
-      <tr><td>Número mayor</td><td>Atacante</td></tr>
-      <tr><td>Número menor</td><td>Defensor</td></tr>
-      <tr><td>Iguales</td><td>Ambos hacen los mismos hits</td></tr>
-    </table>
-    <div class="box warning" style="margin-top:10px;">
-      <p><strong>Límite de hits por dados:</strong> El máximo hits que puedes hacer = número de tus guerreros en ese claro. Ejemplo: tienes 1 guerrero y sacas 3 → solo haces 1 hit.</p>
-    </div>
-    <p><strong>Hits extra</strong> por habilidades especiales no tienen este límite.</p>
+<!-- ============================================================ FAQ -->
+<section class="panel" id="p-faq" role="tabpanel">
+  <h2 class="ph">Dudas frecuentes</h2>
+  <div class="grid g2" id="faqGrid">
+    <div class="card"><h4>¿Puedo atacar un claro que no gobierno?</h4><p style="margin:0">Sí. Para <strong>batallar</strong> solo necesitas tener ahí guerreros o tu peón. Gobernar hace falta para <strong>mover</strong> y para <strong>construir</strong>.</p></div>
+    <div class="card"><h4>¿El defensor pega si se queda sin guerreros?</h4><p style="margin:0">Sí: los golpes son <strong>simultáneos</strong>. Pega con los guerreros que tenía <em>antes</em> de recibir. Lo que no puede es infligir por dados más golpes que guerreros tenga.</p></div>
+    <div class="card"><h4>¿Gano puntos por matar guerreros?</h4><p style="margin:0">No. Solo por <strong>edificios y tokens</strong>. La excepción es la <strong>Infamia</strong> del Vagabundo contra una facción hostil.</p></div>
+    <div class="card"><h4>¿Un pájaro vale como cualquier palo?</h4><p style="margin:0">Casi siempre sí. <strong>No</strong> para los <strong>rituales del Culto</strong> y <strong>no</strong> al comprobar si se descarta una carta de <strong>espía</strong>.</p></div>
+    <div class="card"><h4>¿Cuántas cartas puedo tener?</h4><p style="margin:0"><strong>5 al terminar tu Evening.</strong> Durante tu turno puedes pasarte. Los <strong>partidarios</strong> de la Alianza y los <strong>dominios activados</strong> no cuentan.</p></div>
+    <div class="card"><h4>¿Se puede entrar en el claro de la fortaleza?</h4><p style="margin:0">Se puede <strong>mover</strong> hacia ahí, sí. Lo que no se puede es <strong>colocar</strong> piezas nuevas: eso solo la Marquesa.</p></div>
+    <div class="card"><h4>¿Quién puede entrar en los bosques?</h4><p style="margin:0">Solo el <strong>Vagabundo</strong>. Y ahí repara todos sus objetos dañados en el Evening.</p></div>
+    <div class="card"><h4>¿Los ríos son caminos?</h4><p style="margin:0">No, salvo para la <strong>Compañía del Río</strong> (Nadadores) y para quien le compre el servicio de <strong>Barcos</strong> ese turno.</p></div>
+    <div class="card"><h4>Si destruyo un jardín del Culto, ¿pierde el gobierno?</h4><p style="margin:0">Sí — pero solo si no tiene <strong>otro</strong> jardín ahí y no gana por guerreros + edificios. Un jardín basta para gobernar, y se salta a las Águilas.</p></div>
+    <div class="card"><h4>Si nadie le compra a la Compañía, ¿se queda a cero?</h4><p style="margin:0">No: si su caja de <strong>Pagos está vacía</strong> al empezar su Birdsong, mete <strong>2 guerreros propios</strong>. Renta mínima. Pero con 2 fondos y un puesto, son <strong>1 punto</strong> por turno.</p></div>
+    <div class="card"><h4>¿Puede la Compañía poner un puesto donde gobierna la Alianza?</h4><p style="margin:0">Solo si tiene <strong>guerreros de la Alianza</strong> en sus fondos, porque hay que <strong>gastar 2 fondos de quien gobierna</strong>. Si el claro <strong>no lo gobierna nadie</strong>, no hay fondos que casen: no se puede.</p></div>
+    <div class="card"><h4>¿Las Almas Perdidas son solo del Culto?</h4><p style="margin:0">El montón es suyo, pero <strong>reciben las cartas de todos</strong>: con el Culto en mesa, todo lo gastado y descartado va ahí en vez de al descarte. Se vacía en su Birdsong.</p></div>
+    <div class="card"><h4>¿Puede el Culto puntuar un palo del que no tiene jardines?</h4><p style="margin:0">No. Y con <strong>un solo</strong> jardín de ese palo, puntúa <strong>0</strong>. Hacen falta dos para cobrar.</p></div>
+    <div class="card"><h4>Cuando el Vagabundo aporta guerreros aliados, ¿cuántos golpes mete?</h4><p style="margin:0">Su tope pasa a ser <strong>los guerreros del aliado en ese claro + sus espadas sanas</strong>. No puede usarlos si ese aliado es el <strong>defensor</strong>.</p></div>
+    <div class="card"><h4>¿Las Águilas puntúan el turno que caen en Tumulto?</h4><p style="margin:0">Sí. El Tumulto <strong>termina el Daylight</strong> y pasa al Evening, y en el Evening puntúan sus nidos con normalidad. Lo que pierden es 1 punto por cada pájaro del Decreto.</p></div>
+    <div class="card"><h4>¿Un segundo Vagabundo cambia algo?</h4><p style="margin:0">Sí: <strong>dos objetos «R» por ruina</strong> (y no puede coger uno que ya tenga), orden de montaje <strong>al azar</strong> entre los dos vagabundos, y las <strong>tres misiones se comparten</strong> sin añadir más. Su alcance es <strong>2</strong>, no 5.</p></div>
+    <div class="card"><h4>¿Cuándo se puede activar un dominio?</h4><p style="margin:0">En <strong>tu Daylight</strong>, con <strong>10 puntos o más</strong>. Dejas de puntuar y ganas cumpliendo su condición <strong>al empezar tu Birdsong</strong>. A 2 jugadores no hay dominios.</p></div>
+    <div class="card"><h4>Hemos llegado a 30 los dos a la vez. ¿Quién gana?</h4><p style="margin:0"><strong>Quien esté jugando el turno.</strong></p></div>
   </div>
+  <div class="note" style="margin-top:20px"><h4>Sobre esta guía</h4>
+    <p>Redactada desde <em>The Law of Root</em> (reglamento base) y <em>Learning to Play — The Riverfolk Expansion</em>.</p>
+    <p style="margin:0">Donde un dato está <strong>impreso en un tablero</strong> y no en el reglamento —los puntos de los tracks de la Marquesa, las Águilas y la Alianza— la guía te dice <strong>qué espacio mirar</strong> en vez de darte un número que podría estar mal. En la mesa lo lees en un segundo; una cifra equivocada te arruina la partida.</p></div>
+</section>
 
-  <div class="box">
-    <h4>Paso 3 — Aplicar hits simultáneamente</h4>
-    <p>El que recibe hits elige qué pierde, en este orden <strong>obligatorio</strong>:</p>
-    <ol>
-      <li>Primero todos sus <strong>guerreros</strong></li>
-      <li>Luego sus <strong>edificios y tokens</strong> (en el orden que elija)</li>
-    </ol>
-    <p>Ganas <strong>1VP por cada edificio o token enemigo</strong> destruido.</p>
-  </div>
+</div><!-- /wrap -->
 
-  <hr>
-
-  <h3>Reglas Especiales por Facción</h3>
-  <table>
-    <tr><th>Facción</th><th>Regla</th></tr>
-    <tr><td>🐱 Marquise</td><td>Field Hospitals: gasta 1 carta del palo del claro para recuperar todos los guerreros eliminados y llevarlos al Keep</td></tr>
-    <tr><td>🦅 Eyrie</td><td>Señores del Bosque: gobierna en empates. Comandante: +1 hit al atacar</td></tr>
-    <tr><td>🌿 Alliance</td><td>Guerra de Guerrillas: como defensora usa el dado mayor (no el menor)</td></tr>
-    <tr><td>🦝 Vagabond</td><td>Recibe hits dañando objetos en vez de perder guerreros. Hits máximos = número de espadas en Mochila</td></tr>
-  </table>
-
-  <hr>
-
-  <h3>Regla — Indefenso</h3>
-  <div class="box warning">
-    <p>Si el defensor no tiene <strong>guerreros</strong> en el claro de batalla, el atacante hace <strong>+1 hit extra</strong> automático. Aplica a todos.</p>
-    <p>Ejemplo: atacas un claro con solo 2 edificios enemigos → +1 hit por Indefenso → destruyes más edificios de lo que indicaban los dados.</p>
-  </div>
-
-  <h3>Resumen Visual del Combate</h3>
-  <div class="turn-order">
-    <span class="turn-step">Emboscada?</span>
-    <span class="arrow">→</span>
-    <span class="turn-step">Tirar dados</span>
-    <span class="arrow">→</span>
-    <span class="turn-step">Aplicar hits</span>
-    <span class="arrow">→</span>
-    <span class="turn-step">Anotar puntos</span>
-  </div>
-</div>
-
-<!-- ===================== FAQ ===================== -->
-<div id="faq" class="tab-content faq">
-  <h2>❓ Preguntas Frecuentes</h2>
-
-  <div class="faq-item">
-    <div class="faq-question">¿Puedo atacar con solo 1 guerrero?</div>
-    <p>Sí, pero el máximo de hits que puedes hacer tirando dados es igual a tu número de guerreros. Con 1 guerrero, máximo 1 hit aunque el dado muestre más.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿Los tokens de simpatía ocupan slots del claro?</div>
-    <p>No. Los tokens no ocupan slots ni contribuyen a gobernar. Puedes colocar simpatía en cualquier claro sin importar sus slots.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿Cuántos guerreros puede haber en un claro?</div>
-    <p>No hay límite. Puedes acumular todos los guerreros que quieras en un solo claro. Solo los slots de edificios tienen límite.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿Solo puedo construir donde gobierno?</div>
-    <p>Sí. Para construir cualquier edificio debes gobernar el claro donde lo colocas. Sin gobernar, no puedes construir nada.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿Los Supporters de la Alliance son públicos?</div>
-    <p>No. Están boca abajo — solo la Alliance puede verlos cuando quiera. Sin embargo, cuando destruyen una base tienes que voltearlos para identificar cuáles descartar, y en ese momento los demás jugadores pueden verlos.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿La Eyrie gobierna cuando hay empate?</div>
-    <p>Sí. La Eyrie es la única facción que gobierna un claro en empate. Las demás facciones no gobiernan cuando hay empate.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿El Vagabond puede ser eliminado del mapa?</div>
-    <p>No. El peón del Vagabond no puede ser removido del mapa bajo ninguna circunstancia. En cambio, cuando recibe hits en combate daña sus objetos.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿Qué pasa cuando destruyen una base de la Alliance?</div>
-    <p>Tres cosas simultáneas: (1) descarta todos los Supporters del palo de esa base + todos los pájaros, (2) pierde la mitad de los Oficiales redondeado arriba, (3) si era la última base y tiene más de 5 Supporters, descarta hasta 5.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿Puedo hacer la Revuelta de Alliance en cualquier claro?</div>
-    <p>No. El claro debe tener un token de simpatía, y el palo del claro debe coincidir con una base que aún no hayas colocado en el mapa. Máximo 1 revuelta por palo en toda la partida.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿Cuando la Eyrie cae en La Caída puede continuar el turno?</div>
-    <p>No. La Caída termina el Daylight inmediatamente. Después de los 4 pasos (Humillación, Purga, Destronamiento, Descanso) pasa directo al Evening.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿Cuando la Marquise usa Field Hospitals pierde los guerreros?</div>
-    <p>No. Los guerreros se trasladan al claro del Keep en vez de regresar a la reserva. Solo cuesta 1 carta del palo del claro donde ocurrió la batalla, sin importar cuántos guerreros recuperes.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿El Vagabond puede moverse a bosques?</div>
-    <p>Solo desde otro bosque o con el Deslizamiento del Birdsong. Desde un claro normal, el Vagabond no puede entrar a un bosque — solo de bosque a claro o de bosque a bosque.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿Cuántos puntos da fabricar un objeto?</div>
-    <p>Los indicados en la carta. Excepto la Eyrie que siempre gana solo 1 punto por fabricar (Desdén por el Comercio). El Vagabond cuando fabrica un objeto lo toma directamente a su Mochila.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿Si recupero un edificio destruido regreso los puntos que había ganado?</div>
-    <p>No. Los puntos ganados al construir son permanentes. Pero el espacio del tablero se vuelve a tapar — pierdes el bonus de robo o los puntos de Evening que ese espacio daba.</p>
-  </div>
-
-  <div class="faq-item">
-    <div class="faq-question">¿La carta pájaro siempre es comodín?</div>
-    <p>Como comodín para gastar: sí, siempre. Pero si alguien te pide específicamente una carta pájaro, no puedes sustituirla con otra carta de palo diferente.</p>
-  </div>
-
-</div>
+<style>
+.numin{background:#0e0a07;border:1px solid var(--line2);color:var(--ink);border-radius:var(--r2);
+  padding:8px 10px;font:inherit;font-size:.95rem;width:100%;max-width:120px}
+.numin:focus{outline:none;border-color:var(--gold-dim);box-shadow:0 0 0 3px rgba(226,180,92,.12)}
+.fcard{border:1px solid var(--line);border-left:4px solid var(--c);border-radius:var(--r);background:var(--panel);
+  padding:13px 15px;cursor:pointer;transition:.14s;position:relative;text-align:left;font:inherit;color:inherit;width:100%}
+.fcard:hover{border-color:var(--line2);transform:translateY(-1px)}
+.fcard[aria-pressed="true"]{background:color-mix(in srgb,var(--c) 16%,var(--panel));border-color:var(--c)}
+.fcard b{display:block;color:var(--ink);font-size:1rem;margin-bottom:3px}
+.fcard span{font-size:.82rem;color:var(--ink3)}
+.fcard .rv{position:absolute;top:11px;right:13px;font-size:1.2rem;color:var(--c);font-weight:700;font-variant-numeric:tabular-nums}
+.fcard .tick{position:absolute;bottom:11px;right:13px;color:var(--c);font-size:1rem;opacity:0}
+.fcard[aria-pressed="true"] .tick{opacity:1}
+.mixc{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:13px 15px;cursor:pointer;
+  text-align:left;font:inherit;color:inherit;transition:.14s}
+.mixc:hover{border-color:var(--gold-dim)}
+.mixc b{display:block;color:var(--gold);font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;margin-bottom:6px}
+.mixc span{font-size:.92rem;color:var(--ink2)}
+.sbrow{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-left:4px solid var(--c);
+  border-radius:var(--r2);background:var(--panel);margin-bottom:8px;flex-wrap:wrap}
+.sbrow .nm{flex:1 1 140px;min-width:0;color:var(--ink);font-size:.95rem}
+.sbrow .sc{font-size:1.5rem;color:var(--gold);min-width:52px;text-align:center;font-variant-numeric:tabular-nums}
+.sbrow.win{border-color:var(--ok);background:rgba(95,184,113,.1)}
+.sbrow.win .sc{color:var(--ok)}
+.sq{width:34px;height:34px;border-radius:7px;border:1px solid var(--line2);background:#0e0a07;color:var(--ink2);
+  font:inherit;font-size:1.05rem;cursor:pointer;line-height:1}
+.sq:hover{border-color:var(--gold-dim);color:var(--gold)}
+.res{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:13px 15px;margin-bottom:10px}
+.res .rt{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.hitbar{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}
+.hit{width:17px;height:17px;border-radius:50%;background:var(--bad);box-shadow:inset 0 0 0 1px rgba(0,0,0,.3)}
+.hit.x{background:var(--gold)}
+.turnrow{display:flex;gap:9px;align-items:center;padding:9px 11px;border:1px solid var(--line);border-radius:var(--r2);
+  background:var(--panel);margin-bottom:7px;cursor:pointer;border-left:4px solid var(--c)}
+.turnrow.act{background:color-mix(in srgb,var(--c) 14%,var(--panel));border-color:var(--c)}
+.turnrow .ix{font-size:.72rem;color:var(--ink3);width:18px}
+.phbtns{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+</style>
 
 <script>
-  function showTab(id) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    const btns = document.querySelectorAll('.tab-btn');
-    const map = { setup: 0, cat: 1, eyrie: 2, alliance: 3, vagabond: 4, general: 5, combat: 6, faq: 7 };
-    btns[map[id]].classList.add('active');
-  }
-</script>
+(function(){
+"use strict";
+const LS="rootguia.v2";
+let S={big:0,players:4,picked:["cat","eyrie","alliance","vagabond"],checks:{},scores:{},names:{},turn:0,phase:0,ruleN:{}};
+try{const r=localStorage.getItem(LS);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
+const save=()=>{try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
+/* ---------------- datos ---------------- */
+const TABS=[
+  {id:"setup",   label:"Preparar",    c:"var(--gold)"},
+  {id:"mesa",    label:"Mesa",        c:"var(--gold)"},
+  {id:"cat",     label:"Marquesa",    c:"var(--cat)"},
+  {id:"eyrie",   label:"Águilas",     c:"var(--eyrie)"},
+  {id:"alliance",label:"Alianza",     c:"var(--alliance)"},
+  {id:"vagabond",label:"Vagabundo",   c:"var(--vaga)"},
+  {id:"cult",    label:"Culto",       c:"var(--cult)", nu:1},
+  {id:"riverfolk",label:"Compañía",   c:"var(--river)",nu:1},
+  {id:"bot",     label:"Mecánica",    c:"var(--cat)",  nu:1},
+  {id:"reglas",  label:"Reglas base", c:"var(--gold)"},
+  {id:"combate", label:"Combate",     c:"var(--bad)"},
+  {id:"chuleta", label:"Chuletario",  c:"var(--gold)"},
+  {id:"faq",     label:"Dudas",       c:"var(--gold)"}
+];
+const NEED={2:17,3:18,4:21,5:25,6:28};
+const F={
+  cat:{n:"Marquesa de los Gatos",e:"Marquise de Cat",r:10,c:"var(--cat)",o:1,s:[
+    "Reserva de <b>25 guerreros</b> y <b>8 maderas</b>.",
+    "El <b>token de fortaleza</b> en el claro de esquina que quieras.",
+    "<b>1 guerrero en cada claro</b> del mapa <b>excepto</b> el de la esquina diagonalmente opuesta a la fortaleza.",
+    "<b>1 aserradero, 1 taller y 1 reclutador</b> repartidos como quieras entre el claro de la fortaleza y los adyacentes.",
+    "Los <b>5 + 5 + 5</b> edificios restantes a sus tracks, llenando todo menos el espacio de la <b>izquierda</b> de cada uno."]},
+  eyrie:{n:"Dinastías de las Águilas",e:"Eyrie Dynasties",r:7,c:"var(--eyrie)",o:2,s:[
+    "Reserva de <b>20 guerreros</b>.",
+    "<b>1 nido y 6 guerreros</b> en la esquina <b>diagonalmente opuesta</b> a la fortaleza de la Marquesa. <i>Si la Marquesa no juega, la esquina que quieras.</i>",
+    "Elige <b>1 de los 4 líderes</b>; los otros tres boca arriba a tu lado.",
+    "Mete los <b>2 Visires Leales</b> en las columnas que diga tu líder, mostrando el palo.",
+    "Los <b>6 nidos</b> restantes al track, llenando todo menos el espacio de la izquierda."]},
+  alliance:{n:"Alianza del Bosque",e:"Woodland Alliance",r:3,c:"var(--alliance)",o:3,s:[
+    "Reserva de <b>10 guerreros</b>. <i>No colocas nada en el mapa.</i>",
+    "Las <b>3 bases</b> en sus espacios del tablero.",
+    "Los <b>10 tokens de simpatía</b> en el track.",
+    "<b>Roba 3 cartas</b> y ponlas boca abajo como partidarios iniciales."]},
+  cult:{n:"Culto Reptiliano",e:"Lizard Cult",r:2,c:"var(--cult)",o:4,s:[
+    "Reserva de <b>25 guerreros</b>.",
+    "<b>4 guerreros y 1 jardín</b> del palo impreso en un <b>claro de esquina</b> que no sea la esquina inicial de otro jugador y, si se puede, <b>diagonalmente opuesto</b> a una esquina inicial.",
+    "<b>1 guerrero en cada claro adyacente</b> a ese.",
+    "Los <b>14 jardines</b> restantes a sus tracks, <b>de derecha a izquierda</b>.",
+    "El <b>marcador de Paria</b> en el palo que quieras. La caja de <b>Acólitos empieza vacía</b>.",
+    "<b>Avisa a la mesa:</b> desde ahora todo lo que cualquiera gaste o descarte va a tus <b>Almas Perdidas</b>, no al descarte."]},
+  riverfolk:{n:"Compañía del Río",e:"Riverfolk Company",r:5,c:"var(--river)",o:5,s:[
+    "Reserva de <b>15 guerreros</b>.",
+    "<b>4 guerreros</b> repartidos entre <b>claros con río</b>.",
+    "<b>3 guerreros en tu caja de Pagos</b> — tu capital inicial.",
+    "Los <b>9 puestos comerciales</b> en sus tracks.",
+    "Un <b>marcador de servicio</b> en el espacio que quieras de cada uno de los <b>3 tracks</b>: así de caro empiezas.",
+    "Pon tu <b>mano boca arriba</b> encima del tablero."]},
+  vagabond:{n:"Vagabundo",e:"Vagabond",r:5,c:"var(--vaga)",o:9,s:[
+    "Elige <b>personaje</b>: Ladrón, Manitas o Explorador (base) · Errante, Canalla o Árbitro (Los Ribereños).",
+    "Coloca el <b>peón en cualquier bosque</b>.",
+    "Baraja tu <b>mazo de misiones</b> y saca <b>3 boca arriba</b>.",
+    "<b>Llena las ruinas:</b> coge las 4 ruinas y los objetos «R» (bolsa, bota, martillo, espada), uno debajo de cada una, baraja cada montón y devuélvelos a sus huecos.",
+    "Coge tus <b>objetos iniciales «S»</b> según tu personaje; el resto de «S» a la caja.",
+    "Un <b>marcador de relación</b> por cada facción en juego, todos en <b>Indiferente</b>."]}
+};
+const ORDER=Object.keys(F).sort((a,b)=>F[a].o-F[b].o);
+let CUR="setup";
+
+/* ---------------- tabs ---------------- */
+$("#tabs").innerHTML=TABS.map(t=>
+  `<button class="tb" role="tab" data-t="${t.id}" style="--c:${t.c}" aria-selected="false">
+     <span class="dot"></span>${esc(t.label)}${t.nu?'<span class="new">nuevo</span>':""}</button>`).join("");
+function go(id,push){
+  if(!TABS.some(t=>t.id===id))id="setup";
+  CUR=id;
+  $$(".tb").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.t===id)));
+  $$(".panel").forEach(p=>p.classList.toggle("on",p.id==="p-"+id));
+  if(push){try{history.replaceState(null,"","#"+id);}catch(e){}}
+  window.scrollTo({top:0,behavior:"instant"});
+}
+$("#tabs").addEventListener("click",e=>{const b=e.target.closest(".tb");if(b){clearSearch();go(b.dataset.t,1);}});
+go((location.hash||"#setup").slice(1),0);
+
+/* ---------------- preparar ---------------- */
+function renderCount(){
+  $("#pcount").innerHTML=[2,3,4,5,6].map(n=>
+    `<button class="btn ${S.players===n?"on":""}" data-p="${n}">${n} jugador${n>1?"es":""}</button>`).join("");
+}
+$("#pcount").addEventListener("click",e=>{const b=e.target.closest("[data-p]");if(!b)return;
+  S.players=+b.dataset.p;save();renderCount();renderReach();renderMixes();});
+
+function renderPick(){
+  $("#fpick").innerHTML=ORDER.map(k=>{const f=F[k];const on=S.picked.includes(k);
+    return `<button class="fcard" data-f="${k}" style="--c:${f.c}" aria-pressed="${on}">
+      <span class="rv">${f.r}</span><b>${esc(f.n)}</b><span>${esc(f.e)}</span><span class="tick">✓</span></button>`;}).join("");
+}
+$("#fpick").addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;
+  const k=b.dataset.f, i=S.picked.indexOf(k);
+  if(i>=0)S.picked.splice(i,1); else S.picked.push(k);
+  save();renderPick();renderReach();renderSetup();renderScore();renderRule();renderTurn();});
+
+function reachOf(list){
+  // un 2.º vagabundo valdría 2; aquí cada facción se elige una sola vez
+  return list.reduce((a,k)=>a+(F[k]?F[k].r:0),0);
+}
+function renderReach(){
+  const sum=reachOf(S.picked), need=NEED[S.players], n=S.picked.length;
+  $("#reachSum").textContent=sum; $("#reachNeed").textContent=need;
+  const box=$("#reachBox"), msg=$("#reachMsg");
+  let col,html;
+  if(n!==S.players){
+    col="var(--line2)";
+    html=`<span class="pill">Faltan facciones</span><p style="margin:6px 0 0;font-size:.9rem">Has elegido <b>${n}</b> para <b>${S.players}</b> jugadores. Elige ${S.players-n>0?"<b>"+(S.players-n)+"</b> más":"<b>"+(n-S.players)+"</b> menos"}.</p>`;
+  }else if(sum>=need){
+    col="var(--ok)";
+    html=`<span class="pill" style="border-color:var(--ok);color:var(--ok)">✓ Mezcla válida</span><p style="margin:6px 0 0;font-size:.9rem">Suma <b>${sum}</b> y necesitabas <b>${need}</b>. Adelante.</p>`;
+  }else{
+    col="var(--bad)";
+    html=`<span class="pill" style="border-color:var(--bad);color:var(--bad)">✗ Alcance corto</span><p style="margin:6px 0 0;font-size:.9rem">Te faltan <b>${need-sum}</b> de alcance. La partida puede quedarse sosa: cambia una facción pequeña por una grande.</p>`;
+  }
+  box.style.borderLeftColor=col; msg.innerHTML=html;
+}
+function combos(arr,k){
+  const out=[];(function rec(i,cur){ if(cur.length===k){out.push(cur.slice());return;}
+    for(let j=i;j<arr.length;j++){cur.push(arr[j]);rec(j+1,cur);cur.pop();} })(0,[]);
+  return out;
+}
+function renderMixes(){
+  const need=NEED[S.players];
+  const ok=combos(ORDER,S.players).map(c=>({c,s:reachOf(c)})).filter(x=>x.s>=need).sort((a,b)=>a.s-b.s);
+  const el=$("#mixes");
+  if(!ok.length){ el.innerHTML=`<div class="card"><p style="margin:0">Con el juego base y Los Ribereños <b>no hay ninguna combinación de ${S.players}</b> que llegue a ${need} de alcance. Haría falta otra expansión.</p></div>`; return; }
+  const shown=ok.slice(0,4);
+  el.innerHTML=shown.map(x=>`<button class="mixc" data-mix="${x.c.join(",")}">
+      <b>Alcance ${x.s} · mínimo ${need}</b>
+      <span>${x.c.map(k=>esc(F[k].n)).join(" · ")}</span></button>`).join("")
+    + (ok.length>4?`<div class="card" style="display:grid;place-items:center"><p style="margin:0;font-size:.88rem;text-align:center">y <b>${ok.length-4}</b> combinaciones válidas más</p></div>`:"");
+}
+$("#mixes").addEventListener("click",e=>{const b=e.target.closest("[data-mix]");if(!b)return;
+  S.picked=b.dataset.mix.split(",");save();
+  renderPick();renderReach();renderSetup();renderScore();renderRule();renderTurn();
+  $("#setupList").scrollIntoView({behavior:"smooth",block:"start"});});
+
+function renderSetup(){
+  const sel=ORDER.filter(k=>S.picked.includes(k));
+  if(!sel.length){ $("#setupList").innerHTML=`<div class="card"><p style="margin:0">Elige facciones arriba y aquí aparecerá la lista de montaje exacta.</p></div>`; $("#setupProg").textContent=""; return; }
+  let h="", n=0;
+  const gen=[
+    "Reparte facciones y decide <b>orden de asiento al azar</b>.",
+    "Cada uno pone su <b>marcador de puntuación en el 0</b>.",
+    "Baraja y <b>roba 3 cartas</b> cada uno."+(S.players===2?" <b style='color:var(--bad)'>A 2 jugadores, quita antes las 4 cartas de dominio.</b>":""),
+    "Una <b>ruina</b> en cada hueco «R» (4 en total).",
+    "<b>Reserva de objetos:</b> 2 botas, 2 bolsas, 1 ballesta, 1 martillo, 2 espadas, 2 teteras, 2 monedas.",
+    "Reparte las <b>cartas de resumen</b> y deja los <b>2 dados</b> junto al mapa."
+  ];
+  h+=`<h4 style="margin:18px 0 9px;color:var(--gold)">Pasos generales</h4>`;
+  gen.forEach(t=>{h+=chk("g"+(n++),t);});
+  sel.forEach((k,i)=>{
+    const f=F[k];
+    h+=`<h4 style="margin:22px 0 9px;color:${f.c}">${i+1}.º · ${esc(f.n)}</h4>`;
+    f.s.forEach((t,j)=>{h+=chk(k+j,t);});
+  });
+  if(S.picked.includes("cat")) h+=`<div class="note" style="margin-top:16px"><p style="margin:0">Si jugáis con la <b>Marquesa Mecánica</b> en vez de la Marquesa, cambia los pasos: 5 cartas de órdenes en atril, fuera los 4 dominios y dentro las 4 espías, y <b>sin edificios</b>. Pestaña «Mecánica».</p></div>`;
+  $("#setupList").innerHTML=h; paintChecks();
+}
+function chk(id,txt){
+  const d=S.checks[id]?"done":"";
+  return `<label class="chk ${d}" data-c="${id}"><input type="checkbox" ${S.checks[id]?"checked":""}><span class="ct">${txt}</span></label>`;
+}
+function paintChecks(){
+  const all=$$("#setupList .chk"), done=all.filter(e=>e.classList.contains("done")).length;
+  $("#setupProg").innerHTML=all.length?`<b style="color:var(--gold)">${done}</b> de ${all.length} pasos hechos${done===all.length?" — <b style='color:var(--ok)'>listo, a jugar</b>":""}`:"";
+}
+$("#setupList").addEventListener("change",e=>{
+  const l=e.target.closest(".chk"); if(!l)return;
+  S.checks[l.dataset.c]=e.target.checked; l.classList.toggle("done",e.target.checked); save(); paintChecks();});
+
+/* ---------------- marcador ---------------- */
+function roster(){ const s=ORDER.filter(k=>S.picked.includes(k)); return s.length?s:ORDER; }
+function renderScore(){
+  $("#scoreboard").innerHTML=roster().map(k=>{
+    const f=F[k], v=S.scores[k]||0, nm=S.names[k]||"";
+    return `<div class="sbrow ${v>=30?"win":""}" style="--c:${f.c}">
+      <div class="nm"><b style="color:${f.c}">${esc(f.n)}</b>
+        <input class="numin" style="max-width:130px;margin-top:5px;font-size:.85rem" data-nm="${k}" value="${esc(nm)}" placeholder="¿quién la lleva?"></div>
+      <button class="sq" data-s="${k}" data-d="-1">−</button>
+      <div class="sc">${v}</div>
+      <button class="sq" data-s="${k}" data-d="1">+</button>
+      <button class="sq" data-s="${k}" data-d="5" title="+5">»</button>
+    </div>`;}).join("");
+}
+$("#scoreboard").addEventListener("click",e=>{const b=e.target.closest("[data-s]");if(!b)return;
+  const k=b.dataset.s; S.scores[k]=Math.max(0,Math.min(99,(S.scores[k]||0)+ +b.dataset.d)); save(); renderScore();});
+$("#scoreboard").addEventListener("input",e=>{const i=e.target.closest("[data-nm]");if(!i)return;
+  S.names[i.dataset.nm]=i.value; save();});
+
+/* ---------------- gobernar ---------------- */
+function renderRule(){
+  $("#ruleRows").innerHTML=roster().map(k=>{const f=F[k], d=S.ruleN[k]||{w:0,b:0};
+    return `<tr><td style="color:${f.c}">${esc(f.n)}</td>
+      <td><input class="numin" style="max-width:72px" type="number" min="0" max="25" value="${d.w}" data-r="${k}" data-k="w"></td>
+      <td><input class="numin" style="max-width:72px" type="number" min="0" max="6" value="${d.b}" data-r="${k}" data-k="b"></td>
+      <td style="color:var(--gold);font-variant-numeric:tabular-nums">${d.w+d.b}</td></tr>`;}).join("");
+  calcRule();
+}
+$("#ruleRows").addEventListener("input",e=>{const i=e.target.closest("[data-r]");if(!i)return;
+  const k=i.dataset.r; S.ruleN[k]=S.ruleN[k]||{w:0,b:0}; S.ruleN[k][i.dataset.k]=Math.max(0,+i.value||0); save();
+  const d=S.ruleN[k], cell=i.closest("tr").lastElementChild; if(cell)cell.textContent=d.w+d.b;
+  calcRule();});
+function calcRule(){
+  const rows=roster().map(k=>({k,t:(S.ruleN[k]||{w:0,b:0}).w+(S.ruleN[k]||{w:0,b:0}).b})).filter(r=>r.t>0);
+  const out=$("#ruleOut");
+  if(!rows.length){out.innerHTML=`<div class="res"><div class="rt">Resultado</div><p style="margin:0">Claro vacío: <b>nadie gobierna</b>. <i>Y las Águilas tampoco: no gobiernan claros vacíos.</i></p></div>`;return;}
+  const max=Math.max(...rows.map(r=>r.t)), top=rows.filter(r=>r.t===max);
+  let h=`<div class="res"><div class="rt">Resultado</div>`;
+  if(top.length===1){
+    h+=`<p style="margin:0">Gobierna <b style="color:${F[top[0].k].c}">${esc(F[top[0].k].n)}</b> con <b>${max}</b>.</p>`;
+  }else{
+    const ey=top.find(r=>r.k==="eyrie");
+    h+=`<p style="margin:0 0 7px">Empate a <b>${max}</b> entre ${top.map(r=>`<b style="color:${F[r.k].c}">${esc(F[r.k].n)}</b>`).join(" y ")}.</p>`;
+    h+= ey ? `<p style="margin:0;color:var(--eyrie)"><b>Gobiernan las Águilas:</b> Señores del Bosque gana los empates.</p>`
+           : `<p style="margin:0"><b>No gobierna nadie.</b></p>`;
+  }
+  if(S.picked.includes("cult")) h+=`<p style="margin:9px 0 0;font-size:.88rem;color:var(--cult)">Recuerda: si el <b>Culto</b> tiene un jardín en este claro, <b>gobierna el Culto</b> pase lo que pase aquí.</p>`;
+  h+=`<p style="margin:9px 0 0;font-size:.85rem;color:var(--ink3)">Tokens y peones no se cuentan. Los <b>mercenarios</b> alquilados a la Compañía sí cuentan como guerreros del comprador.</p></div>`;
+  out.innerHTML=h;
+}
+
+/* ---------------- combate ---------------- */
+const sel1=$("#d1"), sel2=$("#d2");
+[0,1,2,3].forEach(v=>{sel1.insertAdjacentHTML("beforeend",`<option ${v===2?"selected":""}>${v}</option>`);
+                      sel2.insertAdjacentHTML("beforeend",`<option ${v===1?"selected":""}>${v}</option>`);});
+function dots(n,extra){let h="";for(let i=0;i<Math.min(n,30);i++)h+=`<span class="hit ${i>=n-extra?"x":""}"></span>`;return h;}
+function combat(){
+  const aw=+$("#atkW").value||0, dw=+$("#defW").value||0, ax=+$("#atkX").value||0, dx=+$("#defX").value||0;
+  let hi=+sel1.value, lo=+sel2.value; if(lo>hi){const t=hi;hi=lo;lo=t;}
+  const gue=$("#cGuerrilla").checked;
+  const aRoll=gue?lo:hi, dRoll=gue?hi:lo;
+  const defenseless=dw===0?1:0;
+  const aCap=Math.min(aRoll,aw), dCap=Math.min(dRoll,dw);
+  const aTot=aCap+ax+defenseless, dTot=dCap+dx;
+  const vag=$("#cVagaAtk").checked;
+  $("#combatOut").innerHTML=`
+  <div class="grid g2">
+    <div class="res" style="border-left:3px solid var(--fox)">
+      <div class="rt">Atacante inflige</div>
+      <div style="font-size:2.2rem;color:var(--gold);line-height:1">${aTot}</div>
+      <div class="hitbar">${dots(aTot,ax+defenseless)}</div>
+      <p style="margin:9px 0 0;font-size:.85rem">Dado <b>${aRoll}</b>, topado por ${vag?"<b>espadas sanas</b>":"guerreros"} (${aw}) → <b>${aCap}</b>${ax?` · +${ax} extra`:""}${defenseless?` · <b style="color:var(--gold)">+1 por indefenso</b>`:""}</p>
+    </div>
+    <div class="res" style="border-left:3px solid var(--eyrie)">
+      <div class="rt">Defensor inflige</div>
+      <div style="font-size:2.2rem;color:var(--gold);line-height:1">${dTot}</div>
+      <div class="hitbar">${dots(dTot,dx)}</div>
+      <p style="margin:9px 0 0;font-size:.85rem">Dado <b>${dRoll}</b>, topado por guerreros (${dw}) → <b>${dCap}</b>${dx?` · +${dx} extra`:""}</p>
+    </div>
+  </div>
+  ${gue?`<div class="note warn" style="margin:12px 0 0"><p style="margin:0"><b>Guerra de Guerrillas:</b> la Alianza se queda el dado alto (${hi}) y el atacante el bajo (${lo}).</p></div>`:""}
+  ${defenseless?`<div class="note" style="margin:12px 0 0"><p style="margin:0"><b>Indefenso:</b> el defensor no tiene guerreros, así que el atacante suma 1 golpe. Ese golpe sí puede tirar un edificio o un token.</p></div>`:""}
+  <div class="note" style="margin:12px 0 0"><p style="margin:0">Los golpes se reparten <b>a la vez</b>. Quien recibe elige qué pierde, pero <b>primero todos sus guerreros</b> del claro y solo después edificios y tokens. <b>1 punto por cada edificio o token retirado.</b></p></div>`;
+}
+["atkW","defW","atkX","defX","d1","d2","cGuerrilla","cVagaAtk"].forEach(id=>{
+  const el=document.getElementById(id); el.addEventListener("input",combat); el.addEventListener("change",combat);});
+$("#rollBtn").addEventListener("click",()=>{
+  const a=Math.floor(Math.random()*4), b=Math.floor(Math.random()*4);
+  sel1.value=Math.max(a,b); sel2.value=Math.min(a,b); combat();});
+combat();
+
+/* ---------------- turnos ---------------- */
+const PH=[{n:"Birdsong",d:"Amanecer"},{n:"Daylight",d:"Día"},{n:"Evening",d:"Atardecer"}];
+function renderTurn(){
+  const r=roster(); if(S.turn>=r.length)S.turn=0;
+  $("#turnBox").innerHTML=
+    `<div class="phbtns">${PH.map((p,i)=>`<button class="btn ${S.phase===i?"on":""}" data-ph="${i}">${p.n} <small style="opacity:.7">${p.d}</small></button>`).join("")}</div>`
+    + r.map((k,i)=>`<div class="turnrow ${i===S.turn?"act":""}" data-t2="${i}" style="--c:${F[k].c}">
+        <span class="ix">${i+1}</span><b style="color:${F[k].c}">${esc(F[k].n)}</b>
+        <span style="margin-left:auto;font-size:.85rem;color:var(--ink3)">${esc(S.names[k]||"")}</span>
+        ${i===S.turn?`<span class="pill b" style="--c:${F[k].c}">juega</span>`:""}</div>`).join("")
+    + `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+         <button class="btn" id="nextPh">Fase siguiente ›</button>
+         <button class="btn" id="nextPl">Jugador siguiente ››</button></div>
+       ${S.picked.includes("riverfolk")?`<div class="note" style="margin-top:12px"><p style="margin:0"><b>Al empezar el Birdsong de cada jugador</b> (menos la Compañía), ofrécele comprar servicios: 1, más 1 por cada claro con puesto comercial donde tenga alguna pieza.</p></div>`:""}`;
+}
+$("#turnBox").addEventListener("click",e=>{
+  const p=e.target.closest("[data-ph]"), t=e.target.closest("[data-t2]");
+  if(p){S.phase=+p.dataset.ph;save();renderTurn();return;}
+  if(t){S.turn=+t.dataset.t2;save();renderTurn();return;}
+  if(e.target.id==="nextPh"){S.phase=(S.phase+1)%3; if(S.phase===0)S.turn=(S.turn+1)%roster().length; save();renderTurn();return;}
+  if(e.target.id==="nextPl"){S.turn=(S.turn+1)%roster().length;S.phase=0;save();renderTurn();}
+});
+
+/* ---------------- búsqueda ---------------- */
+let IDX=null;
+function buildIndex(){
+  IDX=[];
+  TABS.forEach(t=>{
+    if(t.id==="mesa")return;
+    const p=document.getElementById("p-"+t.id); if(!p)return;
+    p.querySelectorAll(".card,.note,.act,tbody tr,.steps > li,.bx").forEach(el=>{
+      if(el.classList.contains("chk"))return;
+      if(el.querySelector("input,select"))return;
+      const txt=(el.textContent||"").replace(/\s+/g," ").trim();
+      if(txt.length>14)IDX.push({tab:t.id,label:t.label,c:t.c,el,txt});
+    });
+  });
+}
+function norm(s){return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");}
+function clearSearch(){ $("#q").value=""; $("#searchInfo").classList.remove("on"); $("#searchInfo").innerHTML=""; }
+let tmr;
+$("#q").addEventListener("input",()=>{clearTimeout(tmr);tmr=setTimeout(doSearch,160);});
+function doSearch(){
+  const raw=$("#q").value.trim();
+  const info=$("#searchInfo");
+  if(raw.length<2){info.classList.remove("on");info.innerHTML="";$$(".panel").forEach(p=>p.classList.toggle("on",p.id==="p-"+CUR));return;}
+  if(!IDX)buildIndex();
+  const q=norm(raw);
+  let hits=IDX.filter(u=>norm(u.txt).includes(q));
+  hits=hits.filter(u=>!hits.some(o=>o!==u&&u.el.contains(o.el)));
+  $$(".panel").forEach(p=>p.classList.remove("on"));
+  info.classList.add("on");
+  if(!hits.length){ info.innerHTML=`<p style="margin:0">Nada para <b>${esc(raw)}</b>. Prueba con una palabra más corta — «simpatía», «paria», «fondos», «emboscada».</p>`; return; }
+  const shown=hits.slice(0,30);
+  info.innerHTML=`<p style="margin:0 0 12px"><b>${hits.length}</b> resultado${hits.length>1?"s":""} para <b>${esc(raw)}</b>${hits.length>30?" — se muestran 30":""}. <button class="btn" id="clrS">Cerrar búsqueda</button></p>`
+   + shown.map(u=>{
+      const clone=u.el.cloneNode(true);
+      clone.querySelectorAll("input,button,select").forEach(n=>n.remove());
+      highlight(clone,q);
+      const tag=u.el.tagName==="TR"?"table":"div";
+      const inner=tag==="table"?`<div class="tscroll"><table><tbody>${clone.outerHTML}</tbody></table></div>`:clone.outerHTML;
+      return `<div style="margin-bottom:14px">
+        <button class="pill b" style="--c:${u.c};cursor:pointer;border:0" data-jump="${u.tab}">${esc(u.label)} ›</button>
+        <div style="margin-top:7px">${inner}</div></div>`;
+    }).join("");
+}
+function highlight(root,q){
+  const walk=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null);
+  const todo=[]; let n;
+  while((n=walk.nextNode())) if(norm(n.nodeValue).includes(q)) todo.push(n);
+  todo.forEach(node=>{
+    const txt=node.nodeValue, low=norm(txt), frag=document.createDocumentFragment();
+    let i=0,at;
+    while((at=low.indexOf(q,i))!==-1){
+      if(at>i)frag.appendChild(document.createTextNode(txt.slice(i,at)));
+      const m=document.createElement("mark"); m.textContent=txt.slice(at,at+q.length);
+      frag.appendChild(m); i=at+q.length;
+    }
+    if(i<txt.length)frag.appendChild(document.createTextNode(txt.slice(i)));
+    node.parentNode.replaceChild(frag,node);
+  });
+}
+$("#searchInfo").addEventListener("click",e=>{
+  if(e.target.id==="clrS"){clearSearch();go(CUR,0);return;}
+  const j=e.target.closest("[data-jump]"); if(j){clearSearch();go(j.dataset.jump,1);}
+});
+
+/* ---------------- utilidades ---------------- */
+function applyBig(){document.documentElement.setAttribute("data-big",S.big?"1":"0");$("#bigBtn").classList.toggle("on",!!S.big);}
+$("#bigBtn").addEventListener("click",()=>{S.big=S.big?0:1;save();applyBig();});
+$("#resetBtn").addEventListener("click",()=>{
+  if(!confirm("¿Borrar marcador, marcas de preparación y nombres? Las facciones elegidas se conservan."))return;
+  S.checks={};S.scores={};S.names={};S.ruleN={};S.turn=0;S.phase=0;save();
+  renderSetup();renderScore();renderRule();renderTurn();});
+
+renderCount();renderPick();renderReach();renderMixes();renderSetup();renderScore();renderRule();renderTurn();applyBig();
+})();
+</script>
 </body>
 </html>
