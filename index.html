@@ -13,7 +13,7 @@
   --line:#3d2d1f; --line2:#523b27;
   --ink:#f3e9d6; --ink2:#c9b391; --ink3:#9a846a;
   --gold:#e2b45c; --gold-dim:#a8832f;
-  --fox:#ef7a2e; --rabbit:#e8bb3c; --mouse:#bb3a38; --bird:#6ba3dd;
+  --fox:#d8473a; --rabbit:#e8bb3c; --mouse:#f09a68; --bird:#6ba3dd;
   --cat:#e07c35; --eyrie:#4f84c4; --alliance:#58a567; --vaga:#aab0b4;
   --cult:#e8c948; --river:#3fb0a6;
   --ok:#5fb871; --bad:#d8584f;
@@ -340,7 +340,7 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
   <h3>4 · Lista de montaje</h3>
   <div class="note">
     <h4>El orden importa</h4>
-    <p>Las facciones se montan en el orden de la <strong>letra impresa en cada tablero</strong> (A, B, C…). El orden habitual es el de esta lista: la Marquesa planta la fortaleza primero porque las Águilas y el Culto se colocan en relación a ella, y el Vagabundo va último porque necesita las ruinas llenas y un marcador por cada facción en juego.</p>
+    <p>Las facciones se montan en el orden de la <strong>letra impresa en cada tablero</strong> (A, B, C…). El orden de las letras impresas en los reversos es: Marquesa A, Águilas B, Alianza C, Vagabundo D, Culto F y Compañía G. La Marquesa planta la fortaleza primero porque las Águilas y el Culto se colocan en relación a ella.</p>
   </div>
   <div id="setupList"></div>
   <div id="setupProg" style="margin-top:10px;font-size:.86rem;color:var(--ink3)"></div>
@@ -393,7 +393,7 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
   <div id="coach"></div>
 
   <h3>Marcador</h3>
-  <p>Gana quien llega a <strong>30</strong>. Si varios llegan a la vez, gana <strong>quien está jugando el turno</strong>.</p>
+  <p>Gana quien llega a <strong>30</strong>. Si varios llegan a la vez, gana el empatado más cercano en sentido horario a quien juega el turno, contándole a él (Ley 3.1.1).</p>
   <div id="scoreboard"></div>
   <p style="font-size:.84rem;color:var(--ink3)">Se guarda en este navegador. «Reiniciar», arriba, lo borra todo.</p>
 
@@ -472,7 +472,7 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
   </figure>
   <figure class="shot">
     <img src="img/tablero.jpg" alt="El tablero de Otoño con las piezas de la Marquesa y las Águilas colocadas" loading="lazy" width="1150" height="870">
-    <figcaption>El tablero de Otoño en juego. Los <strong>árboles naranjas</strong> marcan claros de zorro, los <strong>amarillos</strong> de conejo y los <strong>rojos</strong> de ratón. Mismo original, CC0.</figcaption>
+    <figcaption>El tablero de Otoño en juego. Los <strong>árboles rojos</strong> marcan claros de zorro, los <strong>amarillos</strong> de conejo y los <strong>naranjas</strong> de ratón. Mismo original, CC0.</figcaption>
   </figure>
 
   <h3>Cómo leer un claro</h3>
@@ -505,7 +505,7 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
   <h3>Habilidades</h3>
   <div class="grid g2">
     <div class="card"><h4>La Fortaleza</h4><p style="margin:0">Solo la Marquesa puede <strong>colocar</strong> piezas en el claro de la fortaleza. Otros sí pueden <strong>mover</strong> piezas hacia ahí. Si le retiran el token de fortaleza, se va a la caja: no vuelve.</p></div>
-    <div class="card"><h4>Hospitales de Campaña</h4><p style="margin:0">Cada vez que le retiran un guerrero —en combate o por cualquier motivo— puede <strong>gastar una carta del palo del claro donde estaba</strong> y colocar ese guerrero en el claro de la fortaleza. Un guerrero por carta.</p></div>
+    <div class="card"><h4>Hospitales de Campaña</h4><p style="margin:0">Cuando le retiran guerreros de un claro —en combate o por cualquier motivo—, puede <strong>gastar una carta del palo de ese claro</strong> y colocar <strong>a todos ellos</strong> en el claro de la fortaleza. Una carta por claro, no por guerrero (Ley 6.2.3).</p></div>
     <div class="card"><h4>Fabricar</h4><p style="margin:0">Fabrica en el <strong>Daylight</strong>, activando <strong>talleres</strong>. El palo de un taller es el del claro donde está.</p></div>
   </div>
 
@@ -740,7 +740,7 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
       <div class="act"><div class="ai">⚔️</div><div class="ab"><b>Batallar</b><span>Inicia un combate.</span></div></div>
       <div class="act"><div class="ai">🪖</div><div class="ab"><b>Reclutar</b><span>1 guerrero en cualquier claro <strong>con base</strong>.</span></div></div>
       <div class="act"><div class="ai">🟢</div><div class="ab"><b>Organizar</b><span>Retira <strong>uno de tus guerreros</strong> de un claro <strong>sin</strong> simpatía, coloca ahí un token de simpatía y anota los puntos descubiertos. <strong>Gratis: no cuesta partidarios.</strong></span></div></div>
-      <p style="margin:12px 0 0"><strong>Ingresos:</strong> roba 1 carta + 1 por bonus de robo descubierto. Descarta hasta 5.</p>
+      <p style="margin:12px 0 0"><strong>Ingresos:</strong> roba 1 carta + 1 por bonus de robo descubierto, y los símbolos de robo están debajo de las bases: es decir, <strong>1 + 1 por cada base en el mapa</strong>. Descarta hasta 5.</p>
     </div></div>
 
   <h3>Montaje</h3>
@@ -791,7 +791,7 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
     <div class="card" style="text-align:center;border-color:rgba(226,180,92,.4)"><svg class="ico" style="width:1.9em;height:1.9em;color:var(--mouse)"><use href="#i-bag"/></svg><h4 style="margin:7px 0 3px">Bolsa</h4><p style="margin:0;font-size:.85rem"><strong>Track.</strong> +2 de límite de objetos</p></div>
   </div>
   <div class="note"><h4>Morral y tracks</h4>
-    <p><strong>Tetera, moneda y bolsa</strong> van a <strong>tracks</strong> (máx. 3 de cada). <strong>Bota, espada, ballesta, antorcha y martillo</strong> van al <strong>morral</strong>. Puedes mover libremente teteras, monedas y bolsas <em>boca arriba y sin daño</em> entre su track y el morral — pero en el morral dejan de dar su bonus.</p>
+    <p><strong>Tetera, moneda y bolsa</strong> van a <strong>tracks</strong> (máx. 3 de cada). <strong>Bota, espada, ballesta, antorcha y martillo</strong> van al <strong>morral</strong>. Una tetera, moneda o bolsa boca arriba va <strong>sola</strong> a su track; si se agota, baja al morral y deja de dar su bonus (Ley 9.2.5.I).</p>
     <p style="margin:0"><strong>Límite de objetos:</strong> 6 + 2 por cada bolsa boca arriba en su track. Se comprueba al final del Evening, contando morral + dañados; lo que pase, a la caja.</p></div>
 
   <h3>Relaciones</h3>
@@ -823,7 +823,7 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
       <div class="act"><div class="ai">🤝</div><div class="ab"><b>Ayudar</b><span>Da una carta <strong>del palo de tu claro</strong> a cualquier jugador que esté ahí — <strong>incluso hostil</strong>. Después puedes coger <strong>un objeto</strong> de su caja de Objetos Fabricados. Luego comprueba la relación.</span></div><span class="cost">1 objeto cualquiera</span></div>
       <div class="act"><div class="ai">📜</div><div class="ab"><b>Misión</b><span>Misión <strong>del palo de tu claro</strong>: agota los <strong>dos objetos</strong> que indique. Ponla en tu zona, roba una misión nueva, y elige: <strong>1 punto por cada misión completada de ese palo</strong> (contando esta) <strong>o robar 2 cartas</strong>.</span></div><span class="cost">2 objetos</span></div>
       <div class="act"><div class="ai"><svg class="ico"><use href="#i-crossbow"/></svg></div><div class="ab"><b>Golpear</b><span>Retira <strong>un guerrero</strong> de tu claro. Si ese jugador no tiene guerreros ahí, retira <strong>un edificio o token</strong> suyo. Luego comprueba la relación: <strong>esto vuelve hostil</strong>.</span></div><span class="cost">1 ballesta</span></div>
-      <div class="act"><div class="ai"><svg class="ico"><use href="#i-hammer"/></svg></div><div class="ab"><b>Reparar</b><span>Un objeto dañado vuelve al morral o a su track, boca arriba.</span></div><span class="cost">1 martillo</span></div>
+      <div class="act"><div class="ai"><svg class="ico"><use href="#i-hammer"/></svg></div><div class="ab"><b>Reparar</b><span>Un objeto dañado vuelve al morral <strong>con el lado que tenía</strong>: reparar no lo endereza (Ley 9.5.7).</span></div><span class="cost">1 martillo</span></div>
       <div class="act"><div class="ai">🔨</div><div class="ab"><b>Fabricar</b><span>Agota los martillos del palo indicado. <strong>Todos tus martillos valen el palo de tu claro.</strong> Si fabricas un objeto, te lo puedes quedar.</span></div><span class="cost">martillos</span></div>
       <div class="act"><div class="ai">⭐</div><div class="ab"><b>Acción especial</b><span>La de tu carta de personaje.</span></div><span class="cost">1 antorcha</span></div>
     </div></div>
@@ -1142,7 +1142,7 @@ mark{background:rgba(226,180,92,.3);color:var(--ink);border-radius:3px;padding:0
 
   <h3>Cómo se gana</h3>
   <div class="grid g2">
-    <div class="card" style="border-left:3px solid var(--gold)"><h4>30 puntos</h4><p style="margin:0">El <strong>primero en llegar a 30 gana inmediatamente</strong>. Si varios llegan a 30 o más <strong>a la vez</strong>, gana <strong>quien está jugando el turno</strong>.</p></div>
+    <div class="card" style="border-left:3px solid var(--gold)"><h4>30 puntos</h4><p style="margin:0">El <strong>primero en llegar a 30 gana inmediatamente</strong>. Si varios llegan a 30 o más <strong>a la vez</strong>, gana el empatado más cercano en sentido horario a quien juega el turno, contándole a él (Ley 3.1.1).</p></div>
     <div class="card" style="border-left:3px solid var(--bird)"><h4>Cartas de dominio</h4><p style="margin:0">Ganar <strong>sin llegar a 30</strong>. Se activan <strong>en tu Daylight con al menos 10 puntos</strong>: quitas tu marcador del marcador y <strong>dejas de puntuar para siempre</strong>.</p></div>
   </div>
   <div class="tscroll" style="margin-top:12px"><table>
@@ -1813,19 +1813,19 @@ $("#resetBtn").addEventListener("click",()=>{
   renderSetup();renderScore();renderRule();renderTurn();});
 
 /* ================= EL TABLERO ================= */
-const SUIT={fox:{n:"zorro",c:"#ef7a2e",i:"i-fox"},rabbit:{n:"conejo",c:"#e8bb3c",i:"i-rabbit"},mouse:{n:"ratón",c:"#bb3a38",i:"i-mouse"}};
+const SUIT={fox:{n:"zorro",c:"#d8473a",i:"i-fox"},rabbit:{n:"conejo",c:"#e8bb3c",i:"i-rabbit"},mouse:{n:"ratón",c:"#f09a68",i:"i-mouse"}};
 const MAP={
- A:{num:1, s:"mouse", k:1,x:14,y:12,n:["B","C","D"],      cnr:"noroeste"},
+ A:{num:1, s:"fox",   k:1,x:14,y:12,n:["B","C","D"],      cnr:"noroeste"},
  B:{num:2, s:"rabbit",k:2,x:52,y: 7,n:["A","E"]},
- E:{num:3, s:"fox",   k:2,x:88,y:16,n:["B","D","I"],      cnr:"noreste"},
- C:{num:4, s:"fox",   k:2,x:17,y:44,n:["A","F","G"]},
+ E:{num:3, s:"mouse", k:2,x:88,y:16,n:["B","D","I"],      cnr:"noreste"},
+ C:{num:4, s:"mouse", k:2,x:17,y:44,n:["A","F","G"]},
  D:{num:5, s:"rabbit",k:2,x:57,y:33,n:["A","E","G"]},
- I:{num:6, s:"mouse", k:2,x:89,y:54,n:["E","H","L"]},
- G:{num:7, s:"mouse", k:2,x:37,y:61,n:["C","D","F","H","K"]},
- H:{num:8, s:"fox",   k:3,x:66,y:63,n:["G","I","L"]},
+ I:{num:6, s:"fox",   k:2,x:89,y:54,n:["E","H","L"]},
+ G:{num:7, s:"fox",   k:2,x:37,y:61,n:["C","D","F","H","K"]},
+ H:{num:8, s:"mouse", k:3,x:66,y:63,n:["G","I","L"]},
  F:{num:9, s:"rabbit",k:1,x:10,y:78,n:["C","G","J"],      cnr:"suroeste"},
- J:{num:10,s:"mouse", k:2,x:24,y:94,n:["F","K"]},
- K:{num:11,s:"fox",   k:2,x:55,y:89,n:["G","J","L"]},
+ J:{num:10,s:"fox",   k:2,x:24,y:94,n:["F","K"]},
+ K:{num:11,s:"mouse", k:2,x:55,y:89,n:["G","J","L"]},
  L:{num:12,s:"rabbit",k:1,x:87,y:88,n:["H","I","K"],      cnr:"sureste"}
 };
 const DIAG={A:"L",L:"A",E:"F",F:"E"};
